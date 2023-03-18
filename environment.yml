@@ -1,0 +1,5 @@
+name: amls2
+
+dependencies:
+  - python=3.9
+  - pip=22.1.*
