@@ -1,6 +1,8 @@
 """ Utility Module """
 import os
 from pathlib import Path
+import time
+import datetime
 
 class Utility:
     """Provides common functions used across the project
@@ -36,3 +38,31 @@ class Utility:
         """
         if not self.dir_exists(dir_path):
             os.makedirs(dir_path)
+
+    def get_files_in_dir(self, dir_path):
+        """Get list of files in directory
+
+        Args:
+            dir_path (str): path of directory
+        """
+        return [f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))]
+
+    def progress_print(self, total_itrs, completed_itrs, start_time):
+        """Prints a progress message for the process, based on progress
+        so far. Computes an expected time for completion by calculating
+        average time per completed iteration and number of iterations left.
+
+        Args:
+            total_itrs (int): total number of iterations
+            completed_itrs (int): number of iterations completed so far
+            start_time (time): start time of the process
+        """
+        time_taken = time.time() - start_time
+        time_taken_str = str(datetime.timedelta(seconds=int(time_taken)))
+
+        tpi = time_taken/completed_itrs
+
+        time_left = (total_itrs - completed_itrs) * tpi
+        time_left_str = str(datetime.timedelta(seconds=int(time_left)))
+
+        print(f'\t\t\t{completed_itrs}/{total_itrs}\tTime Elapsed: {time_taken_str} (TPI: {tpi:.2f}s)\tTime Left: {time_left_str}')
