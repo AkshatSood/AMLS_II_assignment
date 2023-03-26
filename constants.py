@@ -187,55 +187,63 @@ TRACK1_BICUBIC_TARGETS = [
         'scale': SCALE_X4,
         'test_dir': TRACK1_X4_VALIDATION,
         'results_dir': TRACK1_X4_BICUBIC_RESULTS_DIR,
+    }, 
+    {
+        'name': 'Track 1 (Cropped) - Bicubic Interpolation (x2)',
+        'scale': SCALE_X2,
+        'test_dir': TRACK1_PROCESSED_VALID_X2_DIR,
+        'results_dir': TRACK1_CROPPED_X2_BICUBIC_RESULTS_DIR,
+    },
+    {
+        'name': 'Track 1 (Cropped) - Bicubic Interpolation (x4)',
+        'scale': SCALE_X4,
+        'test_dir': TRACK1_PROCESSED_VALID_X4_DIR,
+        'results_dir': TRACK1_CROPPED_X4_BICUBIC_RESULTS_DIR,
     }
 ]
 
 TRACK2_BICUBIC_TARGETS = [
+    # {
+    #     'name': 'Track 2 - Bicubic Interpolation (x2)',
+    #     'scale': SCALE_X2,
+    #     'test_dir': TRACK2_X2_VALIDATION,
+    #     'results_dir': TRACK2_X2_BICUBIC_RESULTS_DIR,
+    # },
+    # {
+    #     'name': 'Track 2 - Bicubic Interpolation (x3)',
+    #     'scale': SCALE_X3,
+    #     'test_dir': TRACK2_X3_VALIDATION,
+    #     'results_dir': TRACK2_X3_BICUBIC_RESULTS_DIR,
+    # },
+    # {
+    #     'name': 'Track 2 - Bicubic Interpolation (x4)',
+    #     'scale': SCALE_X4,
+    #     'test_dir': TRACK2_X4_VALIDATION,
+    #     'results_dir': TRACK2_X4_BICUBIC_RESULTS_DIR,
+    # },
     {
-        'name': 'Track 2 - Bicubic Interpolation (x2)',
+        'name': 'Track 2 (Cropped) - Bicubic Interpolation (x2)',
         'scale': SCALE_X2,
-        'test_dir': TRACK2_X2_VALIDATION,
-        'results_dir': TRACK2_X2_BICUBIC_RESULTS_DIR,
+        'test_dir': TRACK2_PROCESSED_VALID_X2_DIR,
+        'results_dir': TRACK2_CROPPED_X2_BICUBIC_RESULTS_DIR,
     },
     {
-        'name': 'Track 2 - Bicubic Interpolation (x3)',
-        'scale': SCALE_X3,
-        'test_dir': TRACK2_X3_VALIDATION,
-        'results_dir': TRACK2_X3_BICUBIC_RESULTS_DIR,
-    },
-    {
-        'name': 'Track 2 - Bicubic Interpolation (x4)',
+        'name': 'Track 2 (Cropped) - Bicubic Interpolation (x4)',
         'scale': SCALE_X4,
-        'test_dir': TRACK2_X4_VALIDATION,
-        'results_dir': TRACK2_X4_BICUBIC_RESULTS_DIR,
+        'test_dir': TRACK2_PROCESSED_VALID_X4_DIR,
+        'results_dir': TRACK2_CROPPED_X4_BICUBIC_RESULTS_DIR,
     }
 ]
 
-CROPPED_BICUBIC_TARGETS = []
-# CROPPED_BICUBIC_TARGETS = [
-#     {
-#         'name': 'Custom - Bicubic Interpolation (x2)',
-#         'scale': SCALE_X2,
-#         'test_dir': PROCESSED_VALID_X2_DIR,
-#         'results_dir': CROPPED_X2_BICUBIC_RESULTS_DIR,
-#     },
-#     {
-#         'name': 'Custom - Bicubic Interpolation (x4)',
-#         'scale': SCALE_X4,
-#         'test_dir': PROCESSED_VALID_X4_DIR,
-#         'results_dir': CROPPED_X4_BICUBIC_RESULTS_DIR,
-#     }
-# ]
-
 TRACK1_ESRGANX4_TARGETS = [
     # {
-    #     'name': 'Track 1 - ESRGAN (x4)', 
+    #     'name': 'Track 1 - Real-ESRGAN (x4)', 
     #     'scale': SCALE_X4,
     #     'test_dir': TRACK1_X4_VALIDATION,
     #     'results_dir': TRACK1_X4_ESRGAN_RESULTS_DIR
     # },
     {
-        'name': 'Track 1 (Cropped) - ESRGAN (x4)', 
+        'name': 'Track 1 (Cropped) - Real-ESRGAN (x4)', 
         'scale': SCALE_X4,
         'test_dir': TRACK1_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR
@@ -243,20 +251,16 @@ TRACK1_ESRGANX4_TARGETS = [
 ]
 
 TRACK2_ESRGANX4_TARGETS = [
+    # {
+    #     'name': 'Track 2 - Real-ESRGAN (x4)', 
+    #     'scale': SCALE_X4,
+    #     'test_dir': TRACK2_X4_VALIDATION,
+    #     'results_dir': TRACK2_X4_ESRGAN_RESULTS_DIR
+    # }, 
     {
-        'name': 'Track 2 - ESRGAN (x4)', 
+        'name': 'Track 2 (Cropped) - Real-ESRGAN (x4)', 
         'scale': SCALE_X4,
-        'test_dir': TRACK2_X4_VALIDATION,
-        'results_dir': TRACK2_X4_ESRGAN_RESULTS_DIR
+        'test_dir': TRACK2_PROCESSED_VALID_X4_DIR,
+        'results_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR
     }
 ]
-
-CROPPED_ESRGANX4_TARGETS = []
-# CROPPED_ESRGANX4_TARGETS = [
-#     {
-#         'name': 'Custom - ESRGAN (x4)',
-#         'scale': SCALE_X4,
-#         'test_dir': PROCESSED_VALID_X4_DIR,
-#         'results_dir': CROPPED_X4_ESRGAN_RESULTS_DIR
-#     }
-# ]
