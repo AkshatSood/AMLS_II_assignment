@@ -1,3 +1,4 @@
+"""BicubicInterpolation Module"""
 import sys
 import math
 import numpy as np

@@ -41,22 +41,25 @@ class DataProcessing():
             start_time = time.time()
             idx = 1
 
-            print(f'\t\tProcessing {len(img_names)} files...')
-            for img_name in img_names: 
-                
-                img = cv2.imread(f'{target["raw_dir"]}/{img_name}')
+            if len(img_names) == 0:
+                print(f'\t\tAlready processed images. Can be found in {target["output_dir"]}')
+            else:
+                print(f'\t\tProcessing {len(img_names)} files...')
+                for img_name in img_names: 
+                    
+                    img = cv2.imread(f'{target["raw_dir"]}/{img_name}')
 
-                center = img.shape
+                    center = img.shape
 
-                x = center[1]/2 - dim_x/2
-                y = center[0]/2 - dim_y/2
+                    x = center[1]/2 - dim_x/2
+                    y = center[0]/2 - dim_y/2
 
-                crop_img = img[int(y):int(y+dim_y), int(x):int(x+dim_x)]
+                    crop_img = img[int(y):int(y+dim_y), int(x):int(x+dim_x)]
 
-                cv2.imwrite(f'{target["output_dir"]}/{img_name}', crop_img)
+                    cv2.imwrite(f'{target["output_dir"]}/{img_name}', crop_img)
 
-                if (idx) % check_len == 0:
-                    self.utility.progress_print(len(img_names), idx, start_time)
-                idx += 1
+                    if (idx) % check_len == 0:
+                        self.utility.progress_print(len(img_names), idx, start_time)
+                    idx += 1
 
-            print(f'\t\tSuccessfully processed the images. Can be found in {target["output_dir"]}')
+                print(f'\t\tSuccessfully processed the images. Can be found in {target["output_dir"]}')
