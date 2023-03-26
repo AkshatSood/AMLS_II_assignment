@@ -30,7 +30,7 @@ class Runner:
             result_imgs = self.utility.get_files_in_dir(target['results_dir'])
             target_imgs = [img for img in target_imgs if img not in result_imgs]
 
-            print(f'\t\tProcessing {len(target_imgs)} images...')
+            print(f'\t\tUpscaling {len(target_imgs)} images...')
 
             for img_name in target_imgs:
 
@@ -43,6 +43,8 @@ class Runner:
                 if (idx) % 10 == 0:
                     self.utility.progress_print(len(target_imgs), idx, start_time)
                 idx += 1
+
+            print(f'\t\tSuccessfully upscaled images. Can be found in {target["results_dir"]}')
 
     def run_real_esrgan(self, targets): 
         for target in targets:

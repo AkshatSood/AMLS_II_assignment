@@ -1,22 +1,30 @@
 from track1.track1 import Track1
-from custom.custom import Custom
 from modules.data_processing import DataProcessing
 
 def main():
 
     # Process Data
-    # data_processor = DataProcessing()
-    # data_processor.process()
+    print('\n#########################################')
+    print('\tDATA PROCESSING')
+    print('#########################################\n')
+    data_processor = DataProcessing()
+    data_processor.process()
 
     # Perform Track 1 Tasks
-    # track1 = Track1()
-    # track1.run()
+    print('\n#########################################')
+    print('\tTRACK 1 TASKS')
+    print('#########################################\n')
+    track1 = Track1()
+    track1.run(
+        run_bicubic_interpolation=False, 
+        run_real_esrgan=True
+    )
 
     # Perform Track 2 Tasks
-
-    # Perform Custom Tasks 
-    custom = Custom()
-    custom.run()
+    print('\n#########################################')
+    print('\tTRACK 2 TASKS')
+    print('#########################################\n')
+    
 
 if __name__ == "__main__":
     main()

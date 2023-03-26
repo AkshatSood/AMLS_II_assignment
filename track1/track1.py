@@ -27,8 +27,9 @@ class Track1:
 
         self.runner.run_real_esrgan(TRACK1_ESRGANX4_TARGETS)
 
-
-    def run(self):
-        # self.__run_bicubic_interpolation()
-        self.__run_real_esrgan()
-
+    def run(self, run_bicubic_interpolation=True, run_real_esrgan=True):
+        
+        if run_bicubic_interpolation:
+            self.__run_bicubic_interpolation()
+        if run_real_esrgan:
+            self.__run_real_esrgan()

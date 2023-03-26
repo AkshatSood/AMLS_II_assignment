@@ -14,14 +14,12 @@ class DataProcessing():
 
         # Create the required directories if they do not already exist
         for target in DATA_PROCESSING_TARGETS: 
-            self.utility.check_and_create_dir(target['HR_dir'])
-            self.utility.check_and_create_dir(target['X2_dir'])
-            self.utility.check_and_create_dir(target['X4_dir'])
+            self.utility.check_and_create_dir(target['output_dir'])
 
     def process(self):
-        """Reads the HR images provided in the dataset, crops them into a smaller 
-        shape, creates X2 and X4 LR images from the cropped image by resizing them, 
-        and saves the new images in the processed folder.  
+        """Reads the HR, X2 and X4 images provided in the dataset, crops 
+        them into a smaller shape, and saves the new images in the 
+        processed folder.  
         """
         
         for target in DATA_PROCESSING_TARGETS: 
@@ -29,7 +27,16 @@ class DataProcessing():
             print(f'\tProcessing {target["name"]}...')
             
             img_names = self.utility.get_files_in_dir(target['raw_dir'])
-            check_len = len(img_names)/10
+            processed_img_names = []
+            if self.utility.dir_exists(target['output_dir']):
+                processed_img_names = self.utility.get_files_in_dir(target['output_dir'])
+            
+            img_names = [name for name in img_names if not name in processed_img_names]
+
+            check_len = int(len(img_names)/10)
+
+            dim_x = int(self.hr_shape[1]/target['scale'])
+            dim_y = int(self.hr_shape[0]/target['scale'])
 
             start_time = time.time()
             idx = 1
@@ -40,19 +47,16 @@ class DataProcessing():
                 img = cv2.imread(f'{target["raw_dir"]}/{img_name}')
 
                 center = img.shape
-                x = center[1]/2 - self.hr_shape[1]/2
-                y = center[0]/2 - self.hr_shape[0]/2
 
-                crop_img = img[int(y):int(y+self.hr_shape[0]), int(x):int(x+self.hr_shape[1])]
+                x = center[1]/2 - dim_x/2
+                y = center[0]/2 - dim_y/2
 
-                cv2.imwrite(f'{target["HR_dir"]}/{img_name}', crop_img)
+                crop_img = img[int(y):int(y+dim_y), int(x):int(x+dim_x)]
 
-                x2_img = cv2.resize(crop_img, (int(self.hr_shape[0]/2), int(self.hr_shape[1]/2)))
-                cv2.imwrite(f'{target["X2_dir"]}/{img_name}', x2_img)
-
-                x4_img = cv2.resize(crop_img, (int(self.hr_shape[0]/4), int(self.hr_shape[1]/4)))
-                cv2.imwrite(f'{target["X4_dir"]}/{img_name}', x4_img)
+                cv2.imwrite(f'{target["output_dir"]}/{img_name}', crop_img)
 
                 if (idx) % check_len == 0:
                     self.utility.progress_print(len(img_names), idx, start_time)
                 idx += 1
+
+            print(f'\t\tSuccessfully processed the images. Can be found in {target["output_dir"]}')
