@@ -1,3 +1,4 @@
+"""DataProcessing Module"""
 import cv2
 import time
 
@@ -11,13 +12,16 @@ class DataProcessing():
         self.utility = Utility()
         self.hr_shape = PROCESSED_HR_SHAPE
 
+        # Create the required directories if they do not already exist
         for target in DATA_PROCESSING_TARGETS: 
             self.utility.check_and_create_dir(target['HR_dir'])
             self.utility.check_and_create_dir(target['X2_dir'])
             self.utility.check_and_create_dir(target['X4_dir'])
 
     def process(self):
-        """_summary_
+        """Reads the HR images provided in the dataset, crops them into a smaller 
+        shape, creates X2 and X4 LR images from the cropped image by resizing them, 
+        and saves the new images in the processed folder.  
         """
         
         for target in DATA_PROCESSING_TARGETS: 
