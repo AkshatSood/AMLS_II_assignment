@@ -17,9 +17,9 @@ def main():
     print('#########################################\n')
     track1 = Track1()
     track1.run(
-        run_bicubic_interpolation=False, 
+        run_bicubic_interpolation=True, 
         run_real_esrgan=False, 
-        run_srcnn=False,
+        run_srcnn=True,
         run_fsrcnn = True
     )
 
@@ -29,8 +29,10 @@ def main():
     print('#########################################\n')
     track2 = Track2()
     track2.run(
-        run_bicubic_interpolation=False,
-        run_real_esrgan=False
+        run_bicubic_interpolation=True,
+        run_real_esrgan=False, 
+        run_srcnn=True,
+        run_fsrcnn = True
     )
 
 if __name__ == "__main__":

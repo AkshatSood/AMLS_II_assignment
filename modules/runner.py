@@ -163,7 +163,7 @@ class Runner:
 
             start_time = time.time()
             idx = 1
-            target_imgs = self.utility.get_files_in_dir(target['test_dir'])[:1]
+            target_imgs = self.utility.get_files_in_dir(target['test_dir'])
 
             # Filter the images that have already been processed
             result_imgs = self.utility.get_files_in_dir(target['results_dir'])

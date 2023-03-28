@@ -1,6 +1,7 @@
 """Track1 Module"""
 
-from constants import TRACK1_BICUBIC_TARGETS, TRACK1_ESRGANX4_TARGETS, TRACK1_SRCNN_TARGETS, TRACK1_FSRCNN_TARGETS
+from constants import (TRACK1_BICUBIC_TARGETS, TRACK1_ESRGANX4_TARGETS,
+                       TRACK1_FSRCNN_TARGETS, TRACK1_SRCNN_TARGETS)
 from helpers.utility import Utility
 from modules.runner import Runner
 

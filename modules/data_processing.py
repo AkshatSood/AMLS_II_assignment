@@ -2,7 +2,7 @@
 import cv2
 import time
 
-from constants import DATA_PROCESSING_TARGETS, PROCESSED_HR_SHAPE
+from constants import DATA_PROCESSING_TARGETS, PROCESSED_HR_SHAPE, PROGRESS_NUM
 from helpers.utility import Utility
 
 
@@ -33,7 +33,7 @@ class DataProcessing():
             
             img_names = [name for name in img_names if not name in processed_img_names]
 
-            check_len = int(len(img_names)/10)
+            check_len = int(len(img_names)/PROGRESS_NUM)
 
             dim_x = int(self.hr_shape[1]/target['scale'])
             dim_y = int(self.hr_shape[0]/target['scale'])
@@ -58,7 +58,7 @@ class DataProcessing():
 
                     cv2.imwrite(f'{target["output_dir"]}/{img_name}', crop_img)
 
-                    if (idx) % check_len == 0:
+                    if check_len != 0 and (idx) % check_len == 0:
                         self.utility.progress_print(len(img_names), idx, start_time)
                     idx += 1
 
