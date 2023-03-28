@@ -1,6 +1,6 @@
 """Track1 Module"""
 
-from constants import TRACK1_BICUBIC_TARGETS, TRACK1_ESRGANX4_TARGETS
+from constants import TRACK1_BICUBIC_TARGETS, TRACK1_ESRGANX4_TARGETS, TRACK1_SRCNN_TARGETS
 from helpers.utility import Utility
 from modules.runner import Runner
 
@@ -14,6 +14,7 @@ class Track1:
     def __run_bicubic_interpolation(self):
         print("Track 1 - Bicubic Interpolation")
 
+        # Create the results directories if they do not already exist
         for target in TRACK1_BICUBIC_TARGETS:
             self.utility.check_and_create_dir(target['results_dir'])
 
@@ -22,14 +23,26 @@ class Track1:
     def __run_real_esrgan(self): 
         print("Track 1 - Real-ESRGAN")
 
+        # Create the results directories if they do not already exist
         for target in TRACK1_ESRGANX4_TARGETS:
             self.utility.check_and_create_dir(target['results_dir'])
 
         self.runner.run_real_esrgan(TRACK1_ESRGANX4_TARGETS)
 
-    def run(self, run_bicubic_interpolation=True, run_real_esrgan=True):
+    def __run_srcnn(self):
+        print('Track 1 - SRCNN')
+
+        # Create the results directories if they do not already exist
+        for target in TRACK1_SRCNN_TARGETS:
+            self.utility.check_and_create_dir(target['results_dir'])
+
+        self.runner.run_srcnn(TRACK1_SRCNN_TARGETS)
+
+    def run(self, run_bicubic_interpolation=True, run_real_esrgan=True, run_srcnn=True):
         
         if run_bicubic_interpolation:
             self.__run_bicubic_interpolation()
         if run_real_esrgan:
             self.__run_real_esrgan()
+        if run_srcnn:
+            self.__run_srcnn()

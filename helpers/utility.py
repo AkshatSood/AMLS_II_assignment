@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import time
 import datetime
+import numpy as np
 
 class Utility:
     """Provides common functions used across the project
@@ -66,3 +67,13 @@ class Utility:
         time_left_str = str(datetime.timedelta(seconds=int(time_left)))
 
         print(f'\t\t\t{completed_itrs}/{total_itrs}\tTime Elapsed: {time_taken_str} (TPI: {tpi:.2f}s)\tTime Left: {time_left_str}')
+
+    def mod_crop(self, img, scale):
+        size = img.shape[0:2]
+        size = size - np.mod(size, scale)
+        img = img[0:size[0], 1:size[1]]
+        return img
+    
+    def shave(self, img, border):
+        img = img[border: -border, border: -border]
+        return img

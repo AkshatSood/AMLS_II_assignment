@@ -8,8 +8,10 @@ dependencies:
     - opencv-python==4.7.*
     - matplotlib==3.7.*
     - numpy==1.24.*
-    # - keras>=2.9.*
-    # - tensorflow>=2.9.*
+    - keras>=2.9.*
+    # - chardet
+    - tensorflow>=2.9.*
+    - Pillow>=9.*
     # - tensorflow-hub
     # - charset-normalizer  
     # - vsrealesrgan

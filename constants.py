@@ -45,13 +45,11 @@ TRACK2_PROCESSED_VALID_HR_DIR = PROCESSED_TRACK2_VALID_DIR + '/HR'
 TRACK2_PROCESSED_VALID_X2_DIR = PROCESSED_TRACK2_VALID_DIR + '/X2'
 TRACK2_PROCESSED_VALID_X4_DIR = PROCESSED_TRACK2_VALID_DIR + '/X4'
 
-PROCESSED_HR_SHAPE = (512, 512)
-
 # RESULTS PATHS
 RESULTS_DIR = './results'
 TRACK1_RESULTS_DIR = RESULTS_DIR + '/track1'
 TRACK2_RESULTS_DIR = RESULTS_DIR + '/track2'
-TRACK1_CROPPED_RESULTS_DIR = RESULTS_DIR + '/track1_cropped'
+TRACK1_CROPPED_RESULTS_DIR = RESULTS_DIR + '/_track1_cropped'
 TRACK2_CROPPED_RESULTS_DIR = RESULTS_DIR + '/track2_cropped'
 
 TRACK1_BICUBIC_RESULTS_DIR = TRACK1_RESULTS_DIR + '/bicubic'
@@ -63,6 +61,9 @@ TRACK1_REAL_ESRGAN_RESULTS_DIR = TRACK1_RESULTS_DIR + '/real_esrgan'
 TRACK2_REAL_ESRGAN_RESULTS_DIR = TRACK2_RESULTS_DIR + '/real_esrgan'
 TRACK1_CROPPED_REAL_ESRGAN_RESULTS_DIR = TRACK1_CROPPED_RESULTS_DIR + '/real_esrgan'
 TRACK2_CROPPED_REAL_ESRGAN_RESULTS_DIR = TRACK2_CROPPED_RESULTS_DIR + '/real_esrgan'
+
+TRACK1_CROPPED_SRCNN_RESULTS_DIR = TRACK1_CROPPED_RESULTS_DIR + '/srcnn'
+TRACK2_CROPPED_SRCNN_RESULTS_DIR = TRACK2_CROPPED_RESULTS_DIR + '/srcnn'
 
 TRACK1_X2_BICUBIC_RESULTS_DIR = TRACK1_BICUBIC_RESULTS_DIR + '/X2'
 TRACK1_X3_BICUBIC_RESULTS_DIR = TRACK1_BICUBIC_RESULTS_DIR + '/X3'
@@ -82,16 +83,25 @@ TRACK2_X4_ESRGAN_RESULTS_DIR = TRACK2_REAL_ESRGAN_RESULTS_DIR + '/X4'
 TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR = TRACK1_CROPPED_REAL_ESRGAN_RESULTS_DIR + '/X4'
 TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR = TRACK2_CROPPED_REAL_ESRGAN_RESULTS_DIR + '/X4'
 
+TRACK1_CROPPED_X2_SRCNN_RESULTS_DIR = TRACK1_CROPPED_SRCNN_RESULTS_DIR + '/X2'
+TRACK1_CROPPED_X4_SRCNN_RESULTS_DIR = TRACK1_CROPPED_SRCNN_RESULTS_DIR + '/X4'
+TRACK2_CROPPED_X2_SRCNN_RESULTS_DIR = TRACK2_CROPPED_SRCNN_RESULTS_DIR + '/X2'
+TRACK2_CROPPED_X4_SRCNN_RESULTS_DIR = TRACK2_CROPPED_SRCNN_RESULTS_DIR + '/X4'
+
 # CONSTANTS
 SCALE_X1 = 1
 SCALE_X2 = 2
 SCALE_X3 = 3
 SCALE_X4 = 4
 PROGRESS_NUM = 10
+PROCESSED_HR_SHAPE = (648, 648)
+SRCNN_X2_BORDER = 7
+SRCNN_X4_BORDER = 7
 
 # MODELS
 MODELS_DIR = './models'
 MODEL_RRDB_ESRGAN_X4 = MODELS_DIR + '/RRDB_ESRGAN_X4.pth'
+MODEL_SRCNN_WEIGHTS = MODELS_DIR + '/3051crop_weight_200.h5'
 
 # TARGETS
 DATA_PROCESSING_TARGETS = [
@@ -203,24 +213,6 @@ TRACK1_BICUBIC_TARGETS = [
 ]
 
 TRACK2_BICUBIC_TARGETS = [
-    # {
-    #     'name': 'Track 2 - Bicubic Interpolation (x2)',
-    #     'scale': SCALE_X2,
-    #     'test_dir': TRACK2_X2_VALIDATION,
-    #     'results_dir': TRACK2_X2_BICUBIC_RESULTS_DIR,
-    # },
-    # {
-    #     'name': 'Track 2 - Bicubic Interpolation (x3)',
-    #     'scale': SCALE_X3,
-    #     'test_dir': TRACK2_X3_VALIDATION,
-    #     'results_dir': TRACK2_X3_BICUBIC_RESULTS_DIR,
-    # },
-    # {
-    #     'name': 'Track 2 - Bicubic Interpolation (x4)',
-    #     'scale': SCALE_X4,
-    #     'test_dir': TRACK2_X4_VALIDATION,
-    #     'results_dir': TRACK2_X4_BICUBIC_RESULTS_DIR,
-    # },
     {
         'name': 'Track 2 (Cropped) - Bicubic Interpolation (x2)',
         'scale': SCALE_X2,
@@ -232,18 +224,36 @@ TRACK2_BICUBIC_TARGETS = [
         'scale': SCALE_X4,
         'test_dir': TRACK2_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK2_CROPPED_X4_BICUBIC_RESULTS_DIR,
+    },
+    {
+        'name': 'Track 2 - Bicubic Interpolation (x2)',
+        'scale': SCALE_X2,
+        'test_dir': TRACK2_X2_VALIDATION,
+        'results_dir': TRACK2_X2_BICUBIC_RESULTS_DIR,
+    },
+    {
+        'name': 'Track 2 - Bicubic Interpolation (x3)',
+        'scale': SCALE_X3,
+        'test_dir': TRACK2_X3_VALIDATION,
+        'results_dir': TRACK2_X3_BICUBIC_RESULTS_DIR,
+    },
+    {
+        'name': 'Track 2 - Bicubic Interpolation (x4)',
+        'scale': SCALE_X4,
+        'test_dir': TRACK2_X4_VALIDATION,
+        'results_dir': TRACK2_X4_BICUBIC_RESULTS_DIR,
     }
 ]
 
 TRACK1_ESRGANX4_TARGETS = [
     # {
-    #     'name': 'Track 1 - Real-ESRGAN (x4)', 
+    #     'name': 'Track 1 - Real-ESRGAN (X4)', 
     #     'scale': SCALE_X4,
     #     'test_dir': TRACK1_X4_VALIDATION,
     #     'results_dir': TRACK1_X4_ESRGAN_RESULTS_DIR
     # },
     {
-        'name': 'Track 1 (Cropped) - Real-ESRGAN (x4)', 
+        'name': 'Track 1 (Cropped) - Real-ESRGAN (X4)', 
         'scale': SCALE_X4,
         'test_dir': TRACK1_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR
@@ -262,5 +272,22 @@ TRACK2_ESRGANX4_TARGETS = [
         'scale': SCALE_X4,
         'test_dir': TRACK2_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR
+    }
+]
+
+TRACK1_SRCNN_TARGETS = [
+    {
+        'name': 'Track 1 (Cropped) - SRCNN (X2)', 
+        'scale': SCALE_X2,
+        'border': SRCNN_X2_BORDER,
+        'test_dir': TRACK1_CROPPED_X2_BICUBIC_RESULTS_DIR,
+        'results_dir': TRACK1_CROPPED_X2_SRCNN_RESULTS_DIR
+    },
+    {
+        'name': 'Track 1 (Cropped) - SRCNN (X4)', 
+        'scale': SCALE_X4,
+        'border': SRCNN_X4_BORDER,
+        'test_dir': TRACK1_CROPPED_X4_BICUBIC_RESULTS_DIR,
+        'results_dir': TRACK1_CROPPED_X4_SRCNN_RESULTS_DIR
     }
 ]
