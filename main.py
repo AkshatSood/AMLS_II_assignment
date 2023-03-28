@@ -19,7 +19,8 @@ def main():
     track1.run(
         run_bicubic_interpolation=False, 
         run_real_esrgan=False, 
-        run_srcnn=True
+        run_srcnn=False,
+        run_fsrcnn = True
     )
 
     # Perform Track 2 Tasks

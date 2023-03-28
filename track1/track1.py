@@ -1,6 +1,6 @@
 """Track1 Module"""
 
-from constants import TRACK1_BICUBIC_TARGETS, TRACK1_ESRGANX4_TARGETS, TRACK1_SRCNN_TARGETS
+from constants import TRACK1_BICUBIC_TARGETS, TRACK1_ESRGANX4_TARGETS, TRACK1_SRCNN_TARGETS, TRACK1_FSRCNN_TARGETS
 from helpers.utility import Utility
 from modules.runner import Runner
 
@@ -38,7 +38,17 @@ class Track1:
 
         self.runner.run_srcnn(TRACK1_SRCNN_TARGETS)
 
-    def run(self, run_bicubic_interpolation=True, run_real_esrgan=True, run_srcnn=True):
+    def __run_fsrcnn(self):
+        print('Track 1 - FSRCNN')
+
+        # Create the results directories if they do not already exist
+        for target in TRACK1_FSRCNN_TARGETS:
+            self.utility.check_and_create_dir(target['results_dir'])
+
+        self.runner.run_fsrcnn(TRACK1_FSRCNN_TARGETS)
+
+
+    def run(self, run_bicubic_interpolation=True, run_real_esrgan=True, run_srcnn=True, run_fsrcnn=True):
         
         if run_bicubic_interpolation:
             self.__run_bicubic_interpolation()
@@ -46,3 +56,6 @@ class Track1:
             self.__run_real_esrgan()
         if run_srcnn:
             self.__run_srcnn()
+        if run_fsrcnn: 
+            self.__run_fsrcnn()
+
