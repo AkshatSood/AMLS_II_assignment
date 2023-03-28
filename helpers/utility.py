@@ -1,13 +1,17 @@
 """ Utility Module """
-import os
-from pathlib import Path
-import time
+
 import datetime
+import os
+import time
+from pathlib import Path
+
 import numpy as np
+
 
 class Utility:
     """Provides common functions used across the project
     """
+
     def file_exists(self, fname):
         """Checks if the file exists, and is a file
 
@@ -73,7 +77,7 @@ class Utility:
         size = size - np.mod(size, scale)
         img = img[0:size[0], 1:size[1]]
         return img
-    
+
     def shave(self, img, border):
         img = img[border: -border, border: -border]
         return img

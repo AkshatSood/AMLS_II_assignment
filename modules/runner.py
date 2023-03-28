@@ -3,22 +3,23 @@
 import time
 
 import cv2
-import torch
 import numpy as np
 import PIL.Image as pil_image
+import torch
 import torch.backends.cudnn as cudnn
 
 from constants import PROGRESS_NUM
-from helpers.utility import Utility
 from helpers.helpers import Helpers
+from helpers.utility import Utility
 from modules.bicubic import BicubicInterpolation
+from modules.FSRCNN import FSRCNN
 from modules.real_esrgan import RealESRGAN
 from modules.SRCNN import SRCNN
-from modules.FSRCNN import FSRCNN
 
-class Runner: 
 
-    def __init__(self): 
+class Runner:
+
+    def __init__(self):
         self.utility = Utility()
         self.helpers = Helpers()
 
@@ -59,13 +60,13 @@ class Runner:
                         scale=target['scale']
                     )
 
-                    if checkpoint!= 0 and (idx) % checkpoint == 0:
+                    if checkpoint != 0 and (idx) % checkpoint == 0:
                         self.utility.progress_print(len(target_imgs), idx, start_time)
                     idx += 1
 
                 print(f'\t\tSuccessfully upscaled images. Can be found in {target["results_dir"]}')
 
-    def run_real_esrgan(self, targets): 
+    def run_real_esrgan(self, targets):
         for target in targets:
             print(f'\t{target["name"]}')
 
@@ -88,15 +89,15 @@ class Runner:
                 for img_name in target_imgs:
                     real_esrgan = RealESRGAN(device='cuda')
                     real_esrgan.run(
-                        input = f'{target["test_dir"]}/{img_name}',
-                        output = f'{target["results_dir"]}/{img_name}'
+                        input=f'{target["test_dir"]}/{img_name}',
+                        output=f'{target["results_dir"]}/{img_name}'
                     )
                     torch.cuda.empty_cache()
 
                     # Print the progress
-                    if checkpoint !=0 and (idx) % checkpoint == 0:
+                    if checkpoint != 0 and (idx) % checkpoint == 0:
                         self.utility.progress_print(len(target_imgs), idx, start_time)
-                    idx+=1
+                    idx += 1
 
                 print(f'\t\tSuccessfully upscaled images. Can be found in {target["results_dir"]}')
 
@@ -127,17 +128,17 @@ class Runner:
 
                     print(img.shape)
                     img = self.utility.mod_crop(img, target['scale'])
-                    
+
                     y_cr_cb_img = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
 
                     test_img = np.zeros((1, y_cr_cb_img.shape[0], y_cr_cb_img.shape[1], 1), dtype=float)
                     test_img[0, :, :, 0] = y_cr_cb_img[:, :, 0].astype(float) / 255
-                    
+
                     pred_img = srcnn.predict(test_img)
 
-                    pred_img *= 255 
-                    pred_img[pred_img[:] > 255] = 255 
-                    pred_img[pred_img[:] < 0 ] = 0
+                    pred_img *= 255
+                    pred_img[pred_img[:] > 255] = 255
+                    pred_img[pred_img[:] < 0] = 0
                     pred_img = pred_img.astype(np.uint8)
 
                     y_cr_cb_img = self.utility.shave(y_cr_cb_img, target['border'])
@@ -151,10 +152,10 @@ class Runner:
                     if checkpoint != 0 and (idx) % checkpoint == 0:
                         self.utility.progress_print(len(target_imgs), idx, start_time)
                     idx += 1
-                
+
                 print(f'\t\tSuccessfully processed images. Can be found in {target["results_dir"]}')
 
-    def run_fsrcnn(self, targets): 
+    def run_fsrcnn(self, targets):
         cudnn.benchmark = True
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
@@ -185,15 +186,18 @@ class Runner:
                         state_dict[n].copy_(p)
                     else:
                         raise KeyError(n)
-                    
+
                 fsrcnn.eval()
-                        
+
                 for img_name in target_imgs:
 
                     img = pil_image.open(f'{target["test_dir"]}/{img_name}').convert('RGB')
 
                     # Increase the size of the image using bicubic interpolation
-                    bicubic_img = img.resize((img.width * target['scale'], img.height * target['scale']), resample=pil_image.BICUBIC)
+                    bicubic_img = img.resize(
+                        (img.width * target['scale'],
+                         img.height * target['scale']),
+                        resample=pil_image.BICUBIC)
 
                     img, _ = self.helpers.preprocess_for_fsrcnn(img, device)
                     _, ycbcr_img = self.helpers.preprocess_for_fsrcnn(bicubic_img, device)
@@ -213,5 +217,5 @@ class Runner:
                     if checkpoint != 0 and (idx) % checkpoint == 0:
                         self.utility.progress_print(len(target_imgs), idx, start_time)
                     idx += 1
-                
+
                 print(f'\t\tSuccessfully upscaled images. Can be found in {target["results_dir"]}')

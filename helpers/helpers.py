@@ -4,7 +4,7 @@ import numpy as np
 import torch
 
 
-class Helpers: 
+class Helpers:
 
     def convert_rgb_to_ycbcr(self, img, dim_order='hwc'):
         if dim_order == 'hwc':

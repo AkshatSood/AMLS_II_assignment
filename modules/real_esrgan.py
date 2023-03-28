@@ -1,3 +1,5 @@
+"""Real-ESRGAN Module"""
+
 import glob
 import os.path as osp
 
@@ -8,7 +10,8 @@ import torch
 from constants import MODEL_RRDB_ESRGAN_X4, TRACK1_ESRGANX4_TARGETS
 from modules.RRDBNet_arch import RRDBNet
 
-class RealESRGAN(): 
+
+class RealESRGAN():
 
     def __init__(self, device='cuda'):
         self.device = torch.device(device)
@@ -29,4 +32,3 @@ class RealESRGAN():
         upscaled_img = np.transpose(upscaled_img[[2, 1, 0], :, :], (1, 2, 0))
         upscaled_img = (upscaled_img * 255.0).round()
         cv2.imwrite(output, upscaled_img)
-

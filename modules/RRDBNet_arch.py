@@ -1,9 +1,13 @@
+"""ResidualDenseBlock_C5 Module"""
+
 import functools
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 # TODO: Add license and source comments
+
 
 def make_layer(block, n_layers):
     layers = []

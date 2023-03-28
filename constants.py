@@ -127,45 +127,45 @@ MODEL_FSRCNN_X4_WEIGHTS = MODELS_DIR + '/fsrcnn_x4.pth'
 
 # TARGETS
 DATA_PROCESSING_TARGETS = [
-    {   
-        'name': 'Track 1 - Training Data (HR)', 
-        'raw_dir': TRAIN_HR, 
+    {
+        'name': 'Track 1 - Training Data (HR)',
+        'raw_dir': TRAIN_HR,
         'output_dir': TRACK1_PROCESSED_TRAIN_HR_DIR,
         'scale': SCALE_X1
-    }, 
-    {   
-        'name': 'Track 1 - Training Data (X2)', 
-        'raw_dir': TRACK1_X2_TRAIN, 
+    },
+    {
+        'name': 'Track 1 - Training Data (X2)',
+        'raw_dir': TRACK1_X2_TRAIN,
         'output_dir': TRACK1_PROCESSED_TRAIN_X2_DIR,
         'scale': SCALE_X2
-    }, 
-    {   
-        'name': 'Track 1 - Training Data (X3)', 
-        'raw_dir': TRACK1_X3_TRAIN, 
+    },
+    {
+        'name': 'Track 1 - Training Data (X3)',
+        'raw_dir': TRACK1_X3_TRAIN,
         'output_dir': TRACK1_PROCESSED_TRAIN_X3_DIR,
         'scale': SCALE_X3
     },
-    {   
-        'name': 'Track 1 - Training Data (X4)', 
-        'raw_dir': TRACK1_X4_TRAIN, 
+    {
+        'name': 'Track 1 - Training Data (X4)',
+        'raw_dir': TRACK1_X4_TRAIN,
         'output_dir': TRACK1_PROCESSED_TRAIN_X4_DIR,
         'scale': SCALE_X4
     },
-    {   
-        'name': 'Track 1 - Validation Data (HR)', 
-        'raw_dir': VALIDATION_HR, 
+    {
+        'name': 'Track 1 - Validation Data (HR)',
+        'raw_dir': VALIDATION_HR,
         'output_dir': TRACK1_PROCESSED_VALID_HR_DIR,
         'scale': SCALE_X1
-    }, 
-    {   
-        'name': 'Track 1 - Validation Data (X2)', 
-        'raw_dir': TRACK1_X2_VALIDATION, 
+    },
+    {
+        'name': 'Track 1 - Validation Data (X2)',
+        'raw_dir': TRACK1_X2_VALIDATION,
         'output_dir': TRACK1_PROCESSED_VALID_X2_DIR,
         'scale': SCALE_X2
     },
-    {   
-        'name': 'Track 1 - Validation Data (X3)', 
-        'raw_dir': TRACK1_X3_VALIDATION, 
+    {
+        'name': 'Track 1 - Validation Data (X3)',
+        'raw_dir': TRACK1_X3_VALIDATION,
         'output_dir': TRACK1_PROCESSED_VALID_X3_DIR,
         'scale': SCALE_X3
     },
@@ -175,51 +175,51 @@ DATA_PROCESSING_TARGETS = [
         'output_dir': TRACK1_PROCESSED_VALID_X4_DIR,
         'scale': SCALE_X4
     },
-    {   
-        'name': 'Track 2 - Training Data (HR)', 
-        'raw_dir': TRAIN_HR, 
+    {
+        'name': 'Track 2 - Training Data (HR)',
+        'raw_dir': TRAIN_HR,
         'output_dir': TRACK2_PROCESSED_TRAIN_HR_DIR,
         'scale': SCALE_X1
-    }, 
-    {   
-        'name': 'Track 2 - Training Data (X2)', 
-        'raw_dir': TRACK2_X2_TRAIN, 
+    },
+    {
+        'name': 'Track 2 - Training Data (X2)',
+        'raw_dir': TRACK2_X2_TRAIN,
         'output_dir': TRACK2_PROCESSED_TRAIN_X2_DIR,
         'scale': SCALE_X2
-    }, 
-    {   
-        'name': 'Track 2 - Training Data (X3)', 
-        'raw_dir': TRACK2_X3_TRAIN, 
+    },
+    {
+        'name': 'Track 2 - Training Data (X3)',
+        'raw_dir': TRACK2_X3_TRAIN,
         'output_dir': TRACK2_PROCESSED_TRAIN_X3_DIR,
         'scale': SCALE_X3
     },
-    {   
-        'name': 'Track 2 - Training Data (X4)', 
-        'raw_dir': TRACK2_X4_TRAIN, 
+    {
+        'name': 'Track 2 - Training Data (X4)',
+        'raw_dir': TRACK2_X4_TRAIN,
         'output_dir': TRACK2_PROCESSED_TRAIN_X4_DIR,
         'scale': SCALE_X4
     },
-    {   
-        'name': 'Track 2 - Validation Data (HR)', 
-        'raw_dir': VALIDATION_HR, 
+    {
+        'name': 'Track 2 - Validation Data (HR)',
+        'raw_dir': VALIDATION_HR,
         'output_dir': TRACK2_PROCESSED_VALID_HR_DIR,
         'scale': SCALE_X1
-    }, 
-    {   
-        'name': 'Track 2 - Validation Data (X2)', 
-        'raw_dir': TRACK2_X2_VALIDATION, 
+    },
+    {
+        'name': 'Track 2 - Validation Data (X2)',
+        'raw_dir': TRACK2_X2_VALIDATION,
         'output_dir': TRACK2_PROCESSED_VALID_X2_DIR,
         'scale': SCALE_X2
-    }, 
-    {   
-        'name': 'Track 2 - Validation Data (X3)', 
-        'raw_dir': TRACK2_X3_VALIDATION, 
+    },
+    {
+        'name': 'Track 2 - Validation Data (X3)',
+        'raw_dir': TRACK2_X3_VALIDATION,
         'output_dir': TRACK2_PROCESSED_VALID_X3_DIR,
         'scale': SCALE_X3
     },
-    {   
-        'name': 'Track 2 - Validation Data (X4)', 
-        'raw_dir': TRACK2_X4_VALIDATION, 
+    {
+        'name': 'Track 2 - Validation Data (X4)',
+        'raw_dir': TRACK2_X4_VALIDATION,
         'output_dir': TRACK2_PROCESSED_VALID_X4_DIR,
         'scale': SCALE_X4
     },
@@ -243,13 +243,13 @@ TRACK1_BICUBIC_TARGETS = [
         'scale': SCALE_X4,
         'test_dir': TRACK1_X4_VALIDATION,
         'results_dir': TRACK1_X4_BICUBIC_RESULTS_DIR,
-    }, 
+    },
     {
         'name': 'Track 1 (Cropped) - Bicubic Interpolation (x2)',
         'scale': SCALE_X2,
         'test_dir': TRACK1_PROCESSED_VALID_X2_DIR,
         'results_dir': TRACK1_CROPPED_X2_BICUBIC_RESULTS_DIR,
-    }, 
+    },
     {
         'name': 'Track 1 (Cropped) - Bicubic Interpolation (x3)',
         'scale': SCALE_X3,
@@ -305,13 +305,13 @@ TRACK2_BICUBIC_TARGETS = [
 
 TRACK1_ESRGANX4_TARGETS = [
     # {
-    #     'name': 'Track 1 - Real-ESRGAN (X4)', 
+    #     'name': 'Track 1 - Real-ESRGAN (X4)',
     #     'scale': SCALE_X4,
     #     'test_dir': TRACK1_X4_VALIDATION,
     #     'results_dir': TRACK1_X4_ESRGAN_RESULTS_DIR
     # },
     {
-        'name': 'Track 1 (Cropped) - Real-ESRGAN (X4)', 
+        'name': 'Track 1 (Cropped) - Real-ESRGAN (X4)',
         'scale': SCALE_X4,
         'test_dir': TRACK1_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR
@@ -320,13 +320,13 @@ TRACK1_ESRGANX4_TARGETS = [
 
 TRACK2_ESRGANX4_TARGETS = [
     # {
-    #     'name': 'Track 2 - Real-ESRGAN (x4)', 
+    #     'name': 'Track 2 - Real-ESRGAN (x4)',
     #     'scale': SCALE_X4,
     #     'test_dir': TRACK2_X4_VALIDATION,
     #     'results_dir': TRACK2_X4_ESRGAN_RESULTS_DIR
-    # }, 
+    # },
     {
-        'name': 'Track 2 (Cropped) - Real-ESRGAN (x4)', 
+        'name': 'Track 2 (Cropped) - Real-ESRGAN (x4)',
         'scale': SCALE_X4,
         'test_dir': TRACK2_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR
@@ -335,21 +335,21 @@ TRACK2_ESRGANX4_TARGETS = [
 
 TRACK1_SRCNN_TARGETS = [
     {
-        'name': 'Track 1 (Cropped) - SRCNN (X2)', 
+        'name': 'Track 1 (Cropped) - SRCNN (X2)',
         'scale': SCALE_X2,
         'border': SRCNN_X2_BORDER,
         'test_dir': TRACK1_CROPPED_X2_BICUBIC_RESULTS_DIR,
         'results_dir': TRACK1_CROPPED_X2_SRCNN_RESULTS_DIR
     },
     {
-        'name': 'Track 1 (Cropped) - SRCNN (X3)', 
+        'name': 'Track 1 (Cropped) - SRCNN (X3)',
         'scale': SCALE_X3,
         'border': SRCNN_X3_BORDER,
         'test_dir': TRACK1_CROPPED_X3_BICUBIC_RESULTS_DIR,
         'results_dir': TRACK1_CROPPED_X3_SRCNN_RESULTS_DIR
     },
     {
-        'name': 'Track 1 (Cropped) - SRCNN (X4)', 
+        'name': 'Track 1 (Cropped) - SRCNN (X4)',
         'scale': SCALE_X4,
         'border': SRCNN_X4_BORDER,
         'test_dir': TRACK1_CROPPED_X4_BICUBIC_RESULTS_DIR,
@@ -359,21 +359,21 @@ TRACK1_SRCNN_TARGETS = [
 
 TRACK2_SRCNN_TARGETS = [
     {
-        'name': 'Track 2 (Cropped) - SRCNN (X2)', 
+        'name': 'Track 2 (Cropped) - SRCNN (X2)',
         'scale': SCALE_X2,
         'border': SRCNN_X2_BORDER,
         'test_dir': TRACK2_CROPPED_X2_BICUBIC_RESULTS_DIR,
         'results_dir': TRACK2_CROPPED_X2_SRCNN_RESULTS_DIR
     },
     {
-        'name': 'Track 2 (Cropped) - SRCNN (X3)', 
+        'name': 'Track 2 (Cropped) - SRCNN (X3)',
         'scale': SCALE_X3,
         'border': SRCNN_X3_BORDER,
         'test_dir': TRACK1_CROPPED_X3_BICUBIC_RESULTS_DIR,
         'results_dir': TRACK2_CROPPED_X3_SRCNN_RESULTS_DIR
     },
     {
-        'name': 'Track 2 (Cropped) - SRCNN (X4)', 
+        'name': 'Track 2 (Cropped) - SRCNN (X4)',
         'scale': SCALE_X4,
         'border': SRCNN_X4_BORDER,
         'test_dir': TRACK2_CROPPED_X4_BICUBIC_RESULTS_DIR,
@@ -383,21 +383,21 @@ TRACK2_SRCNN_TARGETS = [
 
 TRACK1_FSRCNN_TARGETS = [
     {
-        'name': 'Track 1 (Cropped) - FSRCNN (X2)', 
+        'name': 'Track 1 (Cropped) - FSRCNN (X2)',
         'scale': SCALE_X2,
         'weights_file': MODEL_FSRCNN_X2_WEIGHTS,
         'test_dir': TRACK1_PROCESSED_VALID_X2_DIR,
         'results_dir': TRACK1_CROPPED_X2_FSRCNN_RESULTS_DIR
     },
     {
-        'name': 'Track 1 (Cropped) - FSRCNN (X3)', 
+        'name': 'Track 1 (Cropped) - FSRCNN (X3)',
         'scale': SCALE_X3,
         'weights_file': MODEL_FSRCNN_X3_WEIGHTS,
         'test_dir': TRACK1_PROCESSED_VALID_X3_DIR,
         'results_dir': TRACK1_CROPPED_X3_FSRCNN_RESULTS_DIR
     },
     {
-        'name': 'Track 1 (Cropped) - FSRCNN (X4)', 
+        'name': 'Track 1 (Cropped) - FSRCNN (X4)',
         'scale': SCALE_X4,
         'weights_file': MODEL_FSRCNN_X4_WEIGHTS,
         'test_dir': TRACK1_PROCESSED_VALID_X4_DIR,
@@ -407,21 +407,21 @@ TRACK1_FSRCNN_TARGETS = [
 
 TRACK2_FSRCNN_TARGETS = [
     {
-        'name': 'Track 2 (Cropped) - FSRCNN (X2)', 
+        'name': 'Track 2 (Cropped) - FSRCNN (X2)',
         'scale': SCALE_X2,
         'weights_file': MODEL_FSRCNN_X2_WEIGHTS,
         'test_dir': TRACK2_PROCESSED_VALID_X2_DIR,
         'results_dir': TRACK2_CROPPED_X2_FSRCNN_RESULTS_DIR
     },
     {
-        'name': 'Track 2 (Cropped) - FSRCNN (X3)', 
+        'name': 'Track 2 (Cropped) - FSRCNN (X3)',
         'scale': SCALE_X3,
         'weights_file': MODEL_FSRCNN_X3_WEIGHTS,
         'test_dir': TRACK2_PROCESSED_VALID_X3_DIR,
         'results_dir': TRACK2_CROPPED_X3_FSRCNN_RESULTS_DIR
     },
     {
-        'name': 'Track 2 (Cropped) - FSRCNN (X4)', 
+        'name': 'Track 2 (Cropped) - FSRCNN (X4)',
         'scale': SCALE_X4,
         'weights_file': MODEL_FSRCNN_X4_WEIGHTS,
         'test_dir': TRACK2_PROCESSED_VALID_X4_DIR,

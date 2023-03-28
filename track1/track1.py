@@ -21,7 +21,7 @@ class Track1:
 
         self.runner.run_bicubic_interpolation(TRACK1_BICUBIC_TARGETS)
 
-    def __run_real_esrgan(self): 
+    def __run_real_esrgan(self):
         print("Track 1 - Real-ESRGAN")
 
         # Create the results directories if they do not already exist
@@ -48,15 +48,13 @@ class Track1:
 
         self.runner.run_fsrcnn(TRACK1_FSRCNN_TARGETS)
 
-
     def run(self, run_bicubic_interpolation=True, run_real_esrgan=True, run_srcnn=True, run_fsrcnn=True):
-        
+
         if run_bicubic_interpolation:
             self.__run_bicubic_interpolation()
         if run_real_esrgan:
             self.__run_real_esrgan()
         if run_srcnn:
             self.__run_srcnn()
-        if run_fsrcnn: 
+        if run_fsrcnn:
             self.__run_fsrcnn()
-

@@ -1,8 +1,10 @@
 """BicubicInterpolation Module"""
-import sys
+
 import math
-import numpy as np
+
 import cv2
+import numpy as np
+
 
 class BicubicInterpolation:
 
@@ -65,25 +67,29 @@ class BicubicInterpolation:
                     y4 = math.floor(y) + 2 - y
 
                     # Considering all nearby 16 values
-                    mat_l = np.matrix([[self.__interpolation_kernel(x1, a), self.__interpolation_kernel(x2, a), self.__interpolation_kernel(x3, a), self.__interpolation_kernel(x4, a)]])
+                    mat_l = np.matrix([[self.__interpolation_kernel(x1, a), self.__interpolation_kernel(
+                        x2, a), self.__interpolation_kernel(x3, a), self.__interpolation_kernel(x4, a)]])
                     mat_m = np.matrix([[img[int(y-y1), int(x-x1), c],
                                         img[int(y-y2), int(x-x1), c],
                                         img[int(y+y3), int(x-x1), c],
                                         img[int(y+y4), int(x-x1), c]],
-                                    [img[int(y-y1), int(x-x2), c],
+                                       [img[int(y-y1), int(x-x2), c],
                                         img[int(y-y2), int(x-x2), c],
                                         img[int(y+y3), int(x-x2), c],
                                         img[int(y+y4), int(x-x2), c]],
-                                    [img[int(y-y1), int(x+x3), c],
+                                       [img[int(y-y1), int(x+x3), c],
                                         img[int(y-y2), int(x+x3), c],
                                         img[int(y+y3), int(x+x3), c],
                                         img[int(y+y4), int(x+x3), c]],
-                                    [img[int(y-y1), int(x+x4), c],
+                                       [img[int(y-y1), int(x+x4), c],
                                         img[int(y-y2), int(x+x4), c],
                                         img[int(y+y3), int(x+x4), c],
                                         img[int(y+y4), int(x+x4), c]]])
                     mat_r = np.matrix(
-                        [[self.__interpolation_kernel(y1, a)], [self.__interpolation_kernel(y2, a)], [self.__interpolation_kernel(y3, a)], [self.__interpolation_kernel(y4, a)]])
+                        [[self.__interpolation_kernel(y1, a)],
+                         [self.__interpolation_kernel(y2, a)],
+                         [self.__interpolation_kernel(y3, a)],
+                         [self.__interpolation_kernel(y4, a)]])
 
                     interpolated_img[j, i, c] = np.dot(np.dot(mat_l, mat_m), mat_r)
 

@@ -1,19 +1,21 @@
 """DataProcessing Module"""
-import cv2
+
 import time
+
+import cv2
 
 from constants import DATA_PROCESSING_TARGETS, PROCESSED_HR_SHAPE, PROGRESS_NUM
 from helpers.utility import Utility
 
 
 class DataProcessing():
-    
+
     def __init__(self):
         self.utility = Utility()
         self.hr_shape = PROCESSED_HR_SHAPE
 
         # Create the required directories if they do not already exist
-        for target in DATA_PROCESSING_TARGETS: 
+        for target in DATA_PROCESSING_TARGETS:
             self.utility.check_and_create_dir(target['output_dir'])
 
     def process(self):
@@ -21,16 +23,16 @@ class DataProcessing():
         them into a smaller shape, and saves the new images in the 
         processed folder.  
         """
-        
-        for target in DATA_PROCESSING_TARGETS: 
+
+        for target in DATA_PROCESSING_TARGETS:
 
             print(f'\tProcessing {target["name"]}...')
-            
+
             img_names = self.utility.get_files_in_dir(target['raw_dir'])
             processed_img_names = []
             if self.utility.dir_exists(target['output_dir']):
                 processed_img_names = self.utility.get_files_in_dir(target['output_dir'])
-            
+
             img_names = [name for name in img_names if not name in processed_img_names]
 
             check_len = int(len(img_names)/PROGRESS_NUM)
@@ -45,8 +47,8 @@ class DataProcessing():
                 print(f'\t\tAlready processed images. Can be found in {target["output_dir"]}')
             else:
                 print(f'\t\tProcessing {len(img_names)} files...')
-                for img_name in img_names: 
-                    
+                for img_name in img_names:
+
                     img = cv2.imread(f'{target["raw_dir"]}/{img_name}')
 
                     center = img.shape
