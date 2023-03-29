@@ -27,8 +27,9 @@ class DataProcessing():
         for target in DATA_PROCESSING_TARGETS:
 
             print(f'\tProcessing {target["name"]}...')
+            print(f'\t\tSource directory: {target["src_dir"]}')
 
-            img_names = self.utility.get_files_in_dir(target['raw_dir'])
+            img_names = self.utility.get_files_in_dir(target['src_dir'])
             processed_img_names = []
             if self.utility.dir_exists(target['output_dir']):
                 processed_img_names = self.utility.get_files_in_dir(target['output_dir'])
@@ -49,7 +50,7 @@ class DataProcessing():
                 print(f'\t\tProcessing {len(img_names)} files...')
                 for img_name in img_names:
 
-                    img = cv2.imread(f'{target["raw_dir"]}/{img_name}')
+                    img = cv2.imread(f'{target["src_dir"]}/{img_name}')
 
                     center = img.shape
 

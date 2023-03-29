@@ -35,10 +35,11 @@ class Runner:
         # Loop over all the image directories
         for target in targets:
             print(f'\t{target["name"]}')
+            print(f'\t\tSource directory: {target["src_dir"]}')
 
             start_time = time.time()
             idx = 1
-            target_imgs = self.utility.get_files_in_dir(target['test_dir'])
+            target_imgs = self.utility.get_files_in_dir(target['src_dir'])
 
             # Filter the images that have already been processed
             result_imgs = self.utility.get_files_in_dir(target['results_dir'])
@@ -55,7 +56,7 @@ class Runner:
                 for img_name in target_imgs:
 
                     bicubic_interpolation.run(
-                        input=f'{target["test_dir"]}/{img_name}',
+                        input=f'{target["src_dir"]}/{img_name}',
                         output=f'{target["results_dir"]}/{img_name}',
                         scale=target['scale']
                     )
@@ -69,10 +70,11 @@ class Runner:
     def run_real_esrgan(self, targets):
         for target in targets:
             print(f'\t{target["name"]}')
+            print(f'\t\tSource directory: {target["src_dir"]}')
 
             start_time = time.time()
             idx = 1
-            target_imgs = self.utility.get_files_in_dir(target['test_dir'])
+            target_imgs = self.utility.get_files_in_dir(target['src_dir'])
 
             # Filter the images that have already been processed
             result_imgs = self.utility.get_files_in_dir(target['results_dir'])
@@ -87,9 +89,9 @@ class Runner:
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
 
                 for img_name in target_imgs:
-                    real_esrgan = RealESRGAN(device='cuda')
+                    real_esrgan = RealESRGAN(device='cuda', model=target['model'])
                     real_esrgan.run(
-                        input=f'{target["test_dir"]}/{img_name}',
+                        input=f'{target["src_dir"]}/{img_name}',
                         output=f'{target["results_dir"]}/{img_name}'
                     )
                     torch.cuda.empty_cache()
@@ -104,10 +106,11 @@ class Runner:
     def run_srcnn(self, targets):
         for target in targets:
             print(f'\t{target["name"]}')
+            print(f'\t\tSource directory: {target["src_dir"]}')
 
             start_time = time.time()
             idx = 1
-            target_imgs = self.utility.get_files_in_dir(target['test_dir'])
+            target_imgs = self.utility.get_files_in_dir(target['src_dir'])
 
             # Filter the images that have already been processed
             result_imgs = self.utility.get_files_in_dir(target['results_dir'])
@@ -124,7 +127,7 @@ class Runner:
                 srcnn = SRCNN()
 
                 for img_name in target_imgs:
-                    img = cv2.imread(f'{target["test_dir"]}/{img_name}')
+                    img = cv2.imread(f'{target["src_dir"]}/{img_name}')
 
                     print(img.shape)
                     img = self.utility.mod_crop(img, target['scale'])
@@ -161,10 +164,12 @@ class Runner:
 
         for target in targets:
             print(f'\t{target["name"]}')
+            print(f'\t\tSource directory: {target["src_dir"]}')
+
 
             start_time = time.time()
             idx = 1
-            target_imgs = self.utility.get_files_in_dir(target['test_dir'])
+            target_imgs = self.utility.get_files_in_dir(target['src_dir'])
 
             # Filter the images that have already been processed
             result_imgs = self.utility.get_files_in_dir(target['results_dir'])
@@ -191,7 +196,7 @@ class Runner:
 
                 for img_name in target_imgs:
 
-                    img = pil_image.open(f'{target["test_dir"]}/{img_name}').convert('RGB')
+                    img = pil_image.open(f'{target["src_dir"]}/{img_name}').convert('RGB')
 
                     # Increase the size of the image using bicubic interpolation
                     bicubic_img = img.resize(

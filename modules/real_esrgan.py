@@ -7,13 +7,13 @@ import cv2
 import numpy as np
 import torch
 
-from constants import MODEL_RRDB_ESRGAN_X4, TRACK1_ESRGANX4_TARGETS
+from constants import MODEL_RRDB_ESRGAN_X4
 from modules.RRDBNet_arch import RRDBNet
 
 
 class RealESRGAN():
 
-    def __init__(self, device='cuda'):
+    def __init__(self, device='cuda', model=MODEL_RRDB_ESRGAN_X4):
         self.device = torch.device(device)
         self.model = RRDBNet(3, 3, 64, 23, gc=32)
         self.model.load_state_dict(torch.load(MODEL_RRDB_ESRGAN_X4), strict=True)
