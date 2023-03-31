@@ -34,7 +34,7 @@ class Runner:
 
         # Loop over all the image directories
         for target in targets:
-            print(f'\t{target["name"]}')
+            print(f'\n\t{target["name"]}')
             print(f'\t\tSource directory: {target["src_dir"]}')
 
             start_time = time.time()
@@ -69,7 +69,7 @@ class Runner:
 
     def run_real_esrgan(self, targets):
         for target in targets:
-            print(f'\t{target["name"]}')
+            print(f'\n\t{target["name"]}')
             print(f'\t\tSource directory: {target["src_dir"]}')
 
             start_time = time.time()
@@ -105,7 +105,7 @@ class Runner:
 
     def run_srcnn(self, targets):
         for target in targets:
-            print(f'\t{target["name"]}')
+            print(f'\n\t{target["name"]}')
             print(f'\t\tSource directory: {target["src_dir"]}')
 
             start_time = time.time()
@@ -163,7 +163,7 @@ class Runner:
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
         for target in targets:
-            print(f'\t{target["name"]}')
+            print(f'\n\t{target["name"]}')
             print(f'\t\tSource directory: {target["src_dir"]}')
 
 

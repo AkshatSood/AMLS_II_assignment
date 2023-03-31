@@ -26,7 +26,7 @@ class DataProcessing():
 
         for target in DATA_PROCESSING_TARGETS:
 
-            print(f'\tProcessing {target["name"]}...')
+            print(f'\n\tProcessing {target["name"]}...')
             print(f'\t\tSource directory: {target["src_dir"]}')
 
             img_names = self.utility.get_files_in_dir(target['src_dir'])
