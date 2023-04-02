@@ -36,3 +36,18 @@ class Helpers:
         x = torch.from_numpy(x).to(device)
         x = x.unsqueeze(0).unsqueeze(0)
         return x, ycbcr
+
+    def crop_to_shape(self, img, shape):
+        
+        dim_x = shape[1]
+        dim_y = shape[0]
+        center = img.shape
+
+        x = center[1]/2 - dim_x/2
+        y = center[0]/2 - dim_y/2
+
+        crop_img = img[int(y):int(y+dim_y), int(x):int(x+dim_x)]
+
+        return crop_img
+
+        

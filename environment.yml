@@ -9,9 +9,11 @@ dependencies:
     - matplotlib==3.7.*
     - numpy==1.24.*
     - keras>=2.9.*
-    # - chardet
+    - pandas>=1.4.*
     - tensorflow>=2.9.*
     - Pillow>=9.*
+    # - image-quality>=1.2.*
+    - "--editable=git+https://github.com/ocampor/image-quality@master#egg=image-quality"
     # - tensorflow-hub
     # - charset-normalizer  
     # - vsrealesrgan

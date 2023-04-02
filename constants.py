@@ -110,6 +110,8 @@ TRACK2_CROPPED_X3_FSRCNN_RESULTS_DIR = TRACK2_CROPPED_FSRCNN_RESULTS_DIR + '/X3'
 TRACK1_CROPPED_X4_FSRCNN_RESULTS_DIR = TRACK1_CROPPED_FSRCNN_RESULTS_DIR + '/X4'
 TRACK2_CROPPED_X4_FSRCNN_RESULTS_DIR = TRACK2_CROPPED_FSRCNN_RESULTS_DIR + '/X4'
 
+EVALUATION_DIR = './evaluation'
+
 # CONSTANTS
 SCALE_X1 = 1
 SCALE_X2 = 2
@@ -117,6 +119,7 @@ SCALE_X3 = 3
 SCALE_X4 = 4
 PROGRESS_NUM = 10
 PROCESSED_HR_SHAPE = (648, 648)
+EVALUATION_IMG_SHAPE = (630, 630)
 SRCNN_X2_BORDER = 7
 SRCNN_X3_BORDER = 7
 SRCNN_X4_BORDER = 7
@@ -358,13 +361,13 @@ TRACK1_ESRGANX4_TARGETS = [
         'src_dir': TRACK1_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR
     },
-    {
-        'name': 'Track 1 (Cropped) - Real-ESRGAN (ESRGAN) (X4) [Train]',
-        'scale': SCALE_X4,
-        'model': MODEL_RRDB_ESRGAN_X4,
-        'src_dir': TRACK1_PROCESSED_TRAIN_X4_DIR,
-        'results_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR
-    },
+    # {
+    #     'name': 'Track 1 (Cropped) - Real-ESRGAN (ESRGAN) (X4) [Train]',
+    #     'scale': SCALE_X4,
+    #     'model': MODEL_RRDB_ESRGAN_X4,
+    #     'src_dir': TRACK1_PROCESSED_TRAIN_X4_DIR,
+    #     'results_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR
+    # },
     {
         'name': 'Track 1 (Cropped) - Real-ESRGAN (PSNR) (X4) [Validation]',
         'scale': SCALE_X4,
@@ -372,13 +375,13 @@ TRACK1_ESRGANX4_TARGETS = [
         'src_dir': TRACK1_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK1_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
     },
-    {
-        'name': 'Track 1 (Cropped) - Real-ESRGAN (PSNR) (X4) [Train]',
-        'scale': SCALE_X4,
-        'model': MODEL_RRDB_PSNR_X4,
-        'src_dir': TRACK1_PROCESSED_TRAIN_X4_DIR,
-        'results_dir': TRACK1_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
-    }
+    # {
+    #     'name': 'Track 1 (Cropped) - Real-ESRGAN (PSNR) (X4) [Train]',
+    #     'scale': SCALE_X4,
+    #     'model': MODEL_RRDB_PSNR_X4,
+    #     'src_dir': TRACK1_PROCESSED_TRAIN_X4_DIR,
+    #     'results_dir': TRACK1_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
+    # }
 ]
 
 TRACK2_ESRGANX4_TARGETS = [
@@ -395,13 +398,13 @@ TRACK2_ESRGANX4_TARGETS = [
         'src_dir': TRACK2_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR
     },
-    {
-        'name': 'Track 2 (Cropped) - Real-ESRGAN (ESRGAN) (x4) [Train]',
-        'scale': SCALE_X4,
-        'model': MODEL_RRDB_ESRGAN_X4,
-        'src_dir': TRACK2_PROCESSED_TRAIN_X4_DIR,
-        'results_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR
-    },
+    # {
+    #     'name': 'Track 2 (Cropped) - Real-ESRGAN (ESRGAN) (x4) [Train]',
+    #     'scale': SCALE_X4,
+    #     'model': MODEL_RRDB_ESRGAN_X4,
+    #     'src_dir': TRACK2_PROCESSED_TRAIN_X4_DIR,
+    #     'results_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR
+    # },
     {
         'name': 'Track 2 (Cropped) - Real-ESRGAN (PSNR) (x4) [Validation]',
         'scale': SCALE_X4,
@@ -409,13 +412,13 @@ TRACK2_ESRGANX4_TARGETS = [
         'src_dir': TRACK2_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK2_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
     },
-    {
-        'name': 'Track 2 (Cropped) - Real-ESRGAN (PSNR) (x4) [Train]',
-        'scale': SCALE_X4,
-        'model': MODEL_RRDB_PSNR_X4,
-        'src_dir': TRACK2_PROCESSED_TRAIN_X4_DIR,
-        'results_dir': TRACK2_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
-    }
+    # {
+    #     'name': 'Track 2 (Cropped) - Real-ESRGAN (PSNR) (x4) [Train]',
+    #     'scale': SCALE_X4,
+    #     'model': MODEL_RRDB_PSNR_X4,
+    #     'src_dir': TRACK2_PROCESSED_TRAIN_X4_DIR,
+    #     'results_dir': TRACK2_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
+    # }
 ]
 
 TRACK1_SRCNN_TARGETS = [
@@ -556,4 +559,197 @@ TRACK2_FSRCNN_TARGETS = [
     },
 ]
 
-
+EVALUATION_TARGETS = [
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'Original',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'scale': SCALE_X1, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'Bicubic',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X2_BICUBIC_RESULTS_DIR, 
+        'scale': SCALE_X2, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'Bicubic',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X3_BICUBIC_RESULTS_DIR, 
+        'scale': SCALE_X3, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'Bicubic',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X4_BICUBIC_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'Real-ESRGAN (ESRGAN)',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'Real-ESRGAN (PSNR)',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'SRCNN',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X2_SRCNN_RESULTS_DIR, 
+        'scale': SCALE_X2, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'SRCNN',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X3_SRCNN_RESULTS_DIR, 
+        'scale': SCALE_X3, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'SRCNN',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X4_SRCNN_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'FSRCNN',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X2_FSRCNN_RESULTS_DIR, 
+        'scale': SCALE_X2, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'FSRCNN',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X3_FSRCNN_RESULTS_DIR, 
+        'scale': SCALE_X3, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 1 (Cropped)', 
+        'method': 'FSRCNN',
+        'hr_dir': TRACK1_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK1_CROPPED_X4_FSRCNN_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'Original',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'scale': SCALE_X1, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'Bicubic',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X2_BICUBIC_RESULTS_DIR, 
+        'scale': SCALE_X2, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'Bicubic',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X3_BICUBIC_RESULTS_DIR, 
+        'scale': SCALE_X3, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'Bicubic',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X4_BICUBIC_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'Real-ESRGAN (ESRGAN)',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'Real-ESRGAN (PSNR)',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'SRCNN',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X2_SRCNN_RESULTS_DIR, 
+        'scale': SCALE_X2, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'SRCNN',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X3_SRCNN_RESULTS_DIR, 
+        'scale': SCALE_X3, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'SRCNN',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X4_SRCNN_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'FSRCNN',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X2_FSRCNN_RESULTS_DIR, 
+        'scale': SCALE_X2, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'FSRCNN',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X3_FSRCNN_RESULTS_DIR, 
+        'scale': SCALE_X3, 
+        'startswith': tuple(['08', '09']),
+    },
+    {      
+        'track': 'Track 2 (Cropped)', 
+        'method': 'FSRCNN',
+        'hr_dir': TRACK2_PROCESSED_VALID_HR_DIR, 
+        'up_dir': TRACK2_CROPPED_X4_FSRCNN_RESULTS_DIR, 
+        'scale': SCALE_X4, 
+        'startswith': tuple(['08', '09']),
+    }
+]
