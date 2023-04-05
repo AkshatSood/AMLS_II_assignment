@@ -13,6 +13,7 @@ LR = 'LR'
 BICUBIC = 'bicubic'
 GLASNER = 'glasner'
 NEAREST = 'nearest'
+FSRCNN = 'FSRCNN'
 SRCNN = 'SRCNN'
 RDDBESRGAN = 'RDDBESRGAN'
 RDDBPSNR = 'RDDBPSNR'
@@ -35,6 +36,9 @@ IMGAGE_SRF_X8 = '/image_SRF_8'
 MODELS_DIR = './models'
 MODEL_RRDB_ESRGAN_X4 = MODELS_DIR + '/RRDB_ESRGAN_x4.pth'
 MODEL_RRDB_PSNR_X4 = MODELS_DIR + '/RRDB_PSNR_x4.pth'
+MODEL_FSRCNN_X2_WEIGHTS = MODELS_DIR + '/fsrcnn_x2.pth'
+MODEL_FSRCNN_X3_WEIGHTS = MODELS_DIR + '/fsrcnn_x3.pth'
+MODEL_FSRCNN_X4_WEIGHTS = MODELS_DIR + '/fsrcnn_x4.pth'
 
 # RESULTS ROOTS
 RESULTS_DIR = './results'
@@ -45,8 +49,10 @@ BSD100_RESULTS_ROOT = RESULTS_DIR + '/' + BSD100
 SUNHAYS80_RESULTS_ROOT = RESULTS_DIR + '/' + SUNHAYS80
 
 # RESULTS SUB PATHS
-RRDB_ESRGAN = '/RRDB_ESRGAN'
-RRDB_PSNR = '/RRDB_PSNR'
+RRDB_ESRGAN_DIR = '/RRDB_ESRGAN'
+RRDB_PSNR_DIR = '/RRDB_PSNR'
+FSRCNN_DIR = '/FSRCNN'
+
 
 SCALE_X2 = 2 
 SCALE_X3 = 3 
@@ -81,3 +87,93 @@ TARGETS_RRDB = [
     }
 ]
 
+TARGETS_FSRCNN = [
+    {
+        'dataset': SET5, 
+        'src_dir': SET5_ROOT + IMGAGE_SRF_X2,
+        'res_dir': SET5_RESULTS_ROOT + IMGAGE_SRF_X2 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X2,
+        'weights': MODEL_FSRCNN_X2_WEIGHTS
+    },
+    {
+        'dataset': SET5, 
+        'src_dir': SET5_ROOT + IMGAGE_SRF_X3,
+        'res_dir': SET5_RESULTS_ROOT + IMGAGE_SRF_X3 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X3,
+        'weights': MODEL_FSRCNN_X3_WEIGHTS
+    },
+    {
+        'dataset': SET5, 
+        'src_dir': SET5_ROOT + IMGAGE_SRF_X4,
+        'res_dir': SET5_RESULTS_ROOT + IMGAGE_SRF_X4 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X4,
+        'weights': MODEL_FSRCNN_X4_WEIGHTS
+    },
+    {
+        'dataset': SET14, 
+        'src_dir': SET14_ROOT + IMGAGE_SRF_X2,
+        'res_dir': SET14_RESULTS_ROOT + IMGAGE_SRF_X2 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X2,
+        'weights': MODEL_FSRCNN_X2_WEIGHTS
+    },
+    {
+        'dataset': SET14, 
+        'src_dir': SET14_ROOT + IMGAGE_SRF_X3,
+        'res_dir': SET14_RESULTS_ROOT + IMGAGE_SRF_X3 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X3,
+        'weights': MODEL_FSRCNN_X3_WEIGHTS
+    },
+    {
+        'dataset': SET14, 
+        'src_dir': SET14_ROOT + IMGAGE_SRF_X4,
+        'res_dir': SET14_RESULTS_ROOT + IMGAGE_SRF_X4 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X4,
+        'weights': MODEL_FSRCNN_X4_WEIGHTS
+    },
+    {
+        'dataset': URBAN100, 
+        'src_dir': URBAN100_ROOT + IMGAGE_SRF_X2,
+        'res_dir': URBAN100_RESULTS_ROOT + IMGAGE_SRF_X2 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X2,
+        'weights': MODEL_FSRCNN_X2_WEIGHTS
+    },
+    {
+        'dataset': URBAN100, 
+        'src_dir': URBAN100_ROOT + IMGAGE_SRF_X4,
+        'res_dir': URBAN100_RESULTS_ROOT + IMGAGE_SRF_X4 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X4,
+        'weights': MODEL_FSRCNN_X4_WEIGHTS
+    },
+    {
+        'dataset': BSD100, 
+        'src_dir': BSD100_ROOT + IMGAGE_SRF_X2,
+        'res_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X2 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X2,
+        'weights': MODEL_FSRCNN_X2_WEIGHTS
+    },
+    {
+        'dataset': BSD100, 
+        'src_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+        'res_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X3 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X3,
+        'weights': MODEL_FSRCNN_X3_WEIGHTS
+    },
+    {
+        'dataset': BSD100, 
+        'src_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+        'res_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X4 + FSRCNN_DIR,
+        'src_tag': LR, 
+        'scale': SCALE_X4,
+        'weights': MODEL_FSRCNN_X4_WEIGHTS
+    }
+]
