@@ -2,18 +2,19 @@
 
 import time
 
-import torch
 import numpy as np
 import PIL.Image as pil_image
+import torch
 import torch.backends.cudnn as cudnn
 
 from constants2 import (MODEL_RRDB_ESRGAN_X4, MODEL_RRDB_PSNR_X4, PROGRESS_NUM,
-                        RDDBESRGAN, RDDBPSNR, TARGETS_RRDB, RRDB_ESRGAN_DIR, RRDB_PSNR_DIR, TARGETS_FSRCNN)
-from helpers.utility import Utility
+                        RDDBESRGAN, RDDBPSNR, RRDB_ESRGAN_DIR, RRDB_PSNR_DIR,
+                        TARGETS_FSRCNN, TARGETS_RRDB)
 from helpers.helpers import Helpers
+from helpers.utility import Utility
+from modules.FSRCNN import FSRCNN
 from modules.real_esrgan import RealESRGAN
 from modules.runner import Runner
-from modules.FSRCNN import FSRCNN
 
 
 class RunModels:

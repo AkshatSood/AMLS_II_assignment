@@ -2,9 +2,9 @@
 
 from modules.data_processing import DataProcessing
 from modules.evaluation import Evaluation
+from modules.run_models import RunModels
 from track1.track1 import Track1
 from track2.track2 import Track2
-from modules.run_models import RunModels
 
 
 def main():
@@ -39,13 +39,6 @@ def main():
     #     run_srcnn=False,
     #     run_fsrcnn=False
     # )
-    
-    # # Evaluate Data
-    # print('\n#########################################')
-    # print('\tEVALUATION')
-    # print('#########################################\n')
-    # evaluation = Evaluation()
-    # evaluation.evaluate()
 
     print('\n#########################################')
     print('\tRUN MODELS')
@@ -54,6 +47,15 @@ def main():
     # model_runner.run_rrdb_esrgan_model()
     # model_runner.run_rrdb_psnr_model()
     model_runner.run_fsrcnn_model()
+    
+    # # Evaluate Data
+    # print('\n#########################################')
+    # print('\tEVALUATION')
+    # print('#########################################\n')
+    # evaluation = Evaluation()
+    # evaluation.evaluate()
+
+    
 
 if __name__ == "__main__":
     main()
