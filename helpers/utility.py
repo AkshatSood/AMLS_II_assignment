@@ -52,6 +52,35 @@ class Utility:
         """
         return [f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))]
 
+    def get_img_tag(self, img): 
+        return img.split('_')[4].split('.')[0]
+    
+    def get_img_num(self, img):
+        return img.split('_')[1]
+
+    def get_imgs_with_tag_from_dir(self, dir_path, tag):
+        return [f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f)) and f.endswith('.png') and self.get_img_tag(f) == tag]
+
+    def replace_img_tag(self, img_name, tag):
+        num = img_name.split('_')[1]
+        scale = img_name.split('_')[3]
+        return f'img_{num}_SRF_{scale}_{tag}.png'
+    
+    def get_time_taken_str(self, start_time):
+        time_taken = time.time() - start_time
+        return str(datetime.timedelta(seconds=int(time_taken)))
+    
+    def filter_names_ignore_tag(self, src, res):
+        filtered = []
+        res = [res_img[:13] for res_img in res]
+        for src_img in src: 
+            if not src_img[:13] in res:
+                filtered.append(src_img)
+
+        return filtered
+            
+
+
     def progress_print(self, total_itrs, completed_itrs, start_time):
         """Prints a progress message for the process, based on progress
         so far. Computes an expected time for completion by calculating

@@ -89,10 +89,10 @@ class Runner:
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
 
                 for img_name in target_imgs:
-                    real_esrgan = RealESRGAN(device='cuda', model=target['model'])
+                    real_esrgan = RealESRGAN(device='cuda', model_path=target['model_path'])
                     real_esrgan.run(
                         input=f'{target["src_dir"]}/{img_name}',
-                        output=f'{target["results_dir"]}/{img_name}'
+                        output=f'{target["res_dir"]}/{img_name}'
                     )
                     torch.cuda.empty_cache()
 

@@ -13,10 +13,10 @@ from modules.RRDBNet_arch import RRDBNet
 
 class RealESRGAN():
 
-    def __init__(self, device='cuda', model=MODEL_RRDB_ESRGAN_X4):
+    def __init__(self, device='cuda', model_path=MODEL_RRDB_ESRGAN_X4):
         self.device = torch.device(device)
         self.model = RRDBNet(3, 3, 64, 23, gc=32)
-        self.model.load_state_dict(torch.load(MODEL_RRDB_ESRGAN_X4), strict=True)
+        self.model.load_state_dict(torch.load(model_path), strict=True)
         self.model.eval()
         self.model = self.model.to(self.device)
 
