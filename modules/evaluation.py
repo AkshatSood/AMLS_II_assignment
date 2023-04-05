@@ -7,6 +7,9 @@ import numpy as np
 import pandas as pd
 from skimage.metrics import structural_similarity
 import imquality.brisque as brisque
+from piqa import MS_SSIM, SSIM, PSNR
+import torch
+from torchvision import transforms
 
 from constants import (EVALUATION_DIR, EVALUATION_IMG_SHAPE,
                        EVALUATION_TARGETS, PROGRESS_NUM)
@@ -19,8 +22,12 @@ class Evaluation:
     def __init__(self):
         self.utility = Utility()
         self.helpers = Helpers()
+        self.totensor = transforms.ToTensor()
 
         self.utility.check_and_create_dir(EVALUATION_DIR)
+
+    def __to_tensor(self, img): 
+        return self.totensor(img).repeat(1,1,1,1)
 
     def __compute_mse_and_psnr(self, hr_img, up_img):
         mse = np.sum((hr_img.astype("float") - up_img.astype("float")) ** 2)
@@ -32,6 +39,12 @@ class Evaluation:
 
     def __compute_ssim(self, hr_img, up_img):
         return structural_similarity(hr_img, up_img)
+    
+    def __compute_ms_ssim(self, hr_img, up_img):
+        return MS_SSIM(up_img, hr_img)
+    
+    def __test_piqa(self, hr_img, up_img):
+        return SSIM(up_img, hr_img)
         
     def __compute_brisque(self, img): 
         return brisque.score(img)
@@ -52,7 +65,8 @@ class Evaluation:
 
             # Filter the list of files in the directory so that the same images are considered for evaluation
             up_img_names = [img_name for img_name in up_img_names if img_name.startswith(target['startswith'])]
-            hr_img_names = [hr_img_name for hr_img_name in hr_img_names if f'{hr_img_name.split(".")[0]}x{target["scale"]}.png' in up_img_names]
+            if target['scale'] > 1:
+                hr_img_names = [hr_img_name for hr_img_name in hr_img_names if f'{hr_img_name.split(".")[0]}x{target["scale"]}.png' in up_img_names]
 
             # Check to make sure that the file lengths are the same and not zero
             if len(hr_img_names) == 0 or len(up_img_names) == 0: 
@@ -67,7 +81,7 @@ class Evaluation:
             checkpoint = int(len(hr_img_names)/PROGRESS_NUM)
 
             for hr_img_name in hr_img_names: 
-                up_img_name = f'{hr_img_name.split(".")[0]}x{target["scale"]}.png'
+                up_img_name = f'{hr_img_name.split(".")[0]}x{target["scale"]}.png' if target['scale'] > 1 else hr_img_name
                 
                 # Read the images
                 hr_img = cv2.imread(f'{target["hr_dir"]}/{hr_img_name}') 
@@ -76,7 +90,7 @@ class Evaluation:
                 # Crop the images (so that they are both the same size)
                 hr_img = self.helpers.crop_to_shape(hr_img, EVALUATION_IMG_SHAPE)
                 up_img = self.helpers.crop_to_shape(up_img, EVALUATION_IMG_SHAPE)          
-                      
+
                 # Convert the images to YCbCr
                 hr_img_ycrcb = self.helpers.convert_rgb_to_ycbcr(cv2.cvtColor(hr_img, cv2.COLOR_BGR2RGB))
                 up_img_ycrcb = self.helpers.convert_rgb_to_ycbcr(cv2.cvtColor(up_img, cv2.COLOR_BGR2RGB))
@@ -84,11 +98,19 @@ class Evaluation:
                 # Extract the Y channel for comparison
                 hr_img_y = hr_img_ycrcb[:,:,0]
                 up_img_y = up_img_ycrcb[:,:,0]
-
+                
+                ssim, mse, psnr, brisque_score = None, None, None, None 
                 # Compute the metrics
                 ssim = self.__compute_ssim(hr_img_y, up_img_y)
-                mse, psnr = self.__compute_mse_and_psnr(hr_img_y, up_img_y)
+                if target['scale'] > 1: 
+                    mse, psnr = self.__compute_mse_and_psnr(hr_img_y, up_img_y)
                 brisque_score = self.__compute_brisque(up_img)
+
+                # hr_img_tensor = self.__to_tensor(hr_img)
+                # up_img_tensor = self.__to_tensor(up_img)
+
+                # test_ssim = self.__compute_ms_ssim(hr_img_tensor, up_img_tensor)
+                # print(ssim, test_ssim)
 
                 metrics.append({
                     'ssim': ssim, 

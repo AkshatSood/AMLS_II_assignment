@@ -49,11 +49,10 @@ class Track2:
         self.runner.run_fsrcnn(TRACK2_FSRCNN_TARGETS)
 
     def run(self, run_bicubic_interpolation=True, run_real_esrgan=True, run_srcnn=True, run_fsrcnn=True):
-
-        if run_bicubic_interpolation:
-            self.__run_bicubic_interpolation()
         if run_real_esrgan:
             self.__run_real_esrgan()
+        if run_bicubic_interpolation:
+            self.__run_bicubic_interpolation()
         if run_srcnn:
             self.__run_srcnn()
         if run_fsrcnn:

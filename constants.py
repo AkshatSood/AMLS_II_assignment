@@ -361,13 +361,13 @@ TRACK1_ESRGANX4_TARGETS = [
         'src_dir': TRACK1_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR
     },
-    # {
-    #     'name': 'Track 1 (Cropped) - Real-ESRGAN (ESRGAN) (X4) [Train]',
-    #     'scale': SCALE_X4,
-    #     'model': MODEL_RRDB_ESRGAN_X4,
-    #     'src_dir': TRACK1_PROCESSED_TRAIN_X4_DIR,
-    #     'results_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR
-    # },
+    {
+        'name': 'Track 1 (Cropped) - Real-ESRGAN (ESRGAN) (X4) [Train]',
+        'scale': SCALE_X4,
+        'model': MODEL_RRDB_ESRGAN_X4,
+        'src_dir': TRACK1_PROCESSED_TRAIN_X4_DIR,
+        'results_dir': TRACK1_CROPPED_X4_ESRGAN_RESULTS_DIR
+    },
     {
         'name': 'Track 1 (Cropped) - Real-ESRGAN (PSNR) (X4) [Validation]',
         'scale': SCALE_X4,
@@ -375,13 +375,13 @@ TRACK1_ESRGANX4_TARGETS = [
         'src_dir': TRACK1_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK1_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
     },
-    # {
-    #     'name': 'Track 1 (Cropped) - Real-ESRGAN (PSNR) (X4) [Train]',
-    #     'scale': SCALE_X4,
-    #     'model': MODEL_RRDB_PSNR_X4,
-    #     'src_dir': TRACK1_PROCESSED_TRAIN_X4_DIR,
-    #     'results_dir': TRACK1_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
-    # }
+    {
+        'name': 'Track 1 (Cropped) - Real-ESRGAN (PSNR) (X4) [Train]',
+        'scale': SCALE_X4,
+        'model': MODEL_RRDB_PSNR_X4,
+        'src_dir': TRACK1_PROCESSED_TRAIN_X4_DIR,
+        'results_dir': TRACK1_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
+    }
 ]
 
 TRACK2_ESRGANX4_TARGETS = [
@@ -398,13 +398,13 @@ TRACK2_ESRGANX4_TARGETS = [
         'src_dir': TRACK2_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR
     },
-    # {
-    #     'name': 'Track 2 (Cropped) - Real-ESRGAN (ESRGAN) (x4) [Train]',
-    #     'scale': SCALE_X4,
-    #     'model': MODEL_RRDB_ESRGAN_X4,
-    #     'src_dir': TRACK2_PROCESSED_TRAIN_X4_DIR,
-    #     'results_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR
-    # },
+    {
+        'name': 'Track 2 (Cropped) - Real-ESRGAN (ESRGAN) (x4) [Train]',
+        'scale': SCALE_X4,
+        'model': MODEL_RRDB_ESRGAN_X4,
+        'src_dir': TRACK2_PROCESSED_TRAIN_X4_DIR,
+        'results_dir': TRACK2_CROPPED_X4_ESRGAN_RESULTS_DIR
+    },
     {
         'name': 'Track 2 (Cropped) - Real-ESRGAN (PSNR) (x4) [Validation]',
         'scale': SCALE_X4,
@@ -412,13 +412,13 @@ TRACK2_ESRGANX4_TARGETS = [
         'src_dir': TRACK2_PROCESSED_VALID_X4_DIR,
         'results_dir': TRACK2_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
     },
-    # {
-    #     'name': 'Track 2 (Cropped) - Real-ESRGAN (PSNR) (x4) [Train]',
-    #     'scale': SCALE_X4,
-    #     'model': MODEL_RRDB_PSNR_X4,
-    #     'src_dir': TRACK2_PROCESSED_TRAIN_X4_DIR,
-    #     'results_dir': TRACK2_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
-    # }
+    {
+        'name': 'Track 2 (Cropped) - Real-ESRGAN (PSNR) (x4) [Train]',
+        'scale': SCALE_X4,
+        'model': MODEL_RRDB_PSNR_X4,
+        'src_dir': TRACK2_PROCESSED_TRAIN_X4_DIR,
+        'results_dir': TRACK2_CROPPED_X4_ESRGAN_PSNR_RESULTS_DIR
+    }
 ]
 
 TRACK1_SRCNN_TARGETS = [
