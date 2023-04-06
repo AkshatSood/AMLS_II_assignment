@@ -8,7 +8,7 @@ import torch
 import torch.backends.cudnn as cudnn
 
 from constants2 import (MODEL_RRDB_ESRGAN_X4, MODEL_RRDB_PSNR_X4, PROGRESS_NUM,
-                        RDDBESRGAN, RDDBPSNR, RRDB_ESRGAN_DIR, RRDB_PSNR_DIR,
+                        RRDBESRGAN, RRDBPSNR, RRDB_ESRGAN_DIR, RRDB_PSNR_DIR,
                         TARGETS_FSRCNN, TARGETS_RRDB)
 from helpers.helpers import Helpers
 from helpers.utility import Utility
@@ -37,7 +37,7 @@ class RunModels:
 
             self.utility.check_and_create_dir(RES_DIR)
 
-            target_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['src_dir'], tag=target['src_tag'])[:10]
+            target_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['src_dir'], tag=target['src_tag'])
 
             result_imgs = self.utility.get_files_in_dir(RES_DIR)
 
@@ -52,7 +52,7 @@ class RunModels:
 
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
                 for img_name in target_imgs: 
-                    out_name = self.utility.replace_img_tag(img_name=img_name, tag=RDDBESRGAN)
+                    out_name = self.utility.replace_img_tag(img_name=img_name, tag=RRDBESRGAN)
                     real_esrgan = RealESRGAN(device='cuda', model_path=MODEL_RRDB_ESRGAN_X4)
                     real_esrgan.run(
                         input=f'{target["src_dir"]}/{img_name}',
@@ -80,7 +80,7 @@ class RunModels:
 
             self.utility.check_and_create_dir(RES_DIR)
 
-            target_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['src_dir'], tag=target['src_tag'])[:10]
+            target_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['src_dir'], tag=target['src_tag'])
 
             result_imgs = self.utility.get_files_in_dir(RES_DIR)
 
@@ -95,7 +95,7 @@ class RunModels:
 
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
                 for img_name in target_imgs: 
-                    out_name = self.utility.replace_img_tag(img_name=img_name, tag=RDDBPSNR)
+                    out_name = self.utility.replace_img_tag(img_name=img_name, tag=RRDBPSNR)
                     real_esrgan = RealESRGAN(device='cuda', model_path=MODEL_RRDB_PSNR_X4)
                     real_esrgan.run(
                         input=f'{target["src_dir"]}/{img_name}',
@@ -121,7 +121,7 @@ class RunModels:
 
             self.utility.check_and_create_dir(target['res_dir'])
 
-            target_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['src_dir'], tag=target['src_tag'])[:10]
+            target_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['src_dir'], tag=target['src_tag'])
 
             result_imgs = self.utility.get_files_in_dir(target['res_dir'])
 

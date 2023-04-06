@@ -3,16 +3,20 @@
 import time
 
 import cv2
+import imquality.brisque as brisque
 import numpy as np
 import pandas as pd
-from skimage.metrics import structural_similarity
-import imquality.brisque as brisque
-from piqa import MS_SSIM, SSIM, PSNR
+import PIL.Image as pil_image
 import torch
+from piqa import MS_SSIM, PSNR, SSIM
+from skimage.measure import shannon_entropy
+from skimage.metrics import (mean_squared_error, peak_signal_noise_ratio,
+                             structural_similarity)
 from torchvision import transforms
 
 from constants import (EVALUATION_DIR, EVALUATION_IMG_SHAPE,
                        EVALUATION_TARGETS, PROGRESS_NUM)
+from constants2 import TARGETS_EVALUATION
 from helpers.helpers import Helpers
 from helpers.utility import Utility
 
@@ -26,30 +30,25 @@ class Evaluation:
 
         self.utility.check_and_create_dir(EVALUATION_DIR)
 
-    def __to_tensor(self, img): 
-        return self.totensor(img).repeat(1,1,1,1)
+    def __compute_psnr(self, hr_img, up_img):
+        return peak_signal_noise_ratio(hr_img, up_img)
 
-    def __compute_mse_and_psnr(self, hr_img, up_img):
-        mse = np.sum((hr_img.astype("float") - up_img.astype("float")) ** 2)
-        mse = mse / float(hr_img.shape[0] * hr_img.shape[1]) 
-
-        psnr = 10 * np.log10(1.0 / mse)
-
-        return mse, psnr
+    def __compute_mse(self, hr_img, up_img):
+        return mean_squared_error(hr_img, up_img)
 
     def __compute_ssim(self, hr_img, up_img):
         return structural_similarity(hr_img, up_img)
     
     def __compute_ms_ssim(self, hr_img, up_img):
         return MS_SSIM(up_img, hr_img)
-    
-    def __test_piqa(self, hr_img, up_img):
-        return SSIM(up_img, hr_img)
         
     def __compute_brisque(self, img): 
         return brisque.score(img)
+
+    def __compute_entropy(self, img):
+        return shannon_entropy(img)
     
-    def evaluate(self):
+    def evaluate_div2k(self):
         
         metrics_summary = []
 
@@ -74,6 +73,7 @@ class Evaluation:
                 continue
             if len(hr_img_names) != len(up_img_names): 
                 print('\t\t\tError! Different number of files were found for HR and UP images!')
+                continue
             
             metrics = []
             idx = 1
@@ -103,14 +103,10 @@ class Evaluation:
                 # Compute the metrics
                 ssim = self.__compute_ssim(hr_img_y, up_img_y)
                 if target['scale'] > 1: 
-                    mse, psnr = self.__compute_mse_and_psnr(hr_img_y, up_img_y)
+                    mse = self.__compute_mse(hr_img_y, up_img_y)
+                    psne = self.__compute_psnr(hr_img_y, up_img_y)
                 brisque_score = self.__compute_brisque(up_img)
 
-                # hr_img_tensor = self.__to_tensor(hr_img)
-                # up_img_tensor = self.__to_tensor(up_img)
-
-                # test_ssim = self.__compute_ms_ssim(hr_img_tensor, up_img_tensor)
-                # print(ssim, test_ssim)
 
                 metrics.append({
                     'ssim': ssim, 
@@ -158,6 +154,82 @@ class Evaluation:
         print(f'\n\tSuccessfully print evaluation summary to {summary_output_file}.')
             
 
+    def evaluate_tests(self):
+        for target in TARGETS_EVALUATION:
+            print(f'\n=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
+
+            print(target['dataset'], target['scale'], target['eval_file'])
+
+            # Get a sorted list of all the high resolution images
+            hr_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['hr_dir'], tag='HR')
+            hr_imgs.sort(key = lambda x: self.utility.get_img_num(x))
+
+            metrics = []
+            for idx, model in enumerate(target['models']):
+                print(f'\t[{idx+1}/{len(target["models"])}] Evaluating {model["tag"]} images...')
+
+                # Check if the upscaled img directory exists 
+                if not self.utility.dir_exists(model['up_dir']):
+                    print(f'\t\tError! {model["up_dir"]} does not exist!')
+                    continue
+                
+                # Get a sorted list of all the upscaled images
+                up_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=model['up_dir'], tag=model['tag'])
+                up_imgs.sort(key = lambda x: self.utility.get_img_num(x))
+
+                if len(hr_imgs) == 0 or len(up_imgs) == 0: 
+                    print('\t\tError! No images found in either the HR or UP folders!')
+                    continue
+                if len(hr_imgs) != len(up_imgs): 
+                    print('\t\tError! Different number of files were found for HR and UP images!')
+                    continue
+                
+                for hr_img_name, up_img_name in zip(hr_imgs, up_imgs):
+                    
+                    # Read the images
+                    hr_img = cv2.cvtColor(cv2.imread(f'{target["hr_dir"]}/{hr_img_name}'), cv2.COLOR_BGR2RGB)
+                    up_img = cv2.cvtColor(cv2.imread(f'{model["up_dir"]}/{up_img_name}'), cv2.COLOR_BGR2RGB)
+
+                    # Convert the images to YCbCr
+                    hr_img_ycrcb = cv2.cvtColor(hr_img, cv2.COLOR_RGB2YCrCb)
+                    up_img_ycrcb = cv2.cvtColor(up_img, cv2.COLOR_RGB2YCrCb)
+
+                    # Extract the Y channel for comparison
+                    hr_img_y, _, _ = cv2.split(hr_img_ycrcb)
+                    up_img_y, _, _ = cv2.split(up_img_ycrcb)
+
+                    rgb_mse = self.__compute_mse(hr_img=hr_img, up_img=up_img)
+                    rgb_psnr = self.__compute_psnr(hr_img=hr_img, up_img=up_img)
+                    ssim = self.__compute_ssim(hr_img=hr_img_y, up_img=up_img_y)
+                    y_mse = self.__compute_mse(hr_img=hr_img_y, up_img=up_img_y)
+                    y_psnr = self.__compute_psnr(hr_img=hr_img_y, up_img=up_img_y)
+
+                    hr_entropy = self.__compute_entropy(hr_img)
+                    up_entropy = self.__compute_entropy(up_img)
+
+                    metrics.append({
+                        'dataset': target['dataset'],
+                        'scale': target['scale'],
+                        'model': model['tag'],
+                        'num': self.utility.get_img_num(hr_img_name),
+                        'rgb_psnr': rgb_psnr,
+                        'rgb_mse': rgb_mse,
+                        'y_psnr': y_psnr, 
+                        'y_mse': y_mse,
+                        'ssim': ssim,
+                        'hr_entropy': hr_entropy, 
+                        'up_entropy': up_entropy,
+                    })
+            
+            metrics_df = pd.DataFrame(metrics)
+
+            metrics_df.to_csv(target['eval_file'], index=False)
+
+            print(f'\tSuccessfully stored evaluation in {target["eval_file"]}')
+
+
+
+                
 
 
                 

@@ -3,7 +3,6 @@ name: amls2
 dependencies:
   - python=3.9
   - pip=22.1.*
-  - scikit-image
   - pip:
     - opencv-python==4.7.*
     - matplotlib==3.7.*
@@ -14,6 +13,5 @@ dependencies:
     - Pillow>=9.*
     - "--editable=git+https://github.com/ocampor/image-quality@master#egg=image-quality"
     - piqa>=1.2.*
-    # - tensorflow-hub
-    # - charset-normalizer  
-    # - vsrealesrgan
+    - scikit-image>=0.20.*
+    - pyiqa>=0.1.6.*

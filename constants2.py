@@ -12,10 +12,14 @@ LR = 'LR'
 BICUBIC = 'bicubic'
 GLASNER = 'glasner'
 NEAREST = 'nearest'
+KIM = 'Kim'
+APLUS = 'A+'
+SCSR = 'ScSR'
+SELF_EX_SR = 'SelfExSR'
 FSRCNN = 'FSRCNN'
 SRCNN = 'SRCNN'
-RDDBESRGAN = 'RDDBESRGAN'
-RDDBPSNR = 'RDDBPSNR'
+RRDBESRGAN = 'RRDBESRGAN'
+RRDBPSNR = 'RRDBPSNR'
 
 # DATASET ROOTS 
 DATASET_DIR = './dataset'
@@ -46,9 +50,9 @@ URBAN100_RESULTS_ROOT = RESULTS_DIR + '/' + URBAN100
 BSD100_RESULTS_ROOT = RESULTS_DIR + '/' + BSD100
 
 # RESULTS SUB PATHS
-RRDB_ESRGAN_DIR = '/RRDB_ESRGAN'
-RRDB_PSNR_DIR = '/RRDB_PSNR'
-FSRCNN_DIR = '/FSRCNN'
+RRDB_ESRGAN_DIR = '/' + RRDBESRGAN
+RRDB_PSNR_DIR = '/' + RRDBPSNR
+FSRCNN_DIR = '/' + FSRCNN
 
 
 SCALE_X2 = 2 
@@ -173,4 +177,124 @@ TARGETS_FSRCNN = [
         'scale': SCALE_X4,
         'weights': MODEL_FSRCNN_X4_WEIGHTS
     }
+]
+
+TARGETS_EVALUATION = [
+    {
+        'dataset': SET5, 
+        'scale': SCALE_X2,
+        'eval_file': f'./evaluation/{SET5}_X{SCALE_X2}_eval.csv',
+        'hr_dir': SET5_ROOT + IMGAGE_SRF_X2,
+        'models': [
+            {
+                'tag': BICUBIC, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X2,
+            },
+            {
+                'tag': GLASNER, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X2,
+            },
+            {
+                'tag': NEAREST, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X2,
+            },
+            {
+                'tag': SRCNN, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X2,
+            },
+            {
+                'tag': SCSR, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X2,
+            },
+            {
+                'tag': SELF_EX_SR, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X2,
+            },
+            {
+                'tag': FSRCNN, 
+                'up_dir': SET5_RESULTS_ROOT + IMGAGE_SRF_X2 + FSRCNN_DIR,
+            }
+        ]
+    },
+    {
+        'dataset': SET5, 
+        'scale': SCALE_X3,
+        'eval_file': f'./evaluation/{SET5}_X{SCALE_X3}_eval.csv',
+        'hr_dir': SET5_ROOT + IMGAGE_SRF_X3,
+        'models': [
+            {
+                'tag': BICUBIC, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': GLASNER, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': NEAREST, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': SRCNN, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': SCSR, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': SELF_EX_SR, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': FSRCNN, 
+                'up_dir': SET5_RESULTS_ROOT + IMGAGE_SRF_X3 + FSRCNN_DIR,
+            }
+        ]
+    },
+    {
+        'dataset': SET5, 
+        'scale': SCALE_X4,
+        'eval_file': f'./evaluation/{SET5}_X{SCALE_X4}_eval.csv',
+        'hr_dir': SET5_ROOT + IMGAGE_SRF_X4,
+        'models': [
+            {
+                'tag': BICUBIC, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': GLASNER, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': NEAREST, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': SRCNN, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': SCSR, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': SELF_EX_SR, 
+                'up_dir': SET5_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': FSRCNN, 
+                'up_dir': SET5_RESULTS_ROOT + IMGAGE_SRF_X4 + FSRCNN_DIR,
+            },
+            {
+                'tag': RRDBESRGAN, 
+                'up_dir': SET5_RESULTS_ROOT + IMGAGE_SRF_X4 + RRDB_ESRGAN_DIR,
+            },
+            {
+                'tag': RRDBPSNR, 
+                'up_dir': SET5_RESULTS_ROOT + IMGAGE_SRF_X4 + RRDB_PSNR_DIR,
+            }
+            
+        ]
+    },
 ]
