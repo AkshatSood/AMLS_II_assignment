@@ -9,12 +9,12 @@ from track2.track2 import Track2
 
 def main():
 
-    # # Process Data
-    # print('\n#########################################')
-    # print('\tDATA PROCESSING')
-    # print('#########################################\n')
-    # data_processor = DataProcessing()
-    # data_processor.process()
+    # Process Data
+    print('\n#########################################')
+    print('\tDATA PROCESSING')
+    print('#########################################\n')
+    data_processor = DataProcessing()
+    data_processor.process()
 
     # # Perform Track 1 Tasks
     # print('\n#########################################')
@@ -49,11 +49,11 @@ def main():
     # model_runner.run_fsrcnn_model()
     
     # Evaluate Data
-    print('\n#########################################')
-    print('\tEVALUATION')
-    print('#########################################\n')
-    evaluation = Evaluation()
-    evaluation.evaluate_tests()
+    # print('\n#########################################')
+    # print('\tEVALUATION')
+    # print('#########################################\n')
+    # evaluation = Evaluation()
+    # evaluation.evaluate_tests()
 
     
 

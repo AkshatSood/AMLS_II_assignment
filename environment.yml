@@ -14,3 +14,4 @@ dependencies:
     # - "--editable=git+https://github.com/ocampor/image-quality@master#egg=image-quality"
     - piqa>=1.2.*
     - scikit-image>=0.20.*
+    - h5py>=3.*
