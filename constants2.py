@@ -437,6 +437,10 @@ TARGETS_EVALUATION = [
                 'up_dir': URBAN100_ROOT + IMGAGE_SRF_X2,
             },
             {
+                'tag': APLUS, 
+                'up_dir': URBAN100_ROOT + IMGAGE_SRF_X2,
+            },
+            {
                 'tag': SCSR, 
                 'up_dir': URBAN100_ROOT + IMGAGE_SRF_X2,
             },
@@ -447,7 +451,7 @@ TARGETS_EVALUATION = [
             {
                 'tag': FSRCNN, 
                 'up_dir': URBAN100_RESULTS_ROOT + IMGAGE_SRF_X2 + FSRCNN_DIR,
-            }
+            },
         ]
     },
     {
@@ -474,6 +478,10 @@ TARGETS_EVALUATION = [
             },
             {
                 'tag': SCSR, 
+                'up_dir': URBAN100_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': APLUS, 
                 'up_dir': URBAN100_ROOT + IMGAGE_SRF_X4,
             },
             {
@@ -522,6 +530,10 @@ TARGETS_EVALUATION = [
                 'up_dir': BSD100_ROOT + IMGAGE_SRF_X2,
             },
             {
+                'tag': APLUS, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X2,
+            },
+            {
                 'tag': SELF_EX_SR, 
                 'up_dir': BSD100_ROOT + IMGAGE_SRF_X2,
             },
@@ -558,6 +570,10 @@ TARGETS_EVALUATION = [
                 'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
             },
             {
+                'tag': APLUS, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+            },
+            {
                 'tag': SELF_EX_SR, 
                 'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
             },
@@ -587,6 +603,10 @@ TARGETS_EVALUATION = [
             },
             {
                 'tag': SRCNN, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': APLUS, 
                 'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
             },
             {

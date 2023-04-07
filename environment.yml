@@ -11,7 +11,6 @@ dependencies:
     - pandas>=1.4.*
     - tensorflow>=2.9.*
     - Pillow>=9.*
-    - "--editable=git+https://github.com/ocampor/image-quality@master#egg=image-quality"
+    # - "--editable=git+https://github.com/ocampor/image-quality@master#egg=image-quality"
     - piqa>=1.2.*
     - scikit-image>=0.20.*
-    - pyiqa>=0.1.6.*
