@@ -50,7 +50,7 @@ class Utility:
         Args:
             dir_path (str): path of directory
         """
-        return [f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))]
+        return sorted([f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))])
 
     def get_img_tag(self, img): 
         return img.split('_')[4].split('.')[0]

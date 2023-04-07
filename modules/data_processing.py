@@ -6,29 +6,32 @@ import cv2
 import h5py
 import numpy as np
 
-from constants import DATA_PROCESSING_TARGETS, PROCESSED_HR_SHAPE, PROGRESS_NUM
+from constants import DATA_PROCESSING_CROP_TARGETS, PROCESSED_HR_SHAPE, PROGRESS_NUM, DATA_PROCESSING_H5_TARGETS
 from helpers.utility import Utility
-
+from helpers.helpers import Helpers
 
 class DataProcessing():
 
     def __init__(self):
+        """Default constructor
+        """
         self.utility = Utility()
+        self.helpers = Helpers()
         self.hr_shape = PROCESSED_HR_SHAPE
 
         # Create the required directories if they do not already exist
-        for target in DATA_PROCESSING_TARGETS:
+        for target in DATA_PROCESSING_CROP_TARGETS:
             self.utility.check_and_create_dir(target['output_dir'])
 
-    def __crop(self):
+    def __crop_images(self):
         """Reads the HR, X2 and X4 images provided in the dataset, crops 
         them into a smaller shape, and saves the new images in the 
         processed folder.  
         """
         print('\n=>Cropping images...')
 
-        for step, target in enumerate(DATA_PROCESSING_TARGETS):
-            print(f'\n\t[{step+1}/{len(DATA_PROCESSING_TARGETS)}] Cropping {target["name"]}...')
+        for step, target in enumerate(DATA_PROCESSING_CROP_TARGETS):
+            print(f'\n\t[{step+1}/{len(DATA_PROCESSING_CROP_TARGETS)}] Cropping {target["name"]}...')
             print(f'\t\tSource directory: {target["src_dir"]}')
 
             img_names = self.utility.get_files_in_dir(target['src_dir'])
@@ -69,45 +72,114 @@ class DataProcessing():
 
                 print(f'\t\tSuccessfully cropped the images. Can be found in {target["output_dir"]}')
 
-    def __create_dataset(self): 
-        """Create HDF5 binary data datasets (.h5 files) from the DIV2K images
+    def __create_datasets(self, hr_patch_size=600, hr_step=300): 
+        """Create HDF5 binary data datasets (.h5 files) from the DIV2K image patches
         """
         print('\n=> Creating datasets...')
 
-        for step, target in enumerate(DATA_PROCESSING_TARGETS):
-            print(f'\n\t[{step+1}/{len(DATA_PROCESSING_TARGETS)}] Creating dataset for {target["name"]}...')
-            print(f'\t\tSource directory: {target["src_dir"]}')
+        for step, target in enumerate(DATA_PROCESSING_H5_TARGETS):
+            print(f'\n\t[{step+1}/{len(DATA_PROCESSING_H5_TARGETS)}] Creating dataset for {target["name"]}...')
+            print(f'\t\tLR directory: {target["lr_dir"]}')
+            print(f'\t\tHR directory: {target["hr_dir"]}')
 
             # If the .h5 file already exists, then skip to the next one
             if self.utility.file_exists(target['h5']):
                 print(f'\t\t{target["h5"]} already exists. Skipping this step.')
                 continue
 
-            img_names = self.utility.get_files_in_dir(target['output_dir'])
+            lr_img_names = self.utility.get_files_in_dir(target['lr_dir'])
+            hr_img_names = self.utility.get_files_in_dir(target['hr_dir'])
 
-            dim_x = int(self.hr_shape[1]/target['scale'])
-            dim_y = int(self.hr_shape[0]/target['scale'])
-            img_shape = (len(img_names), dim_y, dim_x, 3)
+            lr_img_names = lr_img_names[:80]
+            hr_img_names = hr_img_names[:80]
 
-            h5f = h5py.File(target['h5'], 'w')
-            h5f.create_dataset(
-                name=target['h5_name'],
-                shape=img_shape, 
-                maxshape=img_shape,
-                dtype=np.int8)
+            if(len(lr_img_names) != len(hr_img_names)):
+                print('\t\t\tError! Number of HR and LR images is not the same!')
+                continue
+            if len(hr_img_names) == 0 or len(lr_img_names) == 0: 
+                print('\t\t\tError! Cannot find LR or HR images!')
+                continue
 
-            for idx, img_name in enumerate(img_names):
-                img = cv2.imread(target['output_dir'] + '/' + img_name)
-                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            start_time = time.time()
+            checkpoint = int(len(hr_img_names)/PROGRESS_NUM)
 
-                h5f[target['h5_name']][idx, ...] = img[None]
+            if target['training']:
+                
+                lr_patches = []
+                hr_patches = []
 
-            h5f.close()
+                scale = target['scale']
+                patch_size = int(hr_patch_size/scale)
+                step = int(hr_step/scale)
+
+                for idx, (lr_img_name, hr_img_name) in enumerate(zip(lr_img_names, hr_img_names)):
+
+                    lr_img = cv2.imread(target['lr_dir'] + '/' + lr_img_name)
+                    hr_img = cv2.imread(target['hr_dir'] + '/' + hr_img_name)
+
+                    lr = cv2.cvtColor(lr_img, cv2.COLOR_BGR2RGB)
+                    hr = cv2.cvtColor(hr_img, cv2.COLOR_BGR2RGB)
+
+                    hr = np.array(hr).astype(np.float32)
+                    lr = np.array(lr).astype(np.float32)
+
+                    lr = self.helpers.convert_rgb_to_y(lr)
+                    hr = self.helpers.convert_rgb_to_y(hr)
+
+                    lr = np.asarray(lr).astype(np.float32)
+                    hr = np.asarray(hr).astype(np.float32)
+                    
+                    for i in range(0, lr.shape[0] - patch_size + 1, step):
+                        for j in range(0, lr.shape[1] - patch_size + 1, step):
+                            lr_patches.append(lr[i:i+patch_size, j:j+patch_size])
+                            hr_patches.append(hr[i*scale:i*scale+patch_size*scale, j*scale:j*scale+patch_size*scale])
+                    
+                    if checkpoint != 0 and (idx+1) % checkpoint == 0:
+                        self.utility.progress_print(len(hr_img_names), idx+1, start_time)
+
+
+                hr_patches = np.asarray(hr_patches)
+                lr_patches = np.asarray(lr_patches)
+
+                h5f = h5py.File(target['h5'], 'w')
+                h5f.create_dataset('lr', data=lr_patches)
+                h5f.create_dataset('hr', data=hr_patches)
+
+                h5f.close()
+
+                print(f'\t\tCreated training dataset with {len(hr_patches)} patches.')
+
+            else:
+                h5f = h5py.File(target['h5'], 'w')
+                lr_group = h5f.create_group('lr')
+                hr_group = h5f.create_group('hr')
+
+                for idx, (lr_img_name, hr_img_name) in enumerate(zip(lr_img_names, hr_img_names)):
+
+                    lr_img = cv2.imread(target['lr_dir'] + '/' + lr_img_name)
+                    hr_img = cv2.imread(target['hr_dir'] + '/' + hr_img_name)
+
+                    lr = cv2.cvtColor(lr_img, cv2.COLOR_BGR2RGB)
+                    hr = cv2.cvtColor(hr_img, cv2.COLOR_BGR2RGB)
+
+                    hr = np.array(hr).astype(np.float32)
+                    lr = np.array(lr).astype(np.float32)
+
+                    lr = self.helpers.convert_rgb_to_y(lr)
+                    hr = self.helpers.convert_rgb_to_y(hr)
+
+                    lr_group.create_dataset(str(idx), data=lr)
+                    hr_group.create_dataset(str(idx), data=hr)
+
+                    if checkpoint != 0 and (idx+1) % checkpoint == 0:
+                        self.utility.progress_print(len(hr_img_names), idx+1, start_time)
+
+                h5f.close()
 
             print(f'\t\tSuccessfully created dataset at {target["h5"]}')
 
     def process(self):
         """Run the data processing functions
         """
-        self.__crop()
-        self.__create_dataset()
+        # self.__crop_images()
+        self.__create_datasets()
