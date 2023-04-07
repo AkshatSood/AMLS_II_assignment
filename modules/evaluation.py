@@ -158,8 +158,6 @@ class Evaluation:
         for target in TARGETS_EVALUATION:
             print(f'\n=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
 
-            print(target['dataset'], target['scale'], target['eval_file'])
-
             # Get a sorted list of all the high resolution images
             hr_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['hr_dir'], tag='HR')
             hr_imgs.sort(key = lambda x: self.utility.get_img_num(x))
