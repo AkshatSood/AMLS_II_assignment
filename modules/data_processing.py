@@ -70,6 +70,8 @@ class DataProcessing():
                 print(f'\t\tSuccessfully cropped the images. Can be found in {target["output_dir"]}')
 
     def __create_dataset(self): 
+        """Create HDF5 binary data datasets (.h5 files) from the DIV2K images
+        """
         print('\n=> Creating datasets...')
 
         for step, target in enumerate(DATA_PROCESSING_TARGETS):
@@ -89,7 +91,7 @@ class DataProcessing():
 
             h5f = h5py.File(target['h5'], 'w')
             h5f.create_dataset(
-                name=target['name'],
+                name=target['h5_name'],
                 shape=img_shape, 
                 maxshape=img_shape,
                 dtype=np.int8)
@@ -98,12 +100,14 @@ class DataProcessing():
                 img = cv2.imread(target['output_dir'] + '/' + img_name)
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-                h5f[target['name']][idx, ...] = img[None]
+                h5f[target['h5_name']][idx, ...] = img[None]
 
             h5f.close()
 
             print(f'\t\tSuccessfully created dataset at {target["h5"]}')
 
-    def process(self): 
-        # self.__crop()
+    def process(self):
+        """Run the data processing functions
+        """
+        self.__crop()
         self.__create_dataset()
