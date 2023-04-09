@@ -139,6 +139,79 @@ WEIGHTS_DIR_FSRCNN_TRACK1 = './models/fsrcnn/track1/'
 WEIGHTS_DIR_FSRCNN_TRACK2 = './models/fsrcnn/track2/'
 
 # TARGETS
+DATASET_DOWNLOAD_TARGETS = [
+    {
+        'name': 'DIV2K Train HR',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_HR.zip',
+        'target_dir': TRAIN_HR,
+    },
+    {
+        'name': 'DIV2K Valid HR',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_HR.zip',
+        'target_dir': VALIDATION_HR,
+    },
+    {
+        'name': 'DIV2K Train LR Track 1 (X2)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_bicubic_X2.zip',
+        'target_dir': TRACK1_X2_TRAIN,
+    },
+    {
+        'name': 'DIV2K Train LR Track 1 (X3)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_bicubic_X3.zip',
+        'target_dir': TRACK1_X3_TRAIN,
+    },
+    {
+        'name': 'DIV2K Train LR Track 1 (X4)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_bicubic_X4.zip',
+        'target_dir': TRACK1_X4_TRAIN,
+    },
+    {
+        'name': 'DIV2K Validation LR Track 1 (X2)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X2.zip',
+        'target_dir': TRACK1_X2_VALIDATION,
+    },
+    {
+        'name': 'DIV2K Validation LR Track 1 (X3)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X3.zip',
+        'target_dir': TRACK1_X3_VALIDATION,
+    },
+    {
+        'name': 'DIV2K Validation LR Track 1 (X4)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_bicubic_X4.zip',
+        'target_dir': TRACK1_X4_VALIDATION,
+    },
+    {
+        'name': 'DIV2K Train LR Track 2 (X2)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_unknown_X2.zip',
+        'target_dir': TRACK2_X2_TRAIN,
+    },
+    {
+        'name': 'DIV2K Train LR Track 2 (X3)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_unknown_X3.zip',
+        'target_dir': TRACK2_X3_TRAIN,
+    },
+    {
+        'name': 'DIV2K Train LR Track 2 (X4)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_LR_unknown_X4.zip',
+        'target_dir': TRACK2_X4_TRAIN,
+    },
+    {
+        'name': 'DIV2K Validation LR Track 2 (X2)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_unknown_X2.zip',
+        'target_dir': TRACK2_X2_VALIDATION,
+    },
+    {
+        'name': 'DIV2K Validation LR Track 2 (X3)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_unknown_X3.zip',
+        'target_dir': TRACK2_X3_VALIDATION,
+    },
+    {
+        'name': 'DIV2K Validation LR Track 2 (X4)',
+        'url': 'http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_valid_LR_unknown_X4.zip',
+        'target_dir': TRACK2_X4_VALIDATION,
+    }
+]
+
 DATA_PROCESSING_CROP_TARGETS = [
     {
         'name': 'Track 1 - Training Data (HR)',

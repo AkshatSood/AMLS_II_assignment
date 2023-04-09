@@ -4,11 +4,16 @@ from modules.data_processing import DataProcessing
 from modules.evaluation import Evaluation
 from modules.run_models import RunModels
 from modules.train_FSRCNN import FSRCNNTrainer
+from modules.dataset import Dataset
 from track1.track1 import Track1
 from track2.track2 import Track2
 
 
 def main():
+
+    # Download Data 
+    dataset = Dataset()
+    dataset.download()
 
     # # Process Data
     # print('\n#########################################')
@@ -41,11 +46,11 @@ def main():
     #     run_fsrcnn=False
     # )
 
-    print('\n#########################################')
-    print('\tTRAIN FSRCNN MODEL')
-    print('#########################################\n')
-    trainer = FSRCNNTrainer()
-    trainer.train_models()
+    # print('\n#########################################')
+    # print('\tTRAIN FSRCNN MODEL')
+    # print('#########################################\n')
+    # trainer = FSRCNNTrainer()
+    # trainer.train_models()
 
 
     # print('\n#########################################')

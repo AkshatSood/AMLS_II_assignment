@@ -1,6 +1,36 @@
+"""Dataset Module"""
+
 import h5py
 import numpy as np
+from io import BytesIO
+from urllib.request import urlopen
+from zipfile import ZipFile
+
 from torch.utils.data import Dataset
+from helpers.utility import Utility
+from constants import DATASET_DIR, DATASET_DOWNLOAD_TARGETS
+
+class Dataset:
+
+    def __init__(self): 
+        self.utility = Utility()
+        self.utility.check_and_create_dir(DATASET_DIR)
+
+    def download(self):
+        print('\n=> Downloading and extracting datasets...')
+        
+        for target in DATASET_DOWNLOAD_TARGETS: 
+            print(f'\tDownloading {target["name"]} dataset...')
+
+            if self.utility.dir_exists(target['target_dir']):
+                print(f'\t\tIt appears that this has already been downloaded at {target["target_dir"]}. Skipping this step.')
+                continue
+
+            with urlopen(target['url']) as zipresp:
+                with ZipFile(BytesIO(zipresp.read())) as zfile:
+                    zfile.extractall(DATASET_DIR)
+
+            print(f'\t\tSuccessfully downloaded dataset at {target["target_dir"]}.')
 
 class FSRCNNTrainData(Dataset):
     def __init__(self, h5_file):
