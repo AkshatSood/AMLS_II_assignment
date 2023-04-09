@@ -75,7 +75,7 @@ class FSRCNNTrainer:
                 # print(f'loss={epoch_losses.avg}')
 
             torch.save(model.state_dict(), os.path.join(output_dir, f'{prefix}_epoch_{epoch}.pth'))
-
+    
             model.eval()
             epoch_psnr = AverageMeter()
 
