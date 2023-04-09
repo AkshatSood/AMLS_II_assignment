@@ -72,7 +72,7 @@ class DataProcessing():
 
                 print(f'\t\tSuccessfully cropped the images. Can be found in {target["output_dir"]}')
 
-    def __create_datasets(self, hr_patch_size=600, hr_step=300): 
+    def __create_datasets(self, hr_patch_size=324, hr_step=324): 
         """Create HDF5 binary data datasets (.h5 files) from the DIV2K image patches
         """
         print('\n=> Creating datasets...')
@@ -90,8 +90,8 @@ class DataProcessing():
             lr_img_names = self.utility.get_files_in_dir(target['lr_dir'])
             hr_img_names = self.utility.get_files_in_dir(target['hr_dir'])
 
-            lr_img_names = lr_img_names[:80]
-            hr_img_names = hr_img_names[:80]
+            # lr_img_names = lr_img_names[:100]
+            # hr_img_names = hr_img_names[:100]
 
             if(len(lr_img_names) != len(hr_img_names)):
                 print('\t\t\tError! Number of HR and LR images is not the same!')
@@ -99,6 +99,8 @@ class DataProcessing():
             if len(hr_img_names) == 0 or len(lr_img_names) == 0: 
                 print('\t\t\tError! Cannot find LR or HR images!')
                 continue
+
+            print(f'\t\tFound {len(hr_img_names)} images...')
 
             start_time = time.time()
             checkpoint = int(len(hr_img_names)/PROGRESS_NUM)
@@ -137,17 +139,24 @@ class DataProcessing():
                     if checkpoint != 0 and (idx+1) % checkpoint == 0:
                         self.utility.progress_print(len(hr_img_names), idx+1, start_time)
 
-
+                print(f'\t\tCreated training dataset with {len(hr_patches)} ({hr_patches[0].shape} HR and {lr_patches[0].shape} LR) patches.')
+                
                 hr_patches = np.asarray(hr_patches)
                 lr_patches = np.asarray(lr_patches)
 
                 h5f = h5py.File(target['h5'], 'w')
+
+                lr_start_time = time.time()
                 h5f.create_dataset('lr', data=lr_patches)
+                print(f'\t\t\tCreated LR dataset in {self.utility.get_time_taken_str(lr_start_time)}')
+
+                hr_start_time = time.time()
                 h5f.create_dataset('hr', data=hr_patches)
+                print(f'\t\t\tCreated HR dataset in {self.utility.get_time_taken_str(hr_start_time)}')
 
                 h5f.close()
 
-                print(f'\t\tCreated training dataset with {len(hr_patches)} patches.')
+                
 
             else:
                 h5f = h5py.File(target['h5'], 'w')

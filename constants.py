@@ -18,18 +18,30 @@ TRACK2_X3_VALIDATION = DATASET_DIR + '/DIV2K_valid_LR_unknown/X3'
 TRACK2_X4_VALIDATION = DATASET_DIR + '/DIV2K_valid_LR_unknown/X4'
 
 # H5 FILE PATHS
-H5_TRACK1_X2_TRAIN = DATASET_DIR + '/DIV2K_track1_X2_train.h5'
-H5_TRACK1_X3_TRAIN = DATASET_DIR + '/DIV2K_track1_X3_train.h5'
-H5_TRACK1_X4_TRAIN = DATASET_DIR + '/DIV2K_track1_X4_train.h5'
-H5_TRACK2_X2_TRAIN = DATASET_DIR + '/DIV2K_track2_X2_train.h5'
-H5_TRACK2_X3_TRAIN = DATASET_DIR + '/DIV2K_track2_X3_train.h5'
-H5_TRACK2_X4_TRAIN = DATASET_DIR + '/DIV2K_track2_X4_train.h5'
-H5_TRACK1_X2_VALID = DATASET_DIR + '/DIV2K_track1_X2_valid.h5'
-H5_TRACK1_X3_VALID = DATASET_DIR + '/DIV2K_track1_X3_valid.h5'
-H5_TRACK1_X4_VALID = DATASET_DIR + '/DIV2K_track1_X4_valid.h5'
-H5_TRACK2_X2_VALID = DATASET_DIR + '/DIV2K_track2_X2_valid.h5'
-H5_TRACK2_X3_VALID = DATASET_DIR + '/DIV2K_track2_X3_valid.h5'
-H5_TRACK2_X4_VALID = DATASET_DIR + '/DIV2K_track2_X4_valid.h5'
+# H5_TRACK1_X2_TRAIN = DATASET_DIR + '/DIV2K_track1_X2_train.h5'
+# H5_TRACK1_X3_TRAIN = DATASET_DIR + '/DIV2K_track1_X3_train.h5'
+# H5_TRACK1_X4_TRAIN = DATASET_DIR + '/DIV2K_track1_X4_train.h5'
+# H5_TRACK2_X2_TRAIN = DATASET_DIR + '/DIV2K_track2_X2_train.h5'
+# H5_TRACK2_X3_TRAIN = DATASET_DIR + '/DIV2K_track2_X3_train.h5'
+# H5_TRACK2_X4_TRAIN = DATASET_DIR + '/DIV2K_track2_X4_train.h5'
+# H5_TRACK1_X2_VALID = DATASET_DIR + '/DIV2K_track1_X2_valid.h5'
+# H5_TRACK1_X3_VALID = DATASET_DIR + '/DIV2K_track1_X3_valid.h5'
+# H5_TRACK1_X4_VALID = DATASET_DIR + '/DIV2K_track1_X4_valid.h5'
+# H5_TRACK2_X2_VALID = DATASET_DIR + '/DIV2K_track2_X2_valid.h5'
+# H5_TRACK2_X3_VALID = DATASET_DIR + '/DIV2K_track2_X3_valid.h5'
+# H5_TRACK2_X4_VALID = DATASET_DIR + '/DIV2K_track2_X4_valid.h5'
+H5_TRACK1_X2_TRAIN = 'D:/AMLS2' + '/DIV2K_track1_X2_train.h5'
+H5_TRACK1_X3_TRAIN = 'D:/AMLS2' + '/DIV2K_track1_X3_train.h5'
+H5_TRACK1_X4_TRAIN = 'D:/AMLS2' + '/DIV2K_track1_X4_train.h5'
+H5_TRACK2_X2_TRAIN = 'E:/AMLS2' + '/DIV2K_track2_X2_train.h5'
+H5_TRACK2_X3_TRAIN = 'E:/AMLS2' + '/DIV2K_track2_X3_train.h5'
+H5_TRACK2_X4_TRAIN = 'E:/AMLS2' + '/DIV2K_track2_X4_train.h5'
+H5_TRACK1_X2_VALID = 'D:/AMLS2' + '/DIV2K_track1_X2_valid.h5'
+H5_TRACK1_X3_VALID = 'D:/AMLS2' + '/DIV2K_track1_X3_valid.h5'
+H5_TRACK1_X4_VALID = 'D:/AMLS2' + '/DIV2K_track1_X4_valid.h5'
+H5_TRACK2_X2_VALID = 'E:/AMLS2' + '/DIV2K_track2_X2_valid.h5'
+H5_TRACK2_X3_VALID = 'E:/AMLS2' + '/DIV2K_track2_X3_valid.h5'
+H5_TRACK2_X4_VALID = 'E:/AMLS2' + '/DIV2K_track2_X4_valid.h5'
 
 # PROCESSED IMAGES PATHS
 PROCESSED_DIR = './processed'
@@ -123,6 +135,8 @@ MODEL_SRCNN_WEIGHTS = MODELS_DIR + '/3051crop_weight_200.h5'
 MODEL_FSRCNN_X2_WEIGHTS = MODELS_DIR + '/fsrcnn_x2.pth'
 MODEL_FSRCNN_X3_WEIGHTS = MODELS_DIR + '/fsrcnn_x3.pth'
 MODEL_FSRCNN_X4_WEIGHTS = MODELS_DIR + '/fsrcnn_x4.pth'
+WEIGHTS_DIR_FSRCNN_TRACK1 = './models/fsrcnn/track1/'
+WEIGHTS_DIR_FSRCNN_TRACK2 = './models/fsrcnn/track2/'
 
 # TARGETS
 DATA_PROCESSING_CROP_TARGETS = [
@@ -233,22 +247,22 @@ DATA_PROCESSING_H5_TARGETS = [
         'scale': SCALE_X2,
         'training': True,
     }, 
-    # {
-    #     'name': 'Track 1 - Training Data (X3)',
-    #     'h5': H5_TRACK1_X3_TRAIN,
-    #     'lr_dir': TRACK1_X3_TRAIN,
-    #     'hr_dir': TRAIN_HR, 
-    #     'scale': SCALE_X3,
-    #     'training': True,
-    # },
-    # {
-    #     'name': 'Track 1 - Training Data (X4)',
-    #     'h5': H5_TRACK1_X4_TRAIN,
-    #     'lr_dir': TRACK1_X4_TRAIN,
-    #     'hr_dir': TRAIN_HR, 
-    #     'scale': SCALE_X4,
-    #     'training': True,
-    # },
+    {
+        'name': 'Track 1 - Training Data (X3)',
+        'h5': H5_TRACK1_X3_TRAIN,
+        'lr_dir': TRACK1_X3_TRAIN,
+        'hr_dir': TRAIN_HR, 
+        'scale': SCALE_X3,
+        'training': True,
+    },
+    {
+        'name': 'Track 1 - Training Data (X4)',
+        'h5': H5_TRACK1_X4_TRAIN,
+        'lr_dir': TRACK1_X4_TRAIN,
+        'hr_dir': TRAIN_HR, 
+        'scale': SCALE_X4,
+        'training': True,
+    },
     {
         'name': 'Track 1 - Validation Data (X2)',
         'h5': H5_TRACK1_X2_VALID,
@@ -257,70 +271,121 @@ DATA_PROCESSING_H5_TARGETS = [
         'scale': SCALE_X2,
         'training': False
     }, 
-    # {
-    #     'name': 'Track 1 - Validation Data (X3)',
-    #     'h5': H5_TRACK1_X3_VALID,
-    #     'lr_dir': TRACK1_X3_VALIDATION,
-    #     'hr_dir': VALIDATION_HR, 
-    #     'scale': SCALE_X3,
-    #     'training': False
-    # },
-    # {
-    #     'name': 'Track 1 - Validation Data (X4)',
-    #     'h5': H5_TRACK1_X4_VALID,
-    #     'lr_dir': TRACK1_X4_VALIDATION,
-    #     'hr_dir': VALIDATION_HR, 
-    #     'scale': SCALE_X4,
-    #     'training': False
-    # },
-    # {
-    #     'name': 'Track 2 - Training Data (X2)',
-    #     'h5': H5_TRACK2_X2_TRAIN,
-    #     'lr_dir': TRACK2_X2_TRAIN,
-    #     'hr_dir': TRAIN_HR, 
-    #     'scale': SCALE_X2,
-    #     'training': True
-    # }, 
-    # {
-    #     'name': 'Track 2 - Training Data (X3)',
-    #     'h5': H5_TRACK2_X3_TRAIN,
-    #     'lr_dir': TRACK2_X3_TRAIN,
-    #     'hr_dir': TRAIN_HR, 
-    #     'scale': SCALE_X3,
-    #     'training': True
-    # },
-    # {
-    #     'name': 'Track 2 - Training Data (X4)',
-    #     'h5': H5_TRACK2_X4_TRAIN,
-    #     'lr_dir': TRACK2_X4_TRAIN,
-    #     'hr_dir': TRAIN_HR, 
-    #     'scale': SCALE_X4,
-    #     'training': True
-    # },
-    # {
-    #     'name': 'Track 2 - Validation Data (X2)',
-    #     'h5': H5_TRACK2_X2_VALID,
-    #     'lr_dir': TRACK2_X2_VALIDATION,
-    #     'hr_dir': VALIDATION_HR, 
-    #     'scale': SCALE_X2,
-    #     'training': False
-    # }, 
-    # {
-    #     'name': 'Track 2 - Validation Data (X3)',
-    #     'h5': H5_TRACK2_X3_VALID,
-    #     'lr_dir': TRACK2_X3_VALIDATION,
-    #     'hr_dir': VALIDATION_HR, 
-    #     'scale': SCALE_X3,
-    #     'training': False
-    # },
-    # {
-    #     'name': 'Track 2 - Validation Data (X4)',
-    #     'h5': H5_TRACK2_X4_VALID,
-    #     'lr_dir': TRACK2_X4_VALIDATION,
-    #     'hr_dir': VALIDATION_HR, 
-    #     'scale': SCALE_X4,
-    #     'training': False
-    # },
+    {
+        'name': 'Track 1 - Validation Data (X3)',
+        'h5': H5_TRACK1_X3_VALID,
+        'lr_dir': TRACK1_X3_VALIDATION,
+        'hr_dir': VALIDATION_HR, 
+        'scale': SCALE_X3,
+        'training': False
+    },
+    {
+        'name': 'Track 1 - Validation Data (X4)',
+        'h5': H5_TRACK1_X4_VALID,
+        'lr_dir': TRACK1_X4_VALIDATION,
+        'hr_dir': VALIDATION_HR, 
+        'scale': SCALE_X4,
+        'training': False
+    },
+    {
+        'name': 'Track 2 - Training Data (X2)',
+        'h5': H5_TRACK2_X2_TRAIN,
+        'lr_dir': TRACK2_X2_TRAIN,
+        'hr_dir': TRAIN_HR, 
+        'scale': SCALE_X2,
+        'training': True
+    }, 
+    {
+        'name': 'Track 2 - Training Data (X3)',
+        'h5': H5_TRACK2_X3_TRAIN,
+        'lr_dir': TRACK2_X3_TRAIN,
+        'hr_dir': TRAIN_HR, 
+        'scale': SCALE_X3,
+        'training': True
+    },
+    {
+        'name': 'Track 2 - Training Data (X4)',
+        'h5': H5_TRACK2_X4_TRAIN,
+        'lr_dir': TRACK2_X4_TRAIN,
+        'hr_dir': TRAIN_HR, 
+        'scale': SCALE_X4,
+        'training': True
+    },
+    {
+        'name': 'Track 2 - Validation Data (X2)',
+        'h5': H5_TRACK2_X2_VALID,
+        'lr_dir': TRACK2_X2_VALIDATION,
+        'hr_dir': VALIDATION_HR, 
+        'scale': SCALE_X2,
+        'training': False
+    }, 
+    {
+        'name': 'Track 2 - Validation Data (X3)',
+        'h5': H5_TRACK2_X3_VALID,
+        'lr_dir': TRACK2_X3_VALIDATION,
+        'hr_dir': VALIDATION_HR, 
+        'scale': SCALE_X3,
+        'training': False
+    },
+    {
+        'name': 'Track 2 - Validation Data (X4)',
+        'h5': H5_TRACK2_X4_VALID,
+        'lr_dir': TRACK2_X4_VALIDATION,
+        'hr_dir': VALIDATION_HR, 
+        'scale': SCALE_X4,
+        'training': False
+    },
+]
+
+TRAIN_FSRCNN_TARGETS = [
+    {
+        'name': 'Track 1 - Training Data (X2)',
+        'train_h5': H5_TRACK1_X2_TRAIN,
+        'valid_h5': H5_TRACK1_X2_VALID,
+        'weights_dir': WEIGHTS_DIR_FSRCNN_TRACK1, 
+        'prefix': 'track1_x2_',
+        'scale': SCALE_X2
+    },
+    {
+        'name': 'Track 1 - Training Data (X3)',
+        'train_h5': H5_TRACK1_X3_TRAIN,
+        'valid_h5': H5_TRACK1_X3_VALID,
+        'weights_dir': WEIGHTS_DIR_FSRCNN_TRACK1, 
+        'prefix': 'track1_x3_',
+        'scale': SCALE_X3
+    },
+    {
+        'name': 'Track 1 - Training Data (X4)',
+        'train_h5': H5_TRACK1_X4_TRAIN,
+        'valid_h5': H5_TRACK1_X4_VALID,
+        'weights_dir': WEIGHTS_DIR_FSRCNN_TRACK1, 
+        'prefix': 'track1_x4_',
+        'scale': SCALE_X4
+    },
+    {
+        'name': 'Track 2 - Training Data (X2)',
+        'train_h5': H5_TRACK2_X2_TRAIN,
+        'valid_h5': H5_TRACK2_X2_VALID,
+        'weights_dir': WEIGHTS_DIR_FSRCNN_TRACK2, 
+        'prefix': 'track2_x2_',
+        'scale': SCALE_X2
+    },
+    {
+        'name': 'Track 2 - Training Data (X3)',
+        'train_h5': H5_TRACK2_X3_TRAIN,
+        'valid_h5': H5_TRACK2_X3_VALID,
+        'weights_dir': WEIGHTS_DIR_FSRCNN_TRACK2, 
+        'prefix': 'track2_x3_',
+        'scale': SCALE_X3
+    },
+    {
+        'name': 'Track 2 - Training Data (X4)',
+        'train_h5': H5_TRACK2_X4_TRAIN,
+        'valid_h5': H5_TRACK2_X4_VALID,
+        'weights_dir': WEIGHTS_DIR_FSRCNN_TRACK2, 
+        'prefix': 'track2_x4_',
+        'scale': SCALE_X4
+    }
 ]
 
 TRACK1_BICUBIC_TARGETS = [

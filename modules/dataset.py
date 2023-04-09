@@ -2,9 +2,9 @@ import h5py
 import numpy as np
 from torch.utils.data import Dataset
 
-class Data(Dataset):
+class FSRCNNTrainData(Dataset):
     def __init__(self, h5_file):
-        super(Dataset, self).__init__()
+        super(FSRCNNTrainData, self).__init__()
         self.h5_file = h5_file
 
     def __getitem__(self, idx):
@@ -15,9 +15,9 @@ class Data(Dataset):
         with h5py.File(self.h5_file, 'r') as f:
             return len(f['lr'])
         
-class EvalDataset(Dataset):
+class FSRCNNValidationDataset(Dataset):
     def __init__(self, h5_file):
-        super(EvalDataset, self).__init__()
+        super(FSRCNNValidationDataset, self).__init__()
         self.h5_file = h5_file
 
     def __getitem__(self, idx):

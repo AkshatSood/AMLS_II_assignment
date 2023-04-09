@@ -3,18 +3,19 @@
 from modules.data_processing import DataProcessing
 from modules.evaluation import Evaluation
 from modules.run_models import RunModels
+from modules.train_FSRCNN import FSRCNNTrainer
 from track1.track1 import Track1
 from track2.track2 import Track2
 
 
 def main():
 
-    # Process Data
-    print('\n#########################################')
-    print('\tDATA PROCESSING')
-    print('#########################################\n')
-    data_processor = DataProcessing()
-    data_processor.process()
+    # # Process Data
+    # print('\n#########################################')
+    # print('\tDATA PROCESSING')
+    # print('#########################################\n')
+    # data_processor = DataProcessing()
+    # data_processor.process()
 
     # # Perform Track 1 Tasks
     # print('\n#########################################')
@@ -43,7 +44,8 @@ def main():
     print('\n#########################################')
     print('\tTRAIN FSRCNN MODEL')
     print('#########################################\n')
-
+    trainer = FSRCNNTrainer()
+    trainer.train_models()
 
 
     # print('\n#########################################')
