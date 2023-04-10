@@ -15,4 +15,4 @@ dependencies:
     - piqa>=1.2.*
     - scikit-image>=0.20.*
     - h5py>=3.*
-    - lpips==0.1.4
+    - matplotlib==3.7.*
