@@ -11,19 +11,19 @@ from track2.track2 import Track2
 
 def main():
 
-    # Acquire Data 
-    print('\n#########################################')
-    print('\tDATA ACQUISITION')
-    print('#########################################\n')
-    dataset = Dataset()
-    dataset.download()
+    # # Acquire Data 
+    # print('\n#########################################')
+    # print('\tDATA ACQUISITION')
+    # print('#########################################\n')
+    # dataset = Dataset()
+    # dataset.download()
 
-    # Process Data
-    print('\n#########################################')
-    print('\tDATA PROCESSING')
-    print('#########################################\n')
-    data_processor = DataProcessing()
-    data_processor.process()
+    # # Process Data
+    # print('\n#########################################')
+    # print('\tDATA PROCESSING')
+    # print('#########################################\n')
+    # data_processor = DataProcessing()
+    # data_processor.process()
 
     # # Perform Track 1 Tasks
     # print('\n#########################################')
@@ -49,11 +49,11 @@ def main():
     #     run_fsrcnn=False
     # )
 
-    print('\n#########################################')
-    print('\tTRAIN FSRCNN MODEL')
-    print('#########################################\n')
-    trainer = FSRCNNTrainer()
-    trainer.train_models()
+    # print('\n#########################################')
+    # print('\tTRAIN FSRCNN MODEL')
+    # print('#########################################\n')
+    # trainer = FSRCNNTrainer()
+    # trainer.train_models()
 
 
     # print('\n#########################################')
@@ -65,11 +65,11 @@ def main():
     # model_runner.run_fsrcnn_model()
     
     # Evaluate Data
-    # print('\n#########################################')
-    # print('\tEVALUATION')
-    # print('#########################################\n')
-    # evaluation = Evaluation()
-    # evaluation.evaluate_tests()
+    print('\n#########################################')
+    print('\tEVALUATION')
+    print('#########################################\n')
+    evaluation = Evaluation()
+    evaluation.evaluate_tests()
 
 if __name__ == "__main__":
     main()

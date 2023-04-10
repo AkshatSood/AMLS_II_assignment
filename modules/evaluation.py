@@ -6,9 +6,9 @@ import cv2
 import imquality.brisque as brisque
 import numpy as np
 import pandas as pd
-import PIL.Image as pil_image
+import PIL.Image
 import torch
-from piqa import MS_SSIM, PSNR, SSIM
+from piqa import MS_SSIM
 from skimage.measure import shannon_entropy
 from skimage.metrics import (mean_squared_error, peak_signal_noise_ratio,
                              structural_similarity)
@@ -47,6 +47,37 @@ class Evaluation:
 
     def __compute_entropy(self, img):
         return shannon_entropy(img)
+
+    def __get_brisque_score(self, img): 
+        score = 0 
+
+        try: 
+            score = brisque.score(img)
+        except: 
+            score = 100
+ 
+        return score 
+    
+    def __compute_brisque_score(self, hr_path, up_path):
+        
+        # Read the images
+        hr = PIL.Image.open(hr_path)
+        up = PIL.Image.open(up_path)
+
+        # Convert the images to YCbCr and extract the Y channel
+        hr_y, _, _ = hr.convert('YCbCr').split()
+        up_y, _, _ = up.convert('YCbCr').split()
+
+        # Calculate the brisque scores for the RGB images
+        hr_brisque = self.__get_brisque_score(hr)
+        up_brisque = self.__get_brisque_score(up)
+
+        # Calculate the brisque scores for the Y channel images
+        hr_y_brisque = self.__get_brisque_score(hr_y)
+        up_y_brisque = self.__get_brisque_score(up_y)
+
+        return hr_brisque, up_brisque, hr_y_brisque, up_y_brisque
+
     
     def evaluate_div2k(self):
         
@@ -155,6 +186,7 @@ class Evaluation:
             
 
     def evaluate_tests(self):
+        metrics_summary = []
         for target in TARGETS_EVALUATION:
             print(f'\n=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
 
@@ -202,8 +234,18 @@ class Evaluation:
                     y_mse = self.__compute_mse(hr_img=hr_img_y, up_img=up_img_y)
                     y_psnr = self.__compute_psnr(hr_img=hr_img_y, up_img=up_img_y)
 
+                    hr_brisque, up_brisque, hr_y_brisque, up_y_brisque = self.__compute_brisque_score(
+                        hr_path=f'{target["hr_dir"]}/{hr_img_name}', 
+                        up_path=f'{model["up_dir"]}/{up_img_name}'
+                    )
+
+                    brisque_perc = (up_brisque - hr_brisque)/hr_brisque
+                    brisque_perc_y = (up_y_brisque - hr_y_brisque)/hr_y_brisque
+
                     hr_entropy = self.__compute_entropy(hr_img)
                     up_entropy = self.__compute_entropy(up_img)
+
+                    entropy_perc = (up_entropy - hr_entropy) / hr_entropy
 
                     metrics.append({
                         'dataset': target['dataset'],
@@ -217,6 +259,13 @@ class Evaluation:
                         'ssim': ssim,
                         'hr_entropy': hr_entropy, 
                         'up_entropy': up_entropy,
+                        'entropy_perc': entropy_perc,
+                        'hr_brisque': hr_brisque, 
+                        'up_brisque': up_brisque,
+                        'hr_y_brisque': hr_y_brisque, 
+                        'up_y_brisque': up_y_brisque,
+                        'brisque_perc': brisque_perc,
+                        'brisque_perc_y': brisque_perc_y
                     })
             
             metrics_df = pd.DataFrame(metrics)
@@ -225,6 +274,59 @@ class Evaluation:
 
             print(f'\tSuccessfully stored evaluation in {target["eval_file"]}')
 
+            metrics_summary.append({
+                'dataset': target['dataset'],
+                'scale': target['scale'],
+                'model': model['tag'],
+                'num': self.utility.get_img_num(hr_img_name),
+                'rgb_psnr_min': metrics_df['rgb_psnr'].min(),
+                'rgb_psnr_avg': metrics_df['rgb_psnr'].mean(),
+                'rgb_psnr_max': metrics_df['rgb_psnr'].max(),
+                'rgb_mse_min': metrics_df['rgb_mse'].min(),
+                'rgb_mse_avg': metrics_df['rgb_mse'].mean(),
+                'rgb_mse_max': metrics_df['rgb_mse'].max(),
+                'y_psnr_min': metrics_df['y_psnr'].min(), 
+                'y_psnr_avg': metrics_df['y_psnr'].mean(), 
+                'y_psnr_max': metrics_df['y_psnr'].max(), 
+                'y_mse_min': metrics_df['y_mse'].min(),
+                'y_mse_avg': metrics_df['y_mse'].mean(),
+                'y_mse_max': metrics_df['y_mse'].max(),
+                'ssim_min': metrics_df['ssim'].min(),
+                'ssim_avg': metrics_df['ssim'].mean(),
+                'ssim_max': metrics_df['ssim'].max(),
+                'entropy_perc_min': metrics_df['entropy_perc'].min(),
+                'entropy_perc_avg': metrics_df['entropy_perc'].mean(),
+                'entropy_perc_max': metrics_df['entropy_perc'].max(),
+                'brisque_perc_min': metrics_df['brisque_perc'].min(),
+                'brisque_perc_avg': metrics_df['brisque_perc'].mean(),
+                'brisque_perc_max': metrics_df['brisque_perc'].max(),
+                'brisque_perc_y_min': metrics_df['brisque_perc_y'].min(),
+                'brisque_perc_y_avg': metrics_df['brisque_perc_y'].mean(),
+                'brisque_perc_y_max': metrics_df['brisque_perc_y'].max(),
+                'hr_entropy_min': metrics_df['hr_entropy'].min(), 
+                'hr_entropy_avg': metrics_df['hr_entropy'].min(), 
+                'hr_entropy_max': metrics_df['hr_entropy'].min(), 
+                'up_entropy_min': metrics_df['up_entropy'].min(),
+                'up_entropy_avg': metrics_df['up_entropy'].min(),
+                'up_entropy_max': metrics_df['up_entropy'].min(),
+                'hr_brisque_min': metrics_df['hr_brisque'].min(), 
+                'hr_brisque_avg': metrics_df['hr_brisque'].min(), 
+                'hr_brisque_max': metrics_df['hr_brisque'].min(), 
+                'up_brisque_min': metrics_df['up_brisque'].min(),
+                'up_brisque_avg': metrics_df['up_brisque'].min(),
+                'up_brisque_max': metrics_df['up_brisque'].min(),
+                'hr_y_brisque_min': metrics_df['hr_y_brisque'].min(), 
+                'hr_y_brisque_avg': metrics_df['hr_y_brisque'].min(), 
+                'hr_y_brisque_max': metrics_df['hr_y_brisque'].min(), 
+                'up_y_brisque_min': metrics_df['up_y_brisque'].min(),
+                'up_y_brisque_avg': metrics_df['up_y_brisque'].min(),
+                'up_y_brisque_max': metrics_df['up_y_brisque'].min(),
+            })
+
+        summary_df = pd.DataFrame(metrics_summary)
+        summary_df.to_csv('./evaluation/Evaluation Summary.csv', index=False)
+
+        print('\n=> Successfully stored evaluation summary in ./evaluation/Evaluation Summary.csv')
 
 
                 
