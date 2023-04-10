@@ -543,93 +543,93 @@ TARGETS_EVALUATION = [
             }
         ]
     },
-    # {
-    #     'dataset': BSD100, 
-    #     'scale': SCALE_X3,
-    #     'eval_file': f'./evaluation/{BSD100}_X{SCALE_X3}_eval.csv',
-    #     'hr_dir': BSD100_ROOT + IMGAGE_SRF_X3,
-    #     'models': [
-    #         {
-    #             'tag': BICUBIC, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
-    #         },
-    #         {
-    #             'tag': GLASNER, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
-    #         },
-    #         {
-    #             'tag': NEAREST, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
-    #         },
-    #         {
-    #             'tag': SRCNN, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
-    #         },
-    #         {
-    #             'tag': SCSR, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
-    #         },
-    #         {
-    #             'tag': APLUS, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
-    #         },
-    #         {
-    #             'tag': SELF_EX_SR, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
-    #         },
-    #         {
-    #             'tag': FSRCNN, 
-    #             'up_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X3 + FSRCNN_DIR,
-    #         }
-    #     ]
-    # },
-    # {
-    #     'dataset': BSD100, 
-    #     'scale': SCALE_X4,
-    #     'eval_file': f'./evaluation/{BSD100}_X{SCALE_X4}_eval.csv',
-    #     'hr_dir': BSD100_ROOT + IMGAGE_SRF_X4,
-    #     'models': [
-    #         {
-    #             'tag': BICUBIC, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
-    #         },
-    #         {
-    #             'tag': GLASNER, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
-    #         },
-    #         {
-    #             'tag': NEAREST, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
-    #         },
-    #         {
-    #             'tag': SRCNN, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
-    #         },
-    #         {
-    #             'tag': APLUS, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
-    #         },
-    #         {
-    #             'tag': SCSR, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
-    #         },
-    #         {
-    #             'tag': SELF_EX_SR, 
-    #             'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
-    #         },
-    #         {
-    #             'tag': FSRCNN, 
-    #             'up_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X4 + FSRCNN_DIR,
-    #         },
-    #         {
-    #             'tag': RRDBESRGAN, 
-    #             'up_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X4 + RRDB_ESRGAN_DIR,
-    #         },
-    #         {
-    #             'tag': RRDBPSNR, 
-    #             'up_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X4 + RRDB_PSNR_DIR,
-    #         }
+    {
+        'dataset': BSD100, 
+        'scale': SCALE_X3,
+        'eval_file': f'./evaluation/{BSD100}_X{SCALE_X3}_eval.csv',
+        'hr_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+        'models': [
+            {
+                'tag': BICUBIC, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': GLASNER, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': NEAREST, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': SRCNN, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': SCSR, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': APLUS, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': SELF_EX_SR, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X3,
+            },
+            {
+                'tag': FSRCNN, 
+                'up_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X3 + FSRCNN_DIR,
+            }
+        ]
+    },
+    {
+        'dataset': BSD100, 
+        'scale': SCALE_X4,
+        'eval_file': f'./evaluation/{BSD100}_X{SCALE_X4}_eval.csv',
+        'hr_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+        'models': [
+            {
+                'tag': BICUBIC, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': GLASNER, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': NEAREST, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': SRCNN, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': APLUS, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': SCSR, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': SELF_EX_SR, 
+                'up_dir': BSD100_ROOT + IMGAGE_SRF_X4,
+            },
+            {
+                'tag': FSRCNN, 
+                'up_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X4 + FSRCNN_DIR,
+            },
+            {
+                'tag': RRDBESRGAN, 
+                'up_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X4 + RRDB_ESRGAN_DIR,
+            },
+            {
+                'tag': RRDBPSNR, 
+                'up_dir': BSD100_RESULTS_ROOT + IMGAGE_SRF_X4 + RRDB_PSNR_DIR,
+            }
             
-    #     ]
-    # },
+        ]
+    },
 ]
