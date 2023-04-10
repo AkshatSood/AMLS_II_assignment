@@ -186,147 +186,158 @@ class Evaluation:
             
 
     def evaluate_tests(self):
-        metrics_summary = []
-        for target in TARGETS_EVALUATION:
-            print(f'\n=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
+        # for target in TARGETS_EVALUATION:
+        #     print(f'\n=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
 
-            # Get a sorted list of all the high resolution images
-            hr_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['hr_dir'], tag='HR')
-            hr_imgs.sort(key = lambda x: self.utility.get_img_num(x))
+        #     # Get a sorted list of all the high resolution images
+        #     hr_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['hr_dir'], tag='HR')
+        #     hr_imgs.sort(key = lambda x: self.utility.get_img_num(x))
 
-            metrics = []
-            for idx, model in enumerate(target['models']):
-                print(f'\t[{idx+1}/{len(target["models"])}] Evaluating {model["tag"]} images...')
+        #     metrics = []
+        #     for idx, model in enumerate(target['models']):
+        #         print(f'\t[{idx+1}/{len(target["models"])}] Evaluating {model["tag"]} images...')
 
-                # Check if the upscaled img directory exists 
-                if not self.utility.dir_exists(model['up_dir']):
-                    print(f'\t\tError! {model["up_dir"]} does not exist!')
-                    continue
+        #         # Check if the upscaled img directory exists 
+        #         if not self.utility.dir_exists(model['up_dir']):
+        #             print(f'\t\tError! {model["up_dir"]} does not exist!')
+        #             continue
                 
-                # Get a sorted list of all the upscaled images
-                up_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=model['up_dir'], tag=model['tag'])
-                up_imgs.sort(key = lambda x: self.utility.get_img_num(x))
+        #         # Get a sorted list of all the upscaled images
+        #         up_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=model['up_dir'], tag=model['tag'])
+        #         up_imgs.sort(key = lambda x: self.utility.get_img_num(x))
 
-                if len(hr_imgs) == 0 or len(up_imgs) == 0: 
-                    print('\t\tError! No images found in either the HR or UP folders!')
-                    continue
-                if len(hr_imgs) != len(up_imgs): 
-                    print('\t\tError! Different number of files were found for HR and UP images!')
-                    continue
+        #         if len(hr_imgs) == 0 or len(up_imgs) == 0: 
+        #             print('\t\tError! No images found in either the HR or UP folders!')
+        #             continue
+        #         if len(hr_imgs) != len(up_imgs): 
+        #             print('\t\tError! Different number of files were found for HR and UP images!')
+        #             continue
                 
-                for hr_img_name, up_img_name in zip(hr_imgs, up_imgs):
+        #         for hr_img_name, up_img_name in zip(hr_imgs, up_imgs):
                     
-                    # Read the images
-                    hr_img = cv2.cvtColor(cv2.imread(f'{target["hr_dir"]}/{hr_img_name}'), cv2.COLOR_BGR2RGB)
-                    up_img = cv2.cvtColor(cv2.imread(f'{model["up_dir"]}/{up_img_name}'), cv2.COLOR_BGR2RGB)
+        #             # Read the images
+        #             hr_img = cv2.cvtColor(cv2.imread(f'{target["hr_dir"]}/{hr_img_name}'), cv2.COLOR_BGR2RGB)
+        #             up_img = cv2.cvtColor(cv2.imread(f'{model["up_dir"]}/{up_img_name}'), cv2.COLOR_BGR2RGB)
 
-                    # Convert the images to YCbCr
-                    hr_img_ycrcb = cv2.cvtColor(hr_img, cv2.COLOR_RGB2YCrCb)
-                    up_img_ycrcb = cv2.cvtColor(up_img, cv2.COLOR_RGB2YCrCb)
+        #             # Convert the images to YCbCr
+        #             hr_img_ycrcb = cv2.cvtColor(hr_img, cv2.COLOR_RGB2YCrCb)
+        #             up_img_ycrcb = cv2.cvtColor(up_img, cv2.COLOR_RGB2YCrCb)
 
-                    # Extract the Y channel for comparison
-                    hr_img_y, _, _ = cv2.split(hr_img_ycrcb)
-                    up_img_y, _, _ = cv2.split(up_img_ycrcb)
+        #             # Extract the Y channel for comparison
+        #             hr_img_y, _, _ = cv2.split(hr_img_ycrcb)
+        #             up_img_y, _, _ = cv2.split(up_img_ycrcb)
 
-                    rgb_mse = self.__compute_mse(hr_img=hr_img, up_img=up_img)
-                    rgb_psnr = self.__compute_psnr(hr_img=hr_img, up_img=up_img)
-                    ssim = self.__compute_ssim(hr_img=hr_img_y, up_img=up_img_y)
-                    y_mse = self.__compute_mse(hr_img=hr_img_y, up_img=up_img_y)
-                    y_psnr = self.__compute_psnr(hr_img=hr_img_y, up_img=up_img_y)
+        #             rgb_mse = self.__compute_mse(hr_img=hr_img, up_img=up_img)
+        #             rgb_psnr = self.__compute_psnr(hr_img=hr_img, up_img=up_img)
+        #             ssim = self.__compute_ssim(hr_img=hr_img_y, up_img=up_img_y)
+        #             y_mse = self.__compute_mse(hr_img=hr_img_y, up_img=up_img_y)
+        #             y_psnr = self.__compute_psnr(hr_img=hr_img_y, up_img=up_img_y)
 
-                    hr_brisque, up_brisque, hr_y_brisque, up_y_brisque = self.__compute_brisque_score(
-                        hr_path=f'{target["hr_dir"]}/{hr_img_name}', 
-                        up_path=f'{model["up_dir"]}/{up_img_name}'
-                    )
+        #             hr_brisque, up_brisque, hr_y_brisque, up_y_brisque = self.__compute_brisque_score(
+        #                 hr_path=f'{target["hr_dir"]}/{hr_img_name}', 
+        #                 up_path=f'{model["up_dir"]}/{up_img_name}'
+        #             )
 
-                    brisque_perc = (up_brisque - hr_brisque)/hr_brisque
-                    brisque_perc_y = (up_y_brisque - hr_y_brisque)/hr_y_brisque
+        #             brisque_perc = (up_brisque - hr_brisque)/hr_brisque
+        #             brisque_perc_y = (up_y_brisque - hr_y_brisque)/hr_y_brisque
 
-                    hr_entropy = self.__compute_entropy(hr_img)
-                    up_entropy = self.__compute_entropy(up_img)
+        #             hr_entropy = self.__compute_entropy(hr_img)
+        #             up_entropy = self.__compute_entropy(up_img)
 
-                    entropy_perc = (up_entropy - hr_entropy) / hr_entropy
+        #             entropy_perc = (up_entropy - hr_entropy) / hr_entropy
 
-                    metrics.append({
-                        'dataset': target['dataset'],
-                        'scale': target['scale'],
-                        'model': model['tag'],
-                        'num': self.utility.get_img_num(hr_img_name),
-                        'rgb_psnr': rgb_psnr,
-                        'rgb_mse': rgb_mse,
-                        'y_psnr': y_psnr, 
-                        'y_mse': y_mse,
-                        'ssim': ssim,
-                        'hr_entropy': hr_entropy, 
-                        'up_entropy': up_entropy,
-                        'entropy_perc': entropy_perc,
-                        'hr_brisque': hr_brisque, 
-                        'up_brisque': up_brisque,
-                        'hr_y_brisque': hr_y_brisque, 
-                        'up_y_brisque': up_y_brisque,
-                        'brisque_perc': brisque_perc,
-                        'brisque_perc_y': brisque_perc_y
-                    })
+        #             metrics.append({
+        #                 'dataset': target['dataset'],
+        #                 'scale': target['scale'],
+        #                 'model': model['tag'],
+        #                 'num': self.utility.get_img_num(hr_img_name),
+        #                 'rgb_psnr': rgb_psnr,
+        #                 'rgb_mse': rgb_mse,
+        #                 'y_psnr': y_psnr, 
+        #                 'y_mse': y_mse,
+        #                 'ssim': ssim,
+        #                 'hr_entropy': hr_entropy, 
+        #                 'up_entropy': up_entropy,
+        #                 'entropy_perc': entropy_perc,
+        #                 'hr_brisque': hr_brisque, 
+        #                 'up_brisque': up_brisque,
+        #                 'hr_y_brisque': hr_y_brisque, 
+        #                 'up_y_brisque': up_y_brisque,
+        #                 'brisque_perc': brisque_perc,
+        #                 'brisque_perc_y': brisque_perc_y
+        #             })
             
-            metrics_df = pd.DataFrame(metrics)
+        #     metrics_df = pd.DataFrame(metrics)
 
-            metrics_df.to_csv(target['eval_file'], index=False)
+        #     metrics_df.to_csv(target['eval_file'], index=False)
 
-            print(f'\tSuccessfully stored evaluation in {target["eval_file"]}')
+        #     print(f'\tSuccessfully stored evaluation in {target["eval_file"]}')
 
-            metrics_summary.append({
-                'dataset': target['dataset'],
-                'scale': target['scale'],
-                'model': model['tag'],
-                'num': self.utility.get_img_num(hr_img_name),
-                'rgb_psnr_min': metrics_df['rgb_psnr'].min(),
-                'rgb_psnr_avg': metrics_df['rgb_psnr'].mean(),
-                'rgb_psnr_max': metrics_df['rgb_psnr'].max(),
-                'rgb_mse_min': metrics_df['rgb_mse'].min(),
-                'rgb_mse_avg': metrics_df['rgb_mse'].mean(),
-                'rgb_mse_max': metrics_df['rgb_mse'].max(),
-                'y_psnr_min': metrics_df['y_psnr'].min(), 
-                'y_psnr_avg': metrics_df['y_psnr'].mean(), 
-                'y_psnr_max': metrics_df['y_psnr'].max(), 
-                'y_mse_min': metrics_df['y_mse'].min(),
-                'y_mse_avg': metrics_df['y_mse'].mean(),
-                'y_mse_max': metrics_df['y_mse'].max(),
-                'ssim_min': metrics_df['ssim'].min(),
-                'ssim_avg': metrics_df['ssim'].mean(),
-                'ssim_max': metrics_df['ssim'].max(),
-                'entropy_perc_min': metrics_df['entropy_perc'].min(),
-                'entropy_perc_avg': metrics_df['entropy_perc'].mean(),
-                'entropy_perc_max': metrics_df['entropy_perc'].max(),
-                'brisque_perc_min': metrics_df['brisque_perc'].min(),
-                'brisque_perc_avg': metrics_df['brisque_perc'].mean(),
-                'brisque_perc_max': metrics_df['brisque_perc'].max(),
-                'brisque_perc_y_min': metrics_df['brisque_perc_y'].min(),
-                'brisque_perc_y_avg': metrics_df['brisque_perc_y'].mean(),
-                'brisque_perc_y_max': metrics_df['brisque_perc_y'].max(),
-                'hr_entropy_min': metrics_df['hr_entropy'].min(), 
-                'hr_entropy_avg': metrics_df['hr_entropy'].min(), 
-                'hr_entropy_max': metrics_df['hr_entropy'].min(), 
-                'up_entropy_min': metrics_df['up_entropy'].min(),
-                'up_entropy_avg': metrics_df['up_entropy'].min(),
-                'up_entropy_max': metrics_df['up_entropy'].min(),
-                'hr_brisque_min': metrics_df['hr_brisque'].min(), 
-                'hr_brisque_avg': metrics_df['hr_brisque'].min(), 
-                'hr_brisque_max': metrics_df['hr_brisque'].min(), 
-                'up_brisque_min': metrics_df['up_brisque'].min(),
-                'up_brisque_avg': metrics_df['up_brisque'].min(),
-                'up_brisque_max': metrics_df['up_brisque'].min(),
-                'hr_y_brisque_min': metrics_df['hr_y_brisque'].min(), 
-                'hr_y_brisque_avg': metrics_df['hr_y_brisque'].min(), 
-                'hr_y_brisque_max': metrics_df['hr_y_brisque'].min(), 
-                'up_y_brisque_min': metrics_df['up_y_brisque'].min(),
-                'up_y_brisque_avg': metrics_df['up_y_brisque'].min(),
-                'up_y_brisque_max': metrics_df['up_y_brisque'].min(),
-            })
+        print('\n=> Creating evaluation summary')
+        metrics_summary = []
+        for idx, target in enumerate(TARGETS_EVALUATION):
+            print(f'\t[{idx+1}/{len(TARGETS_EVALUATION)}] Creating summary for {target["dataset"]} (X{target["scale"]})...')
+            
+            if not self.utility.file_exists(target['eval_file']):
+                print(f'\t\tUnable to find CSV file at {target["eval_file"]}. Skipping this dataset')
+                continue
+            
+            metrics_df = pd.read_csv(target['eval_file'])
+
+            for model in target['models']:
+                metrics_summary.append({
+                    'dataset': target['dataset'],
+                    'scale': target['scale'],
+                    'model': model['tag'],
+                    'num': len(metrics_df.loc[metrics_df['model'] == model['tag']]),
+                    'rgb_psnr_min': metrics_df.loc[metrics_df['model'] == model['tag']]['rgb_psnr'].min(),
+                    'rgb_psnr_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['rgb_psnr'].mean(),
+                    'rgb_psnr_max': metrics_df.loc[metrics_df['model'] == model['tag']]['rgb_psnr'].max(),
+                    'rgb_mse_min': metrics_df.loc[metrics_df['model'] == model['tag']]['rgb_mse'].min(),
+                    'rgb_mse_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['rgb_mse'].mean(),
+                    'rgb_mse_max': metrics_df.loc[metrics_df['model'] == model['tag']]['rgb_mse'].max(),
+                    'y_psnr_min': metrics_df.loc[metrics_df['model'] == model['tag']]['y_psnr'].min(), 
+                    'y_psnr_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['y_psnr'].mean(), 
+                    'y_psnr_max': metrics_df.loc[metrics_df['model'] == model['tag']]['y_psnr'].max(), 
+                    'y_mse_min': metrics_df.loc[metrics_df['model'] == model['tag']]['y_mse'].min(),
+                    'y_mse_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['y_mse'].mean(),
+                    'y_mse_max': metrics_df.loc[metrics_df['model'] == model['tag']]['y_mse'].max(),
+                    'ssim_min': metrics_df.loc[metrics_df['model'] == model['tag']]['ssim'].min(),
+                    'ssim_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['ssim'].mean(),
+                    'ssim_max': metrics_df.loc[metrics_df['model'] == model['tag']]['ssim'].max(),
+                    'entropy_perc_min': metrics_df.loc[metrics_df['model'] == model['tag']]['entropy_perc'].min(),
+                    'entropy_perc_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['entropy_perc'].mean(),
+                    'entropy_perc_max': metrics_df.loc[metrics_df['model'] == model['tag']]['entropy_perc'].max(),
+                    'brisque_perc_min': metrics_df.loc[metrics_df['model'] == model['tag']]['brisque_perc'].min(),
+                    'brisque_perc_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['brisque_perc'].mean(),
+                    'brisque_perc_max': metrics_df.loc[metrics_df['model'] == model['tag']]['brisque_perc'].max(),
+                    'brisque_perc_y_min': metrics_df.loc[metrics_df['model'] == model['tag']]['brisque_perc_y'].min(),
+                    'brisque_perc_y_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['brisque_perc_y'].mean(),
+                    'brisque_perc_y_max': metrics_df.loc[metrics_df['model'] == model['tag']]['brisque_perc_y'].max(),
+                    'hr_entropy_min': metrics_df.loc[metrics_df['model'] == model['tag']]['hr_entropy'].min(), 
+                    'hr_entropy_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['hr_entropy'].min(), 
+                    'hr_entropy_max': metrics_df.loc[metrics_df['model'] == model['tag']]['hr_entropy'].min(), 
+                    'up_entropy_min': metrics_df.loc[metrics_df['model'] == model['tag']]['up_entropy'].min(),
+                    'up_entropy_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['up_entropy'].min(),
+                    'up_entropy_max': metrics_df.loc[metrics_df['model'] == model['tag']]['up_entropy'].min(),
+                    'hr_brisque_min': metrics_df.loc[metrics_df['model'] == model['tag']]['hr_brisque'].min(), 
+                    'hr_brisque_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['hr_brisque'].min(), 
+                    'hr_brisque_max': metrics_df.loc[metrics_df['model'] == model['tag']]['hr_brisque'].min(), 
+                    'up_brisque_min': metrics_df.loc[metrics_df['model'] == model['tag']]['up_brisque'].min(),
+                    'up_brisque_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['up_brisque'].min(),
+                    'up_brisque_max': metrics_df.loc[metrics_df['model'] == model['tag']]['up_brisque'].min(),
+                    'hr_y_brisque_min': metrics_df.loc[metrics_df['model'] == model['tag']]['hr_y_brisque'].min(), 
+                    'hr_y_brisque_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['hr_y_brisque'].min(), 
+                    'hr_y_brisque_max': metrics_df.loc[metrics_df['model'] == model['tag']]['hr_y_brisque'].min(), 
+                    'up_y_brisque_min': metrics_df.loc[metrics_df['model'] == model['tag']]['up_y_brisque'].min(),
+                    'up_y_brisque_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['up_y_brisque'].min(),
+                    'up_y_brisque_max': metrics_df.loc[metrics_df['model'] == model['tag']]['up_y_brisque'].min(),
+                })
 
         summary_df = pd.DataFrame(metrics_summary)
         summary_df.to_csv('./evaluation/Evaluation Summary.csv', index=False)
 
-        print('\n=> Successfully stored evaluation summary in ./evaluation/Evaluation Summary.csv')
+        print('\tSuccessfully stored evaluation summary in ./evaluation/Evaluation Summary.csv')
 
 
                 
