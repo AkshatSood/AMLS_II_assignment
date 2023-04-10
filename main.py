@@ -11,26 +11,26 @@ from modules.plotter import Plotter
 
 
 def main():
-    # # Acquire Data 
-    # print('\n#########################################')
-    # print('\tDATA ACQUISITION')
-    # print('#########################################\n')
-    # dataset = Dataset()
-    # dataset.download()
+    # Acquire Data 
+    print('\n#########################################')
+    print('\tDATA ACQUISITION')
+    print('#########################################\n')
+    dataset = Dataset()
+    dataset.download()
 
-    # # Process Data
-    # print('\n#########################################')
-    # print('\tDATA PROCESSING')
-    # print('#########################################\n')
-    # data_processor = DataProcessing()
-    # data_processor.process()
+    # Process Data
+    print('\n#########################################')
+    print('\tDATA PROCESSING')
+    print('#########################################\n')
+    data_processor = DataProcessing()
+    data_processor.process()
 
-    # # Train FSRCNN models
-    # print('\n#########################################')
-    # print('\tTRAIN FSRCNN MODEL')
-    # print('#########################################\n')
-    # trainer = FSRCNNTrainer()
-    # trainer.train_models()
+    # Train FSRCNN models
+    print('\n#########################################')
+    print('\tTRAIN FSRCNN MODEL')
+    print('#########################################\n')
+    trainer = FSRCNNTrainer()
+    trainer.train_models()
 
     # # Perform Track 1 Tasks
     # print('\n#########################################')
@@ -72,12 +72,12 @@ def main():
     # evaluation = Evaluation()
     # evaluation.evaluate_tests()
 
-    # Plot images and charts
-    print('\n#########################################')
-    print('\tPLOT IMAGES AND CHARTS')
-    print('#########################################\n')
-    plotter = Plotter()
-    plotter.plot_zoomed_imgs()
+    # # Plot images and charts
+    # print('\n#########################################')
+    # print('\tPLOT IMAGES AND CHARTS')
+    # print('#########################################\n')
+    # plotter = Plotter()
+    # plotter.plot_zoomed_imgs()
 
 if __name__ == "__main__":
     main()
