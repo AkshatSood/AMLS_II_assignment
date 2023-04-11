@@ -72,7 +72,7 @@ class DataProcessing():
 
                 print(f'\t\tSuccessfully cropped the images. Can be found in {target["output_dir"]}')
 
-    def __create_datasets(self, hr_patch_size=324, hr_step=324): 
+    def __create_datasets(self, hr_patch_size=324, hr_step=162): 
         """Create HDF5 binary data datasets (.h5 files) from the DIV2K image patches
         """
         print('\n=> Creating datasets...')

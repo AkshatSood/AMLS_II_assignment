@@ -331,8 +331,8 @@ DATA_PROCESSING_H5_TARGETS = [
     {
         'name': 'Track 1 - Training Data (X4)',
         'h5': H5_TRACK1_X4_TRAIN,
-        'lr_dir': TRACK1_X4_TRAIN,
-        'hr_dir': TRAIN_HR, 
+        'lr_dir': PROCESSED_TRACK1_TRAIN_DIR + '/X4',
+        'hr_dir': PROCESSED_TRACK1_TRAIN_DIR + '/HR', 
         'scale': SCALE_X4,
         'training': True,
     },
@@ -355,8 +355,8 @@ DATA_PROCESSING_H5_TARGETS = [
     {
         'name': 'Track 1 - Validation Data (X4)',
         'h5': H5_TRACK1_X4_VALID,
-        'lr_dir': TRACK1_X4_VALIDATION,
-        'hr_dir': VALIDATION_HR, 
+        'lr_dir': PROCESSED_TRACK1_VALID_DIR + '/X4',
+        'hr_dir': PROCESSED_TRACK1_VALID_DIR + '/HR', 
         'scale': SCALE_X4,
         'training': False
     },
