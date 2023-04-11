@@ -190,5 +190,5 @@ class DataProcessing():
     def process(self):
         """Run the data processing functions
         """
-        self.__crop_images()
+        # self.__crop_images()
         self.__create_datasets()

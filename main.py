@@ -18,12 +18,12 @@ def main():
     # dataset = Dataset()
     # dataset.download()
 
-    # # Process Data
-    # print('\n#########################################')
-    # print('\tDATA PROCESSING')
-    # print('#########################################\n')
-    # data_processor = DataProcessing()
-    # data_processor.process()
+    # Process Data
+    print('\n#########################################')
+    print('\tDATA PROCESSING')
+    print('#########################################\n')
+    data_processor = DataProcessing()
+    data_processor.process()
 
     # Train FSRCNN models
     print('\n#########################################')
