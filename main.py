@@ -11,12 +11,12 @@ from modules.plotter import Plotter
 
 
 def main():
-    # Acquire Data 
-    print('\n#########################################')
-    print('\tDATA ACQUISITION')
-    print('#########################################\n')
-    dataset = Dataset()
-    dataset.download()
+    # # Acquire Data 
+    # print('\n#########################################')
+    # print('\tDATA ACQUISITION')
+    # print('#########################################\n')
+    # dataset = Dataset()
+    # dataset.download()
 
     # Process Data
     print('\n#########################################')
