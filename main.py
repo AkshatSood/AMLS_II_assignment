@@ -11,27 +11,27 @@ from modules.plotter import Plotter
 
 
 def main():
-    # Acquire Data 
-    print('\n#########################################')
-    print('\tDATA ACQUISITION')
-    print('#########################################\n')
-    dataset = Dataset()
-    dataset.download()
+    # # Acquire Data 
+    # print('\n#########################################')
+    # print('\tDATA ACQUISITION')
+    # print('#########################################\n')
+    # dataset = Dataset()
+    # dataset.download()
 
-    # Process Data
-    print('\n#########################################')
-    print('\tDATA PROCESSING')
-    print('#########################################\n')
-    data_processor = DataProcessing()
-    data_processor.crop_images()
-    data_processor.create_training_datasets()
+    # # Process Data
+    # print('\n#########################################')
+    # print('\tDATA PROCESSING')
+    # print('#########################################\n')
+    # data_processor = DataProcessing()
+    # data_processor.crop_images()
+    # data_processor.create_training_datasets()
 
-    # Train FSRCNN models
-    print('\n#########################################')
-    print('\tTRAIN FSRCNN MODEL')
-    print('#########################################\n')
-    trainer = FSRCNNTrainer()
-    trainer.train_models()
+    # # Train FSRCNN models
+    # print('\n#########################################')
+    # print('\tTRAIN FSRCNN MODEL')
+    # print('#########################################\n')
+    # trainer = FSRCNNTrainer()
+    # trainer.train_models()
 
     # # Perform Track 1 Tasks
     # print('\n#########################################')
@@ -57,14 +57,14 @@ def main():
     #     run_fsrcnn=False
     # )
 
-    # # Run the models
-    # print('\n#########################################')
-    # print('\tRUN MODELS')
-    # print('#########################################\n')
-    # model_runner = RunModels()
+    # Run the models
+    print('\n#########################################')
+    print('\tRUN MODELS')
+    print('#########################################\n')
+    model_runner = RunModels()
     # model_runner.run_rrdb_esrgan_model()
     # model_runner.run_rrdb_psnr_model()
-    # model_runner.run_fsrcnn_model()
+    model_runner.run_fsrcnn_model()
     
     # # Evaluate Data
     # print('\n#########################################')
@@ -73,12 +73,13 @@ def main():
     # evaluation = Evaluation()
     # evaluation.evaluate_tests()
 
-    # # Plot images and charts
+    # Plot images and charts
     # print('\n#########################################')
     # print('\tPLOT IMAGES AND CHARTS')
     # print('#########################################\n')
     # plotter = Plotter()
     # plotter.plot_zoomed_imgs()
+    # plotter.plot_epoch_psnr_charts()
 
 if __name__ == "__main__":
     main()

@@ -114,7 +114,7 @@ class RunModels:
         print('\n=> Running FSRCNN Model on test datasets...')
 
         for step, target in enumerate(TARGETS_FSRCNN):
-            print(f'\n\t[{step+1}/{len(TARGETS_FSRCNN)}] Running FSRCNN (X{target["scale"]}) on {target["dataset"]} dataset...')
+            print(f'\n\t[{step+1}/{len(TARGETS_FSRCNN)}] Running {target["model"]} (X{target["scale"]}) on {target["dataset"]} dataset...')
 
             print(f'\t\tSource directory: {target["src_dir"]}')
             print(f'\t\tResults directory: {target["res_dir"]}')
@@ -150,7 +150,7 @@ class RunModels:
 
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
                 for img_name in target_imgs: 
-                    out_name = self.utility.replace_img_tag(img_name=img_name, tag='FSRCNN')
+                    out_name = self.utility.replace_img_tag(img_name=img_name, tag=target['model'])
                     
                     img = pil_image.open(f'{target["src_dir"]}/{img_name}').convert('RGB')
 

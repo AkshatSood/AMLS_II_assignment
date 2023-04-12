@@ -53,7 +53,7 @@ class FSRCNNTrainer:
         best_psnr = 0.0
 
         for epoch in range(num_epochs):
-            print(f'\t\t\t[{epoch}/{num_epochs}] Starting epoch training...')
+            print(f'\t\t\t[{epoch}/{num_epochs-1}] Starting epoch training...')
             model.train()
             epoch_losses = AverageMeter()
 

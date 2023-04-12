@@ -53,7 +53,6 @@ class Plotter:
 
         plt.savefig(output_path, bbox_inches='tight', dpi=600)
 
-
     def plot_zoomed_imgs(self):
         print('\n=> Plotting zoomed images')
         
@@ -79,3 +78,38 @@ class Plotter:
         
         print(f'\tSuccessfully plotted zoomed in images. Can be found in {IMAGES_DIR}')
 
+    def plot_epoch_psnr_charts(self):
+
+        print('\n=> Plotting FSRCNN training epoch PSNR charts...')
+        plot_targets = {
+            'FSRCNN on Track 1 (X4)': [23.99, 25.01, 25.56, 25.75, 25.81, 25.89, 25.85, 25.57, 25.95, 25.94, 25.95, 25.90, 25.90, 25.89, 25.88, 25.95, 25.93, 25.87, 25.95, 25.97], 
+            'FSRCNN on Track 2 (X4)': [22.76, 23.54, 23.85, 24.39, 24.54, 24.63, 24.32, 24.38, 24.71, 24.91, 25.00, 25.02, 25.12, 25.14, 25.18, 25.17, 25.13, 25.19, 25.27, 25.30] 
+        }
+
+        x_values = [e for e in range(0, 20)]
+
+        fig = plt.gcf()
+        fig.set_size_inches(9, 5)
+
+        for label, scores in plot_targets.items():
+            plt.plot(x_values, scores, label=label)
+            # plt.plot(scores.index(max(scores)), max(scores), label=f'{label} Best PSNR = {max(scores)}')
+
+        plt.xlabel('Epochs')
+        plt.ylabel('PSNR Scores')
+        plt.xticks(x_values)
+        plt.grid()
+        plt.legend()
+        file_name = f'{PLOTS_DIR}/FSRCNN Training PSNR Scores.png'
+        plt.savefig(file_name, bbox_inches='tight', dpi=600)
+        plt.close()
+
+        print(f'\tPlotted chart at {file_name}')
+            
+    def plot_evaluation_charts(self):
+        print('\n=> Plotting evaluation charts...')
+
+        for target in TARGETS_EVALUATION:
+            print(f'\t=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
+            
+        
