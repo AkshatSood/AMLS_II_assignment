@@ -273,6 +273,7 @@ class Evaluation:
 
             print(f'\tSuccessfully stored evaluation in {target["eval_file"]}')
 
+    def create_evaluation_summary(self):
         print('\n=> Creating evaluation summary')
         metrics_summary = []
         for idx, target in enumerate(TARGETS_EVALUATION):

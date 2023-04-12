@@ -58,20 +58,21 @@ def main():
     # )
 
     # Run the models
-    print('\n#########################################')
-    print('\tRUN MODELS')
-    print('#########################################\n')
-    model_runner = RunModels()
+    # print('\n#########################################')
+    # print('\tRUN MODELS')
+    # print('#########################################\n')
+    # model_runner = RunModels()
     # model_runner.run_rrdb_esrgan_model()
     # model_runner.run_rrdb_psnr_model()
-    model_runner.run_fsrcnn_model()
+    # model_runner.run_fsrcnn_model()
     
-    # # Evaluate Data
-    # print('\n#########################################')
-    # print('\tEVALUATION')
-    # print('#########################################\n')
-    # evaluation = Evaluation()
-    # evaluation.evaluate_tests()
+    # Evaluate Data
+    print('\n#########################################')
+    print('\tEVALUATION')
+    print('#########################################\n')
+    evaluation = Evaluation()
+    evaluation.evaluate_tests()
+    evaluation.create_evaluation_summary()
 
     # Plot images and charts
     # print('\n#########################################')
