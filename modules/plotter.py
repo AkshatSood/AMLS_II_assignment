@@ -59,6 +59,7 @@ class Plotter:
         plt.tick_params(axis='y', which='both', left=False, right=False, labelleft=False)
 
         plt.savefig(output_path, bbox_inches='tight', dpi=600)
+        plt.close()
 
     def plot_zoomed_imgs(self):
         print('\n=> Plotting zoomed images')
@@ -112,24 +113,78 @@ class Plotter:
         plt.close()
 
         print(f'\tPlotted chart at {file_name}')
-            
+
+    def plot_correlation_charts(self):
+        pass 
+
+    def __plot_line_chart(self, x, y, xlabel, ylabel, ylim, output):
+        plt.plot(x, y)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.ylim(ylim)
+        # plt.xticks(x_values)
+        plt.grid()
+        plt.savefig(output, bbox_inches='tight', dpi=400)
+        plt.close()
+
     def plot_evaluation_charts(self):
         print('\n=> Plotting evaluation charts...')
 
-        for target in TARGETS_EVALUATION:
+        for target in TARGETS_EVALUATION[:1]:
             print(f'\tPlotting charts for {target["dataset"]} (X{target["scale"]}) evaluation...')
 
             if not self.utility.file_exists(target['eval_file']):
                 print(f'\t\tThe csv file ({target["eval_file"]}) does not exist. Skipping this step.')
                 continue
-                
+            
+            out_dir = f'{PLOTS_DIR}/{target["dataset"]}_X{target["scale"]}'
+            self.utility.check_and_create_dir(out_dir)
+
             df = pd.read_csv(target['eval_file'])
             
             
+            for model in target['models'][:1]:
+                print(f'\t\tPlotting {model["tag"]} charts...')
+                prefix = f'{target["dataset"]}_X{target["scale"]}_{model["tag"]}'
 
-            for model in target['models']:
-                print(f'\t\t\tPlotting {model["tag"]} charts...')
-                print()
+                model_df = df[df.model == model['tag']]
+                print(model_df)
+                
+                image_numbers = model_df['num'].to_list()
+
+                # Plot PSNR Scores by image number
+                psnr_scores = model_df['rgb_psnr'].to_list()
+
+                self.__plot_line_chart(
+                    x=image_numbers,
+                    y=psnr_scores,
+                    xlabel='Image Numbers',
+                    ylabel='PSNR (Db)',
+                    ylim=(5,45),
+                    output=f'{out_dir}/{prefix}_PSNR.png'
+                )
+
+
+                # plt.plot(image_numbers, psnr_scores)
+                # plt.xlabel('Epochs')
+                # plt.ylabel('PSNR Scores')
+                # plt.ylim((5, 45))
+                # # plt.xticks(x_values)
+                # plt.grid()
+                # plt.savefig('./test.png')
+                # plt.close()
+
+                # plt.plot()
+                
+
+
+
+
+                
+
+
+
+
 
                 
 

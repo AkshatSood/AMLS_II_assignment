@@ -80,7 +80,8 @@ def main():
     print('#########################################\n')
     plotter = Plotter()
     # plotter.plot_zoomed_imgs()
-    plotter.plot_epoch_psnr_charts()
+    # plotter.plot_epoch_psnr_charts()
+    plotter.plot_evaluation_charts()
 
 if __name__ == "__main__":
     main()
