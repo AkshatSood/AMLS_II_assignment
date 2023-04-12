@@ -11,19 +11,20 @@ from modules.plotter import Plotter
 
 
 def main():
-    # # Acquire Data 
-    # print('\n#########################################')
-    # print('\tDATA ACQUISITION')
-    # print('#########################################\n')
-    # dataset = Dataset()
-    # dataset.download()
+    # Acquire Data 
+    print('\n#########################################')
+    print('\tDATA ACQUISITION')
+    print('#########################################\n')
+    dataset = Dataset()
+    dataset.download()
 
     # Process Data
     print('\n#########################################')
     print('\tDATA PROCESSING')
     print('#########################################\n')
     data_processor = DataProcessing()
-    data_processor.process()
+    data_processor.crop_images()
+    data_processor.create_training_datasets()
 
     # Train FSRCNN models
     print('\n#########################################')

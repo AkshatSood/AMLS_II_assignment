@@ -23,7 +23,7 @@ class DataProcessing():
         for target in DATA_PROCESSING_CROP_TARGETS:
             self.utility.check_and_create_dir(target['output_dir'])
 
-    def __crop_images(self):
+    def crop_images(self):
         """Reads the HR, X2 and X4 images provided in the dataset, crops 
         them into a smaller shape, and saves the new images in the 
         processed folder.  
@@ -72,7 +72,7 @@ class DataProcessing():
 
                 print(f'\t\tSuccessfully cropped the images. Can be found in {target["output_dir"]}')
 
-    def __create_datasets(self, hr_patch_size=324, hr_step=162): 
+    def create_training_datasets(self, hr_patch_size=324, hr_step=162): 
         """Create HDF5 binary data datasets (.h5 files) from the DIV2K image patches
         """
         print('\n=> Creating datasets...')
@@ -89,9 +89,6 @@ class DataProcessing():
 
             lr_img_names = self.utility.get_files_in_dir(target['lr_dir'])
             hr_img_names = self.utility.get_files_in_dir(target['hr_dir'])
-
-            # lr_img_names = lr_img_names[:100]
-            # hr_img_names = hr_img_names[:100]
 
             if(len(lr_img_names) != len(hr_img_names)):
                 print('\t\t\tError! Number of HR and LR images is not the same!')
@@ -156,8 +153,6 @@ class DataProcessing():
 
                 h5f.close()
 
-                
-
             else:
                 h5f = h5py.File(target['h5'], 'w')
                 lr_group = h5f.create_group('lr')
@@ -186,9 +181,3 @@ class DataProcessing():
                 h5f.close()
 
             print(f'\t\tSuccessfully created dataset at {target["h5"]}')
-
-    def process(self):
-        """Run the data processing functions
-        """
-        # self.__crop_images()
-        self.__create_datasets()
