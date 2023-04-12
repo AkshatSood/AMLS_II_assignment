@@ -12,5 +12,5 @@ __pycache__/
 
 # Test files
 test*.py
-*.png
+test*.png
 *.jpeg

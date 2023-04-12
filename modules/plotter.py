@@ -1,13 +1,15 @@
 """Plotter Module"""
 
 import cv2
-from matplotlib import cbook
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+from matplotlib import cbook
 
-from helpers.utility import Utility
+from constants2 import IMAGES_DIR, PLOTS_DIR, TARGETS_EVALUATION
 from helpers.helpers import Helpers
-from constants2 import PLOTS_DIR, IMAGES_DIR, TARGETS_EVALUATION
+from helpers.utility import Utility
+
 
 class Plotter: 
 
@@ -18,14 +20,19 @@ class Plotter:
         self.utility.check_and_create_dir(PLOTS_DIR)
         self.utility.check_and_create_dir(IMAGES_DIR)
 
-    def ___plot_zoomed_img(self, img_path, output_path, shape=(310, 320)):
+        self.image_index = 2
+
+    def ___plot_zoomed_img(self, img_path, output_path):
 
         img = cv2.imread(img_path)
-        # cv2.imshow('other', img)
-        img = self.helpers.crop_to_shape(img, shape)
-        # cv2.imshow('cropped', img)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+
+        # Crop the image to a square
+        h, w, c = img.shape
+        if h < w:
+            img = self.helpers.crop_to_shape(img, (h, h))
+        else:
+            img = self.helpers.crop_to_shape(img, (w, w))
+
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = cv2.flip(img, 0)
 
@@ -56,10 +63,10 @@ class Plotter:
     def plot_zoomed_imgs(self):
         print('\n=> Plotting zoomed images')
         
-        for target in TARGETS_EVALUATION[:1]:
+        for target in TARGETS_EVALUATION:
             print(f'\tPlotting zoomed in images for {target["dataset"]} (X{target["scale"]})...')
 
-            hr_img_name = self.utility.get_imgs_with_tag_from_dir(dir_path=target['hr_dir'], tag='HR')[1]
+            hr_img_name = self.utility.get_imgs_with_tag_from_dir(dir_path=target['hr_dir'], tag='HR')[self.image_index]
             output_name = f'{IMAGES_DIR}/{target["dataset"]}_X{target["scale"]}_{self.utility.get_img_num(hr_img_name)}_HR.png'
             
             self.___plot_zoomed_img(
@@ -68,7 +75,7 @@ class Plotter:
             )
 
             for model in target['models']:
-                up_img_name = self.utility.get_imgs_with_tag_from_dir(dir_path=model['up_dir'], tag=model['tag'])[1]
+                up_img_name = self.utility.get_imgs_with_tag_from_dir(dir_path=model['up_dir'], tag=model['tag'])[self.image_index]
                 output_name = f'{IMAGES_DIR}/{target["dataset"]}_X{target["scale"]}_{self.utility.get_img_num(up_img_name)}_{model["tag"]}.png'
 
                 self.___plot_zoomed_img(
@@ -110,6 +117,24 @@ class Plotter:
         print('\n=> Plotting evaluation charts...')
 
         for target in TARGETS_EVALUATION:
-            print(f'\t=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
+            print(f'\tPlotting charts for {target["dataset"]} (X{target["scale"]}) evaluation...')
+
+            if not self.utility.file_exists(target['eval_file']):
+                print(f'\t\tThe csv file ({target["eval_file"]}) does not exist. Skipping this step.')
+                continue
+                
+            df = pd.read_csv(target['eval_file'])
             
+            
+
+            for model in target['models']:
+                print(f'\t\t\tPlotting {model["tag"]} charts...')
+                print()
+
+                
+
+                
+
+
+
         

@@ -3,11 +3,11 @@
 from modules.data_processing import DataProcessing
 from modules.dataset import Dataset
 from modules.evaluation import Evaluation
+from modules.plotter import Plotter
 from modules.run_models import RunModels
 from modules.train_FSRCNN import FSRCNNTrainer
 from track1.track1 import Track1
 from track2.track2 import Track2
-from modules.plotter import Plotter
 
 
 def main():
@@ -66,21 +66,21 @@ def main():
     # model_runner.run_rrdb_psnr_model()
     # model_runner.run_fsrcnn_model()
     
-    # Evaluate Data
-    print('\n#########################################')
-    print('\tEVALUATION')
-    print('#########################################\n')
-    evaluation = Evaluation()
-    evaluation.evaluate_tests()
-    evaluation.create_evaluation_summary()
+    # # Evaluate Data
+    # print('\n#########################################')
+    # print('\tEVALUATION')
+    # print('#########################################\n')
+    # evaluation = Evaluation()
+    # evaluation.evaluate_tests()
+    # evaluation.create_evaluation_summary()
 
     # Plot images and charts
-    # print('\n#########################################')
-    # print('\tPLOT IMAGES AND CHARTS')
-    # print('#########################################\n')
-    # plotter = Plotter()
+    print('\n#########################################')
+    print('\tPLOT IMAGES AND CHARTS')
+    print('#########################################\n')
+    plotter = Plotter()
     # plotter.plot_zoomed_imgs()
-    # plotter.plot_epoch_psnr_charts()
+    plotter.plot_epoch_psnr_charts()
 
 if __name__ == "__main__":
     main()
