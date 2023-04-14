@@ -1,4 +1,4 @@
-"""Real-ESRGAN Module"""
+"""ESRGAN Module"""
 
 import glob
 import os.path as osp
@@ -11,7 +11,7 @@ from constants import MODEL_RRDB_ESRGAN_X4
 from modules.RRDBNet_arch import RRDBNet
 
 
-class RealESRGAN():
+class ESRGAN():
 
     def __init__(self, device='cuda', model_path=MODEL_RRDB_ESRGAN_X4):
         self.device = torch.device(device)

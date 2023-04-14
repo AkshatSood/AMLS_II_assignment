@@ -13,7 +13,7 @@ from constants2 import (MODEL_RRDB_ESRGAN_X4, MODEL_RRDB_PSNR_X4, PROGRESS_NUM,
 from helpers.helpers import Helpers
 from helpers.utility import Utility
 from modules.FSRCNN import FSRCNN
-from modules.real_esrgan import RealESRGAN
+from modules.ESRGAN import ESRGAN
 from modules.runner import Runner
 
 
@@ -53,8 +53,8 @@ class RunModels:
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
                 for img_name in target_imgs: 
                     out_name = self.utility.replace_img_tag(img_name=img_name, tag=RRDBESRGAN)
-                    real_esrgan = RealESRGAN(device='cuda', model_path=MODEL_RRDB_ESRGAN_X4)
-                    real_esrgan.run(
+                    model = ESRGAN(device='cuda', model_path=MODEL_RRDB_ESRGAN_X4)
+                    model.run(
                         input=f'{target["src_dir"]}/{img_name}',
                         output=f'{RES_DIR}/{out_name}'
                     )
@@ -96,8 +96,8 @@ class RunModels:
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
                 for img_name in target_imgs: 
                     out_name = self.utility.replace_img_tag(img_name=img_name, tag=RRDBPSNR)
-                    real_esrgan = RealESRGAN(device='cuda', model_path=MODEL_RRDB_PSNR_X4)
-                    real_esrgan.run(
+                    model = ESRGAN(device='cuda', model_path=MODEL_RRDB_PSNR_X4)
+                    model.run(
                         input=f'{target["src_dir"]}/{img_name}',
                         output=f'{RES_DIR}/{out_name}'
                     )

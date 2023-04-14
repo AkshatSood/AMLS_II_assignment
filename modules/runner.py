@@ -13,7 +13,7 @@ from helpers.helpers import Helpers
 from helpers.utility import Utility
 from modules.bicubic import BicubicInterpolation
 from modules.FSRCNN import FSRCNN
-from modules.real_esrgan import RealESRGAN
+from modules.ESRGAN import ESRGAN
 from modules.SRCNN import SRCNN
 
 
@@ -67,7 +67,7 @@ class Runner:
 
                 print(f'\t\tSuccessfully upscaled images. Can be found in {target["results_dir"]}')
 
-    def run_real_esrgan(self, targets):
+    def run_esrgan(self, targets):
         for target in targets:
             print(f'\n\t{target["name"]}')
             print(f'\t\tSource directory: {target["src_dir"]}')
@@ -89,8 +89,8 @@ class Runner:
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
 
                 for img_name in target_imgs:
-                    real_esrgan = RealESRGAN(device='cuda', model_path=target['model_path'])
-                    real_esrgan.run(
+                    esrgan = ESRGAN(device='cuda', model_path=target['model_path'])
+                    esrgan.run(
                         input=f'{target["src_dir"]}/{img_name}',
                         output=f'{target["res_dir"]}/{img_name}'
                     )

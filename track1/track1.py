@@ -21,14 +21,14 @@ class Track1:
 
         self.runner.run_bicubic_interpolation(TRACK1_BICUBIC_TARGETS)
 
-    def __run_real_esrgan(self):
-        print("Track 1 - Real-ESRGAN")
+    def __run_esrgan(self):
+        print("Track 1 - ESRGAN")
 
         # Create the results directories if they do not already exist
         for target in TRACK1_ESRGANX4_TARGETS:
             self.utility.check_and_create_dir(target['results_dir'])
 
-        self.runner.run_real_esrgan(TRACK1_ESRGANX4_TARGETS)
+        self.runner.run_esrgan(TRACK1_ESRGANX4_TARGETS)
 
     def __run_srcnn(self):
         print('Track 1 - SRCNN')
@@ -48,9 +48,9 @@ class Track1:
 
         self.runner.run_fsrcnn(TRACK1_FSRCNN_TARGETS)
 
-    def run(self, run_bicubic_interpolation=True, run_real_esrgan=True, run_srcnn=True, run_fsrcnn=True):
-        if run_real_esrgan:
-            self.__run_real_esrgan()
+    def run(self, run_bicubic_interpolation=True, run_esrgan=True, run_srcnn=True, run_fsrcnn=True):
+        if run_esrgan:
+            self.__run_esrgan()
         if run_bicubic_interpolation:
             self.__run_bicubic_interpolation()
         if run_srcnn:
