@@ -7,12 +7,11 @@ import imquality.brisque as brisque
 import numpy as np
 import pandas as pd
 import PIL.Image
-import torch
-from piqa import MS_SSIM
 from skimage.measure import shannon_entropy
 from skimage.metrics import (mean_squared_error, peak_signal_noise_ratio,
                              structural_similarity)
 from torchvision import transforms
+from sewar.full_ref import uqi
 
 from constants import (EVALUATION_DIR, EVALUATION_IMG_SHAPE,
                        EVALUATION_TARGETS, PROGRESS_NUM)
@@ -38,9 +37,6 @@ class Evaluation:
 
     def __compute_ssim(self, hr_img, up_img):
         return structural_similarity(hr_img, up_img)
-    
-    def __compute_ms_ssim(self, hr_img, up_img):
-        return MS_SSIM(up_img, hr_img)
         
     def __compute_brisque(self, img): 
         return brisque.score(img)
@@ -77,7 +73,6 @@ class Evaluation:
         up_y_brisque = self.__get_brisque_score(up_y)
 
         return hr_brisque, up_brisque, hr_y_brisque, up_y_brisque
-
     
     def evaluate_div2k(self):
         
@@ -184,9 +179,8 @@ class Evaluation:
         summary_df.to_csv(summary_output_file, index=False)
         print(f'\n\tSuccessfully print evaluation summary to {summary_output_file}.')
             
-
     def evaluate_tests(self):
-        for target in TARGETS_EVALUATION:
+        for target in TARGETS_EVALUATION[:1]:
             print(f'\n=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
 
             # Get a sorted list of all the high resolution images

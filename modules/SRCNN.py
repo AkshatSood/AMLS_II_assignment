@@ -10,7 +10,6 @@ from constants import MODEL_SRCNN_WEIGHTS
 class SRCNN:
 
     def __init__(self):
-
         self.model = keras.Sequential()
 
         self.model.add(layers.Conv2D(filters=128, kernel_size=(9, 9), kernel_initializer='glorot_uniform',

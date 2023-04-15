@@ -4,7 +4,7 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from matplotlib import cbook
+import seaborn as sns
 
 from constants2 import IMAGES_DIR, PLOTS_DIR, TARGETS_EVALUATION
 from helpers.helpers import Helpers
@@ -122,13 +122,14 @@ class Plotter:
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.ylim(ylim)
+        plt.xlim((0, len(x)))
         # plt.xticks(x_values)
         plt.grid()
         plt.savefig(output, bbox_inches='tight', dpi=400)
         plt.close()
 
     def plot_evaluation_charts(self):
-        print('\n=> Plotting evaluation charts...')
+        print('\n=> Plotting individual evaluation charts...')
 
         for target in TARGETS_EVALUATION[:1]:
             print(f'\tPlotting charts for {target["dataset"]} (X{target["scale"]}) evaluation...')
@@ -149,20 +150,36 @@ class Plotter:
 
                 model_df = df[df.model == model['tag']]
                 print(model_df)
+
+                metric_targets = [
+                    {
+                        'metric': 'RGB_PSNR',
+                        'col_name': 'rgb_psnr',
+                        'y_label': 'PSNR Scores',
+                        'ylim': (0, 50),
+                    },
+                    {
+                        'metric': 'RGB_MSE',
+                        'col_name': 'rgb_mse',
+                        'y_label': 'Mean Square Error',
+                        'ylim': (0, 100),
+                    },
+                    
+                ]
                 
                 image_numbers = model_df['num'].to_list()
 
-                # Plot PSNR Scores by image number
-                psnr_scores = model_df['rgb_psnr'].to_list()
-
-                self.__plot_line_chart(
-                    x=image_numbers,
-                    y=psnr_scores,
-                    xlabel='Image Numbers',
-                    ylabel='PSNR (Db)',
-                    ylim=(5,45),
-                    output=f'{out_dir}/{prefix}_PSNR.png'
-                )
+                for mt in metric_targets:
+                    print(f'\t\t\tPlotting chart for {mt["metric"]}...')
+                    self.__plot_line_chart(
+                        x=image_numbers,
+                        y=model_df[mt['col_name']].to_list(),
+                        xlabel='Image Numbers',
+                        ylabel=mt['y_label'],
+                        ylim=mt['ylim'],
+                        output=f'{out_dir}/{prefix}_{mt["metric"]}.png'
+                    )
+                
 
 
                 # plt.plot(image_numbers, psnr_scores)
@@ -175,8 +192,119 @@ class Plotter:
                 # plt.close()
 
                 # plt.plot()
-                
 
+    def __plot_correlation_matrices(self, df, cols, labels, title, subfolder=None):
+        """Plots the correlation matrices from the given data
+        Plots both the Pearson's correlation and the Spearman's
+        correlation for the provided dataframe. Only the columns
+        specified in 'cols' will be used to plot the matrices.
+        Args:
+            df (pandas.core.frame.DataFrame): Data for correlation matrices
+            cols (list): Dataframe column names which need to be plotted
+            labels (list): Column name labels
+            title (str): Title of the chart
+            subfolder (str, optional): Name of the subfolder where the chart will be stored.
+                Defaults to None.
+        """
+        sns.set(font_scale=0.6)
+
+        df = df[cols]
+
+        pearson_matrix = df.corr(method='pearson')
+        sns.heatmap(
+            pearson_matrix,
+            fmt='.2f',
+            annot=True,
+            linewidths=2,
+            square=True,
+            xticklabels=labels,
+            yticklabels=labels,
+            vmax=1,
+            vmin=-1,
+        )
+        plt.tight_layout()
+        plt.title(f'{title} - Pearson\'s Correlation')
+
+        if subfolder is None:
+            plt.savefig(f'{PLOTS_DIR}/{title} pearson correlation.png', dpi=600)
+        else:
+            self.utility.check_and_create_dir(f'{PLOTS_DIR}/{subfolder}')
+            plt.savefig(f'{PLOTS_DIR}/{subfolder}/{title} pearson correlation.png', dpi=600)
+
+        plt.close()
+
+        spearman_matrix = df.corr(method='spearman')
+        sns.heatmap(
+            spearman_matrix,
+            fmt='.2f',
+            annot=True,
+            linewidths=2,
+            square=True,
+            xticklabels=labels,
+            yticklabels=labels,
+            vmax=1,
+            vmin=-1,
+        )
+        plt.tight_layout()
+        plt.title(f'{title} - Spearman\'s Correlation')
+
+        if subfolder is None:
+            plt.savefig(f'{PLOTS_DIR}/{title} spearman correlation.png', dpi=600)
+        else:
+            self.utility.check_and_create_dir(f'{PLOTS_DIR}/{subfolder}')
+            plt.savefig(f'{PLOTS_DIR}/{subfolder}/{title} spearman correlation.png', dpi=600)
+
+        plt.close()
+
+    def plot_summary_charts(self):
+        print('\n=> Plotting individual evaluation charts...')
+
+        summary_df = None
+        
+        print('\tCreating summary dataframe....')
+        for target in TARGETS_EVALUATION[:6]:
+            if not self.utility.file_exists(target['eval_file']):
+                print(f'\t\tThe csv file ({target["eval_file"]}) does not exist. Skipping this file.')
+                continue
+                
+            if summary_df is not None:
+                df = pd.read_csv(target['eval_file'])
+                summary_df = pd.concat([summary_df, df])
+            else: 
+                summary_df = pd.read_csv(target['eval_file'])
+
+        corr_subfolder = 'correlation'
+
+        # Plot all metrics correlation matrices
+        self.__plot_correlation_matrices(
+            df=summary_df, 
+            cols=['rgb_psnr', 'rgb_mse', 'y_psnr', 'y_mse', 'ssim', 'hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc', 'brisque_perc_y'],
+            labels=['RGB PSNR', 'RGB MSE', 'Y PSNR', 'Y MSE', 'SSIM', 'HR Entropy', 'UP Entropy', 'Entropy %', 'HR Brisque (RGB)', 'UP Brisque (RGB)', 'HR Brisque (Y)', 'UP Brisque (Y)', 'Brisque % (RGB)', 'Brisque % (Y)'], 
+            title='All Metrics',
+            subfolder=corr_subfolder
+        )
+
+        # Plot the FR metrics correlation matrices
+        self.__plot_correlation_matrices(
+            df=summary_df, 
+            cols=['rgb_psnr', 'rgb_mse', 'y_psnr', 'y_mse', 'ssim'],
+            labels=['RGB PSNR', 'RGB MSE', 'Y PSNR', 'Y MSE', 'SSIM'], 
+            title='FR Metrics',
+            subfolder=corr_subfolder
+        )
+
+        # Plot the NR metrics correlation matrices
+        self.__plot_correlation_matrices(
+            df=summary_df, 
+            cols=['hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc', 'brisque_perc_y'],
+            labels=['HR Entropy', 'UP Entropy', 'Entropy %', 'HR Brisque (RGB)', 'UP Brisque (RGB)', 'HR Brisque (Y)', 'UP Brisque (Y)', 'Brisque % (RGB)', 'Brisque % (Y)'], 
+            title='NR Metrics',
+            subfolder=corr_subfolder
+        )
+
+        
+            
+        
 
 
 
