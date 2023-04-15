@@ -37,7 +37,10 @@ class Evaluation:
 
     def __compute_ssim(self, hr_img, up_img):
         return structural_similarity(hr_img, up_img)
-        
+
+    def __compute_uqi(self, hr_img, up_img):
+        return uqi(hr_img, up_img)
+
     def __compute_brisque(self, img): 
         return brisque.score(img)
 
@@ -180,7 +183,7 @@ class Evaluation:
         print(f'\n\tSuccessfully print evaluation summary to {summary_output_file}.')
             
     def evaluate_tests(self):
-        for target in TARGETS_EVALUATION[:1]:
+        for target in TARGETS_EVALUATION:
             print(f'\n=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
 
             # Get a sorted list of all the high resolution images
@@ -226,6 +229,7 @@ class Evaluation:
                     ssim = self.__compute_ssim(hr_img=hr_img_y, up_img=up_img_y)
                     y_mse = self.__compute_mse(hr_img=hr_img_y, up_img=up_img_y)
                     y_psnr = self.__compute_psnr(hr_img=hr_img_y, up_img=up_img_y)
+                    uqi = self.__compute_uqi(hr_img=hr_img, up_img=up_img)
 
                     hr_brisque, up_brisque, hr_y_brisque, up_y_brisque = self.__compute_brisque_score(
                         hr_path=f'{target["hr_dir"]}/{hr_img_name}', 
@@ -250,6 +254,7 @@ class Evaluation:
                         'y_psnr': y_psnr, 
                         'y_mse': y_mse,
                         'ssim': ssim,
+                        'uqi': uqi,
                         'hr_entropy': hr_entropy, 
                         'up_entropy': up_entropy,
                         'entropy_perc': entropy_perc,
@@ -300,6 +305,9 @@ class Evaluation:
                     'ssim_min': metrics_df.loc[metrics_df['model'] == model['tag']]['ssim'].min(),
                     'ssim_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['ssim'].mean(),
                     'ssim_max': metrics_df.loc[metrics_df['model'] == model['tag']]['ssim'].max(),
+                    'uqi_min': metrics_df.loc[metrics_df['model'] == model['tag']]['uqi'].min(),
+                    'uqi_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['uqi'].mean(),
+                    'uqi_max': metrics_df.loc[metrics_df['model'] == model['tag']]['uqi'].max(),
                     'entropy_perc_min': metrics_df.loc[metrics_df['model'] == model['tag']]['entropy_perc'].min(),
                     'entropy_perc_avg': metrics_df.loc[metrics_df['model'] == model['tag']]['entropy_perc'].mean(),
                     'entropy_perc_max': metrics_df.loc[metrics_df['model'] == model['tag']]['entropy_perc'].max(),

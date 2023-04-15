@@ -72,7 +72,7 @@ def main():
     print('#########################################\n')
     evaluation = Evaluation()
     evaluation.evaluate_tests()
-    # evaluation.create_evaluation_summary()
+    evaluation.create_evaluation_summary()
 
     # # Plot images and charts
     # print('\n#########################################')
