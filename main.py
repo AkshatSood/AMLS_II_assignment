@@ -66,23 +66,23 @@ def main():
     # model_runner.run_rrdb_psnr_model()
     # model_runner.run_fsrcnn_model()
     
-    # Evaluate Data
-    print('\n#########################################')
-    print('\tEVALUATION')
-    print('#########################################\n')
-    evaluation = Evaluation()
-    evaluation.evaluate_tests()
-    evaluation.create_evaluation_summary()
-
-    # # Plot images and charts
+    # # Evaluate Data
     # print('\n#########################################')
-    # print('\tPLOT IMAGES AND CHARTS')
+    # print('\tEVALUATION')
     # print('#########################################\n')
-    # plotter = Plotter()
-    # # plotter.plot_zoomed_imgs()
-    # # plotter.plot_epoch_psnr_charts()
-    # plotter.plot_summary_charts()
-    # # plotter.plot_evaluation_charts()
+    # evaluation = Evaluation()
+    # evaluation.evaluate_tests()
+    # evaluation.create_evaluation_summary()
+
+    # Plot images and charts
+    print('\n#########################################')
+    print('\tPLOT IMAGES AND CHARTS')
+    print('#########################################\n')
+    plotter = Plotter()
+    # plotter.plot_zoomed_imgs()
+    # plotter.plot_epoch_psnr_charts()
+    plotter.plot_summary_charts()
+    # plotter.plot_evaluation_charts()
 
 if __name__ == "__main__":
     main()

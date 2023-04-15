@@ -114,9 +114,6 @@ class Plotter:
 
         print(f'\tPlotted chart at {file_name}')
 
-    def plot_correlation_charts(self):
-        pass 
-
     def __plot_line_chart(self, x, y, xlabel, ylabel, ylim, output):
         plt.plot(x, y)
         plt.xlabel(xlabel)
@@ -193,7 +190,7 @@ class Plotter:
 
                 # plt.plot()
 
-    def __plot_correlation_matrices(self, df, cols, labels, title, subfolder=None):
+    def __plot_correlation_matrices(self, df, cols, labels, title, font_scale, subfolder=None):
         """Plots the correlation matrices from the given data
         Plots both the Pearson's correlation and the Spearman's
         correlation for the provided dataframe. Only the columns
@@ -203,10 +200,11 @@ class Plotter:
             cols (list): Dataframe column names which need to be plotted
             labels (list): Column name labels
             title (str): Title of the chart
+            font_scale (float): The font scale to be used by Seaborn
             subfolder (str, optional): Name of the subfolder where the chart will be stored.
                 Defaults to None.
         """
-        sns.set(font_scale=0.6)
+        sns.set(font_scale=font_scale)
 
         df = df[cols]
 
@@ -278,27 +276,30 @@ class Plotter:
         # Plot all metrics correlation matrices
         self.__plot_correlation_matrices(
             df=summary_df, 
-            cols=['rgb_psnr', 'rgb_mse', 'y_psnr', 'y_mse', 'ssim', 'hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc', 'brisque_perc_y'],
-            labels=['RGB PSNR', 'RGB MSE', 'Y PSNR', 'Y MSE', 'SSIM', 'HR Entropy', 'UP Entropy', 'Entropy %', 'HR Brisque (RGB)', 'UP Brisque (RGB)', 'HR Brisque (Y)', 'UP Brisque (Y)', 'Brisque % (RGB)', 'Brisque % (Y)'], 
+            cols=['rgb_psnr', 'y_psnr', 'rgb_mse' , 'y_mse', 'ssim', 'uqi', 'hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'brisque_perc', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc_y'],
+            labels=['RGB PSNR', 'Y PSNR', 'RGB MSE', 'Y MSE', 'SSIM', 'UQI', 'HR Entropy', 'UP Entropy', 'Entropy %', 'HR BRISQUE (RGB)', 'UP BRISQUE (RGB)', 'BRISQUE % (RGB)', 'HR BRISQUE (Y)', 'UP BRISQUE (Y)', 'BRISQUE % (Y)'], 
             title='All Metrics',
+            font_scale=0.6,
             subfolder=corr_subfolder
         )
 
         # Plot the FR metrics correlation matrices
         self.__plot_correlation_matrices(
             df=summary_df, 
-            cols=['rgb_psnr', 'rgb_mse', 'y_psnr', 'y_mse', 'ssim'],
-            labels=['RGB PSNR', 'RGB MSE', 'Y PSNR', 'Y MSE', 'SSIM'], 
-            title='FR Metrics',
+            cols=['rgb_psnr', 'y_psnr', 'rgb_mse' , 'y_mse', 'ssim', 'uqi'],
+            labels=['PSNR (RGB)', 'PSNR (Y)', 'MSE (RGB)', 'MSE (Y)', 'SSIM', 'UQI'], 
+            title='Full-Reference Metrics',
+            font_scale=0.9,
             subfolder=corr_subfolder
         )
 
         # Plot the NR metrics correlation matrices
         self.__plot_correlation_matrices(
             df=summary_df, 
-            cols=['hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc', 'brisque_perc_y'],
-            labels=['HR Entropy', 'UP Entropy', 'Entropy %', 'HR Brisque (RGB)', 'UP Brisque (RGB)', 'HR Brisque (Y)', 'UP Brisque (Y)', 'Brisque % (RGB)', 'Brisque % (Y)'], 
-            title='NR Metrics',
+            cols=['hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'brisque_perc', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc_y'],
+            labels=['HR Entropy', 'UP Entropy', 'Entropy %', 'HR BRISQUE (RGB)', 'UP BRISQUE (RGB)', 'BRISQUE % (RGB)', 'HR BRISQUE (Y)', 'UP BRISQUE (Y)', 'BRISQUE % (Y)'], 
+            title='No-Reference Metrics',
+            font_scale=0.8,
             subfolder=corr_subfolder
         )
 
