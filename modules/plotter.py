@@ -20,7 +20,7 @@ class Plotter:
         self.utility.check_and_create_dir(PLOTS_DIR)
         self.utility.check_and_create_dir(IMAGES_DIR)
 
-        self.image_index = 2
+        self.image_index = 51
 
     def ___plot_zoomed_img(self, img_path, output_path):
 
