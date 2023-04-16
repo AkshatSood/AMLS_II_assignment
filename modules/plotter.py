@@ -97,7 +97,7 @@ class Plotter:
         x_values = [e for e in range(0, 20)]
 
         fig = plt.gcf()
-        fig.set_size_inches(9, 5)
+        fig.set_size_inches(10, 4)
 
         for label, scores in plot_targets.items():
             plt.plot(x_values, scores, label=label)
@@ -106,6 +106,7 @@ class Plotter:
         plt.xlabel('Epochs')
         plt.ylabel('PSNR Scores')
         plt.xticks(x_values)
+        plt.xlim((0, 19))
         plt.grid()
         plt.legend()
         file_name = f'{PLOTS_DIR}/FSRCNN Training PSNR Scores.png'
@@ -146,7 +147,7 @@ class Plotter:
                 prefix = f'{target["dataset"]}_X{target["scale"]}_{model["tag"]}'
 
                 model_df = df[df.model == model['tag']]
-                print(model_df)
+                # print(model_df)
 
                 metric_targets = [
                     {
@@ -176,19 +177,6 @@ class Plotter:
                         ylim=mt['ylim'],
                         output=f'{out_dir}/{prefix}_{mt["metric"]}.png'
                     )
-                
-
-
-                # plt.plot(image_numbers, psnr_scores)
-                # plt.xlabel('Epochs')
-                # plt.ylabel('PSNR Scores')
-                # plt.ylim((5, 45))
-                # # plt.xticks(x_values)
-                # plt.grid()
-                # plt.savefig('./test.png')
-                # plt.close()
-
-                # plt.plot()
 
     def __plot_correlation_matrices(self, df, cols, labels, title, font_scale, subfolder=None):
         """Plots the correlation matrices from the given data
@@ -255,12 +243,12 @@ class Plotter:
         plt.close()
 
     def plot_summary_charts(self):
-        print('\n=> Plotting individual evaluation charts...')
+        print('\n=> Plotting summary charts...')
 
         summary_df = None
         
         print('\tCreating summary dataframe....')
-        for target in TARGETS_EVALUATION[:6]:
+        for target in TARGETS_EVALUATION:
             if not self.utility.file_exists(target['eval_file']):
                 print(f'\t\tThe csv file ({target["eval_file"]}) does not exist. Skipping this file.')
                 continue
@@ -274,38 +262,105 @@ class Plotter:
         corr_subfolder = 'correlation'
 
         # Plot all metrics correlation matrices
-        self.__plot_correlation_matrices(
-            df=summary_df, 
-            cols=['rgb_psnr', 'y_psnr', 'rgb_mse' , 'y_mse', 'ssim', 'uqi', 'hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'brisque_perc', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc_y'],
-            labels=['RGB PSNR', 'Y PSNR', 'RGB MSE', 'Y MSE', 'SSIM', 'UQI', 'HR Entropy', 'UP Entropy', 'Entropy %', 'HR BRISQUE (RGB)', 'UP BRISQUE (RGB)', 'BRISQUE % (RGB)', 'HR BRISQUE (Y)', 'UP BRISQUE (Y)', 'BRISQUE % (Y)'], 
-            title='All Metrics',
-            font_scale=0.6,
-            subfolder=corr_subfolder
-        )
+        print('\tPlotting all metrics correlation matrix....')
+        # self.__plot_correlation_matrices(
+        #     df=summary_df, 
+        #     cols=['rgb_psnr', 'y_psnr', 'rgb_mse' , 'y_mse', 'ssim', 'uqi', 'hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'brisque_perc', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc_y'],
+        #     labels=['RGB PSNR', 'Y PSNR', 'RGB MSE', 'Y MSE', 'SSIM', 'UQI', 'HR Entropy', 'UP Entropy', 'Entropy %', 'HR BRISQUE (RGB)', 'UP BRISQUE (RGB)', 'BRISQUE % (RGB)', 'HR BRISQUE (Y)', 'UP BRISQUE (Y)', 'BRISQUE % (Y)'], 
+        #     title='All Metrics',
+        #     font_scale=0.6,
+        #     subfolder=corr_subfolder
+        # )
 
         # Plot the FR metrics correlation matrices
-        self.__plot_correlation_matrices(
-            df=summary_df, 
-            cols=['rgb_psnr', 'y_psnr', 'rgb_mse' , 'y_mse', 'ssim', 'uqi'],
-            labels=['PSNR (RGB)', 'PSNR (Y)', 'MSE (RGB)', 'MSE (Y)', 'SSIM', 'UQI'], 
-            title='Full-Reference Metrics',
-            font_scale=0.9,
-            subfolder=corr_subfolder
-        )
+        print('\tPlotting full-reference metrics correlation matrix....')
+        # self.__plot_correlation_matrices(
+        #     df=summary_df, 
+        #     cols=['rgb_psnr', 'y_psnr', 'rgb_mse' , 'y_mse', 'ssim', 'uqi'],
+        #     labels=['PSNR (RGB)', 'PSNR (Y)', 'MSE (RGB)', 'MSE (Y)', 'SSIM', 'UQI'], 
+        #     title='Full-Reference Metrics',
+        #     font_scale=0.9,
+        #     subfolder=corr_subfolder
+        # )
 
         # Plot the NR metrics correlation matrices
-        self.__plot_correlation_matrices(
-            df=summary_df, 
-            cols=['hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'brisque_perc', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc_y'],
-            labels=['HR Entropy', 'UP Entropy', 'Entropy %', 'HR BRISQUE (RGB)', 'UP BRISQUE (RGB)', 'BRISQUE % (RGB)', 'HR BRISQUE (Y)', 'UP BRISQUE (Y)', 'BRISQUE % (Y)'], 
-            title='No-Reference Metrics',
-            font_scale=0.8,
-            subfolder=corr_subfolder
-        )
+        print('\tPlotting no-reference metrics correlation matrix....')
+        # self.__plot_correlation_matrices(
+        #     df=summary_df, 
+        #     cols=['hr_entropy', 'up_entropy', 'entropy_perc', 'hr_brisque', 'up_brisque', 'brisque_perc', 'hr_y_brisque', 'up_y_brisque', 'brisque_perc_y'],
+        #     labels=['HR Entropy', 'UP Entropy', 'Entropy %', 'HR BRISQUE (RGB)', 'UP BRISQUE (RGB)', 'BRISQUE % (RGB)', 'HR BRISQUE (Y)', 'UP BRISQUE (Y)', 'BRISQUE % (Y)'], 
+        #     title='No-Reference Metrics',
+        #     font_scale=0.8,
+        #     subfolder=corr_subfolder
+        # )
 
-        
-            
-        
+        # Plot FSRCNN plots
+        print('\tPlotting FSRCNN metrics plots....')
+        metrics = [
+            {   
+                'name': 'Peak Signal to Noise Ratio (PSNR)',
+                'col': 'y_psnr'
+            },
+            {   
+                'name': 'Mean Square Error (MSE)',
+                'col': 'y_mse'
+            },
+            {   
+                'name': 'Structural Similarity (SSIM)',
+                'col': 'ssim'
+            },
+            {   
+                'name': 'Universal Quality Image Index (UQI)',
+                'col': 'uqi'
+            },
+            {   
+                'name': 'Image Entropy',
+                'col': 'up_entropy'
+            },
+        ]
+
+        for metric in metrics:
+            fig, ax = plt.subplots(figsize=[10, 5])
+
+            for scale in [2,3,4]:
+                df = summary_df[(summary_df.model == 'FSRCNN') & (summary_df.dataset == 'BSD100') & (summary_df.scale == scale)]
+                x = df['num'].to_list()
+                y = df[metric['col']].to_list()
+
+                plt.plot(x, y, label=f'FSRCNN - X{scale}')
+                plt.xlabel('BSD100 Image Numbers')
+                plt.ylabel(metric['name'])
+                # plt.ylim(ylim)
+                plt.xlim((0, len(x)))
+
+            plt.grid()
+            plt.legend()
+            plt.savefig(f'{PLOTS_DIR}/FSRCNN {metric["name"]}.png', bbox_inches='tight', dpi=400)
+            plt.close()
+
+        # Plot model comparison
+        print('\tPlotting model comparison charts....')
+        models = ['SRCNN', 'FSRCNN', 'FSRCNNT1', 'FSRCNNT2', 'RRDBESRGAN', 'RRDBPSNR']
+
+        for metric in metrics:
+            fig, ax = plt.subplots(figsize=[10, 5])
+
+            for model in models:
+                df = summary_df[(summary_df.model == model) & (summary_df.dataset == 'BSD100') & (summary_df.scale == 4)]
+                x = df['num'].to_list()
+                y = df[metric['col']].to_list()
+
+                plt.plot(x, y, label=model)
+                plt.xlabel('BSD100 Image Numbers')
+                plt.ylabel(metric['name'])
+                # plt.ylim(ylim)
+                plt.xlim((0, len(x)))
+
+            plt.grid()
+            plt.legend()
+            plt.savefig(f'{PLOTS_DIR}/BSD100 Model Comparison {metric["name"]}.png', bbox_inches='tight', dpi=400)
+            plt.close()
+
 
 
 

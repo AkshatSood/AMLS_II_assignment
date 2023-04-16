@@ -79,9 +79,9 @@ def main():
     print('\tPLOT IMAGES AND CHARTS')
     print('#########################################\n')
     plotter = Plotter()
-    plotter.plot_zoomed_imgs()
+    # plotter.plot_zoomed_imgs()
     # plotter.plot_epoch_psnr_charts()
-    # plotter.plot_summary_charts()
+    plotter.plot_summary_charts()
     # plotter.plot_evaluation_charts()
 
 if __name__ == "__main__":
