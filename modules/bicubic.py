@@ -7,8 +7,15 @@ import numpy as np
 
 
 class BicubicInterpolation:
+    """Provides functionality to perform bicubic interpolation
+    Uses the code provided at 
+    https://www.geeksforgeeks.org/python-opencv-bicubic-interpolation-for-resizing-image/
+    as reference to create the class.
+    """
 
     def __interpolation_kernel(self, s, a):
+        """Interpolation kernal for bicubic interpolation
+        """
         if (abs(s) >= 0) & (abs(s) <= 1):
             return (a+2)*(abs(s)**3)-(a+3)*(abs(s)**2)+1
 
@@ -17,6 +24,17 @@ class BicubicInterpolation:
         return 0
 
     def __apply_padding(self, img, H, W, C):
+        """Applies padding to the image
+
+        Args:
+            img (numpy.ndarray): Raw image
+            H (int): Height of the image
+            W (int): Width of the image
+            C (int): Number of channels in the image
+
+        Returns:
+            numpy.ndarray: Image with padding
+        """
         zimg = np.zeros((H+4, W+4, C))
         zimg[2:H+2, 2:W+2, :C] = img
 
@@ -35,6 +53,16 @@ class BicubicInterpolation:
         return zimg
 
     def __bicubic_interpolation(self, img, scale, a):
+        """Upscales the provided image with bicubic interpolation
+
+        Args:
+            img (numpy.ndarray): Image to be interpolated
+            scale (int): Scaling factor
+            a (float): Interpolation coefficient (between -0.5 and -0.75) 
+
+        Returns:
+            numpy.ndarray: Interpolated image
+        """
 
         # Get image size
         height, width, channels = img.shape
@@ -96,6 +124,14 @@ class BicubicInterpolation:
         return interpolated_img
 
     def run(self, input, output, scale):
+        """Read the image from the provided path, upscale it and 
+        save the image at the provided output path
+
+        Args:
+            input (str): Image path
+            output (str): Path where the interpolated image needs to be stored
+            scale (int): Scaling factor
+        """
         img = cv2.imread(input)
         a = -1/2
         interpolated_img = self.__bicubic_interpolation(img, scale, a)

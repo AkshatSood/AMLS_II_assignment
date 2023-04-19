@@ -18,13 +18,17 @@ from modules.SRCNN import SRCNN
 
 
 class Runner:
+    """Runs the various models in the project
+    Deprecated
+    """
 
     def __init__(self):
         self.utility = Utility()
         self.helpers = Helpers()
 
     def run_bicubic_interpolation(self, targets):
-        """Run bicubic interpolation in the image files provided
+        """Upscale the images using bicubic interpolation
+        Deprecated
 
         Args:
             targets (list): list of directories with images
@@ -68,6 +72,14 @@ class Runner:
                 print(f'\t\tSuccessfully upscaled images. Can be found in {target["results_dir"]}')
 
     def run_esrgan(self, targets):
+        """Upscale the target images with the RRDB (ESRGAN,PSNR) models
+        The code provided at https://github.com/xinntao/ESRGAN
+        is used as reference
+        Deprecated
+
+        Args:
+            targets (list): List of targets
+        """
         for target in targets:
             print(f'\n\t{target["name"]}')
             print(f'\t\tSource directory: {target["src_dir"]}')
@@ -104,6 +116,14 @@ class Runner:
                 print(f'\t\tSuccessfully upscaled images. Can be found in {target["results_dir"]}')
 
     def run_srcnn(self, targets):
+        """Upscale the target images using the SRCNN model
+        The code provided at https://github.com/MarkPrecursor/SRCNN-keras
+        is used as reference
+        Deprecated
+
+        Args:
+            targets (list): List of targets to upscale
+        """
         for target in targets:
             print(f'\n\t{target["name"]}')
             print(f'\t\tSource directory: {target["src_dir"]}')
@@ -159,6 +179,14 @@ class Runner:
                 print(f'\t\tSuccessfully processed images. Can be found in {target["results_dir"]}')
 
     def run_fsrcnn(self, targets):
+        """Upscale the target images with the FSRCNN model
+        The code provided at https://github.com/yjn870/FSRCNN-pytorch 
+        has been used as a reference
+        Deprecated
+
+        Args:
+            targets (list): List of targets
+        """
         cudnn.benchmark = True
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 

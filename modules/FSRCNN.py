@@ -6,6 +6,13 @@ from torch import nn
 
 
 class FSRCNN(nn.Module):
+    """Implements the FSRCNN model
+    The code provided at https://github.com/yjn870/FSRCNN-pytorch
+    is used as reference 
+
+    Args:
+        nn (torch): Extends torch.Module
+    """
     def __init__(self, scale_factor, num_channels=1, d=56, s=12, m=4):
         super(FSRCNN, self).__init__()
         self.first_part = nn.Sequential(

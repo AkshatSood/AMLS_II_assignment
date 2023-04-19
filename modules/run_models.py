@@ -14,19 +14,23 @@ from helpers.helpers import Helpers
 from helpers.utility import Utility
 from modules.FSRCNN import FSRCNN
 from modules.ESRGAN import ESRGAN
-from modules.runner import Runner
-
 
 class RunModels:
+    """Run the various models in the project
+    """
 
     def __init__(self):
         self.utility = Utility()
         self.helpers = Helpers()
-        self.runner = Runner()
 
     def run_rrdb_esrgan_model(self):
+        """Upscale the test dataset images with RRDBESRGAN model
+        The code provided at https://github.com/xinntao/ESRGAN
+        has been used as reference
+        """
         print('\n=> Running RRDB (ESRGAN) on test datasets...')
-
+        
+        # Loop over all the targets
         for step, target in enumerate(TARGETS_RRDB):
             print(f'\n\t[{step+1}/{len(TARGETS_RRDB)}] Running RRDB (ESRGAN) (X4) on {target["dataset"]} dataset...')
 
@@ -37,19 +41,20 @@ class RunModels:
 
             self.utility.check_and_create_dir(RES_DIR)
 
+            # Get a list of target images and filter the ones that have already been upscaled
             target_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['src_dir'], tag=target['src_tag'])
-
             result_imgs = self.utility.get_files_in_dir(RES_DIR)
-
             target_imgs = self.utility.filter_names_ignore_tag(src=target_imgs, res=result_imgs)
 
             if len(target_imgs) == 0:
                 print('\t\tAlready upscaled images. Skipping this step.')
             else:
+                # Keep track of the progress
                 start_time = time.time()
                 idx = 1
                 checkpoint = int(len(target_imgs)/PROGRESS_NUM)
 
+                # Upscale each image
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
                 for img_name in target_imgs: 
                     out_name = self.utility.replace_img_tag(img_name=img_name, tag=RRDBESRGAN)
@@ -68,8 +73,13 @@ class RunModels:
                 print(f'\t\tSuccessfully upscaled images in {self.utility.get_time_taken_str(start_time)}')
 
     def run_rrdb_psnr_model(self):
+        """Upscale the test dataset images with the RRDBPSNR model
+        The code provided at https://github.com/xinntao/ESRGAN
+        has been used as reference
+        """
         print('\n=> Running RRDB (PSNR) on test datasets...')
 
+        # Loop over all the targets
         for step, target in enumerate(TARGETS_RRDB):
             print(f'\n\t[{step+1}/{len(TARGETS_RRDB)}] Running RRDB (PSNR) (X4) on {target["dataset"]} dataset...')
 
@@ -80,10 +90,9 @@ class RunModels:
 
             self.utility.check_and_create_dir(RES_DIR)
 
+            # Get a list of all the target images, and filter the ones that have already been upscaled
             target_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['src_dir'], tag=target['src_tag'])
-
             result_imgs = self.utility.get_files_in_dir(RES_DIR)
-
             target_imgs = self.utility.filter_names_ignore_tag(src=target_imgs, res=result_imgs)
 
             if len(target_imgs) == 0:
@@ -93,6 +102,7 @@ class RunModels:
                 idx = 1
                 checkpoint = int(len(target_imgs)/PROGRESS_NUM)
 
+                # Loop over all the target images
                 print(f'\t\tUpscaling {len(target_imgs)} images...')
                 for img_name in target_imgs: 
                     out_name = self.utility.replace_img_tag(img_name=img_name, tag=RRDBPSNR)
@@ -111,6 +121,10 @@ class RunModels:
                 print(f'\t\tSuccessfully upscaled images in {self.utility.get_time_taken_str(start_time)}')
     
     def run_fsrcnn_model(self):
+        """Upscale test dataset images using the FSRCNN models
+        The code provided at https://github.com/yjn870/FSRCNN-pytorch
+        has been used as reference
+        """
         print('\n=> Running FSRCNN Model on test datasets...')
 
         for step, target in enumerate(TARGETS_FSRCNN):
@@ -121,15 +135,15 @@ class RunModels:
 
             self.utility.check_and_create_dir(target['res_dir'])
 
+            # Get a list of images to be upscaled and filter the ones that have already been upscaled
             target_imgs = self.utility.get_imgs_with_tag_from_dir(dir_path=target['src_dir'], tag=target['src_tag'])
-
             result_imgs = self.utility.get_files_in_dir(target['res_dir'])
-
             target_imgs = self.utility.filter_names_ignore_tag(src=target_imgs, res=result_imgs)
 
             if len(target_imgs) == 0:
                 print('\t\tAlready upscaled images. Skipping this step.')
             else:
+                # Keep track of the progress
                 start_time = time.time()
                 idx = 1
                 checkpoint = int(len(target_imgs)/PROGRESS_NUM)
@@ -137,6 +151,7 @@ class RunModels:
                 cudnn.benchmark = True
                 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
+                # Load the FSRCNN model, and initialize with the saved weights
                 fsrcnn = FSRCNN(scale_factor=target['scale']).to(device)
 
                 state_dict = fsrcnn.state_dict()
@@ -160,7 +175,9 @@ class RunModels:
                          img.height * target['scale']),
                         resample=pil_image.BICUBIC)
 
+                    # Get the normalised YCBCR colour space image
                     img, _ = self.helpers.preprocess_for_fsrcnn(img, device)
+                    # Get the YCBCR colour space image
                     _, ycbcr_img = self.helpers.preprocess_for_fsrcnn(bicubic_img, device)
 
                     with torch.no_grad():

@@ -7,8 +7,13 @@ from modules.runner import Runner
 
 
 class Track1:
+    """Run the models on Track 1 validation dataset
+    Deprecated
+    """
 
     def __init__(self):
+        """Default constructor
+        """
         self.utility = Utility()
         self.runner = Runner()
 
@@ -49,6 +54,15 @@ class Track1:
         self.runner.run_fsrcnn(TRACK1_FSRCNN_TARGETS)
 
     def run(self, run_bicubic_interpolation=True, run_esrgan=True, run_srcnn=True, run_fsrcnn=True):
+        """Run the models on the Track 1 validation dataset
+        deprecated
+
+        Args:
+            run_bicubic_interpolation (bool, optional): Run bicubic interpolation. Defaults to True.
+            run_esrgan (bool, optional): Run ESRGAN. Defaults to True.
+            run_srcnn (bool, optional): Run SRCNN. Defaults to True.
+            run_fsrcnn (bool, optional): Run FSRCNN. Defaults to True.
+        """
         if run_esrgan:
             self.__run_esrgan()
         if run_bicubic_interpolation:

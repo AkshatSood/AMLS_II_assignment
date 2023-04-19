@@ -15,19 +15,40 @@ from helpers.utility import Utility
 from constants import TRAIN_FSRCNN_TARGETS
 
 class FSRCNNTrainer:
+    """Train the FSRCNN model
+    The code provided at https://github.com/yjn870/FSRCNN-pytorch
+    is used as reference
+    """
 
     def __init__(self):
+        """Default constructor
+        """
         self.helper = Helpers()
         self.utility = Utility()
 
     def __train_model(self, train_dataset_file, validation_dataset_file, output_dir, scale, num_workers, prefix, learning_rate=1e-3, batch_size=16, num_epochs=20, seed=42):
+        """Train the FSRCNN model
+
+        Args:
+            train_dataset_file (str): Path to the training .h5 file
+            validation_dataset_file (str): Path to the validation .h5 file
+            output_dir (str): Output directory to save the weights in
+            scale (int): Scaling factor
+            num_workers (int): Num workers
+            prefix (str): Prefix to attach to the saved files
+            learning_rate (float, optional): Learning rate. Defaults to 1e-3.
+            batch_size (int, optional): Batch size. Defaults to 16.
+            num_epochs (int, optional): Number of epochs to run. Defaults to 20.
+            seed (int, optional): Seed. Defaults to 42.
+        """
         cudnn.benchmark = True
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
         torch.manual_seed(seed)
 
+        # Initialize the model
         model = FSRCNN(scale_factor=scale).to(device)
-
+            
         criterion = nn.MSELoss()
         optimizer = optim.Adam([
             {'params': model.first_part.parameters()},
@@ -35,8 +56,8 @@ class FSRCNNTrainer:
             {'params': model.last_part.parameters(), 'lr': learning_rate * 0.1}
         ], lr=learning_rate)
 
+        # Load the training and validation datasets
         print('\t\tLoading datasets...')
-
         train_dataset = FSRCNNTrainData(train_dataset_file)
         train_dataloader = DataLoader(dataset=train_dataset,
                                     batch_size=batch_size,
@@ -45,13 +66,13 @@ class FSRCNNTrainer:
                                     pin_memory=True)
         validation_dataset = FSRCNNValidationDataset(validation_dataset_file)
         validation_dataloader = DataLoader(dataset=validation_dataset, batch_size=1)
-
         print('\t\tLoaded datasets.')
 
         best_weights = copy.deepcopy(model.state_dict())
         best_epoch = 0
         best_psnr = 0.0
 
+        # Run the training epochs
         for epoch in range(num_epochs):
             print(f'\t\t\t[{epoch}/{num_epochs-1}] Starting epoch training...')
             model.train()
@@ -97,14 +118,18 @@ class FSRCNNTrainer:
                 best_psnr = epoch_psnr.avg
                 best_weights = copy.deepcopy(model.state_dict())
 
+        # Save the best training epoch 
         best_output = os.path.join(output_dir, f'{prefix}_best.pth')
         print('\t\tBest Epoch: {}, PSNR: {:.2f}'.format(best_epoch, best_psnr))
         torch.save(best_weights, best_output)
         print(f'\t\tWeights are saved at {best_output}')
 
     def train_models(self):
+        """Train the FSRCNN models with the provided config
+        """
         print('\n>=> Traing FSRCNN models...')
 
+        # Loop over all the training targets - i.e., individual models to train
         for target in TRAIN_FSRCNN_TARGETS:
             print(f'\tTraining {target["name"]} FSRCNN model...')
 

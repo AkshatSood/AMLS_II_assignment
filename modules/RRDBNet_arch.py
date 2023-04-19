@@ -6,8 +6,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# TODO: Add license and source comments
-
 
 def make_layer(block, n_layers):
     layers = []
@@ -17,6 +15,13 @@ def make_layer(block, n_layers):
 
 
 class ResidualDenseBlock_5C(nn.Module):
+    """Implements the RRDB architecture with 5 convolution layers
+    The code provided at https://github.com/xinntao/ESRGAN
+    has been used as reference
+
+    Args:
+        nn (torch.nn): Extends torch.nn.Module
+    """
     def __init__(self, nf=64, gc=32, bias=True):
         super(ResidualDenseBlock_5C, self).__init__()
         # gc: growth channel, i.e. intermediate channels
@@ -26,9 +31,6 @@ class ResidualDenseBlock_5C(nn.Module):
         self.conv4 = nn.Conv2d(nf + 3 * gc, gc, 3, 1, 1, bias=bias)
         self.conv5 = nn.Conv2d(nf + 4 * gc, nf, 3, 1, 1, bias=bias)
         self.lrelu = nn.LeakyReLU(negative_slope=0.2, inplace=True)
-
-        # initialization
-        # mutil.initialize_weights([self.conv1, self.conv2, self.conv3, self.conv4, self.conv5], 0.1)
 
     def forward(self, x):
         x1 = self.lrelu(self.conv1(x))
@@ -40,7 +42,10 @@ class ResidualDenseBlock_5C(nn.Module):
 
 
 class RRDB(nn.Module):
-    '''Residual in Residual Dense Block'''
+    """Implements the Residual in Residual Dense Block
+    The code provided at https://github.com/xinntao/ESRGAN
+    is used as reference 
+    """
 
     def __init__(self, nf, gc=32):
         super(RRDB, self).__init__()
@@ -56,6 +61,10 @@ class RRDB(nn.Module):
 
 
 class RRDBNet(nn.Module):
+    """Creates the RRDB network
+    The code provided at https://github.com/xinntao/ESRGAN
+    has been used as reference
+    """
     def __init__(self, in_nc, out_nc, nf, nb, gc=32):
         super(RRDBNet, self).__init__()
         RRDB_block_f = functools.partial(RRDB, nf=nf, gc=gc)

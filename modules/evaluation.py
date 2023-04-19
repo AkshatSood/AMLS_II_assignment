@@ -21,33 +21,97 @@ from helpers.utility import Utility
 
 
 class Evaluation:
+    """Evaluates the test images using various IQA metrics
+    """
 
     def __init__(self):
+        """Default constructor
+        """
         self.utility = Utility()
         self.helpers = Helpers()
         self.totensor = transforms.ToTensor()
-
+        
         self.utility.check_and_create_dir(EVALUATION_DIR)
 
     def __compute_psnr(self, hr_img, up_img):
+        """Compute the PSNR score for the image pair
+
+        Args:
+            hr_img (numpy.ndarray): High resolution image
+            up_img (_type_): Upscaled iamge
+
+        Returns:
+            float: PSNR score
+        """
         return peak_signal_noise_ratio(hr_img, up_img)
 
     def __compute_mse(self, hr_img, up_img):
+        """Compute the Mean Square Error for the between the images
+
+        Args:
+            hr_img (_type_): _description_
+            up_img (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         return mean_squared_error(hr_img, up_img)
 
     def __compute_ssim(self, hr_img, up_img):
+        """Compute the structural similarity between the two images
+
+        Args:
+            hr_img (_type_): _description_
+            up_img (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         return structural_similarity(hr_img, up_img)
 
     def __compute_uqi(self, hr_img, up_img):
+        """Compute the image quality index for the upscaled image
+
+        Args:
+            hr_img (_type_): _description_
+            up_img (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         return uqi(hr_img, up_img)
 
     def __compute_brisque(self, img): 
+        """Compute the Blind/Referenceless Image Spatial Quality Evaluator (BRISQUE) score for the image
+
+        Args:
+            img (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         return brisque.score(img)
 
     def __compute_entropy(self, img):
+        """Compute the Shannon Entropy for the provided image
+
+        Args:
+            img (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         return shannon_entropy(img)
 
     def __get_brisque_score(self, img): 
+        """Compute the Blind/Referenceless Image Spatial Quality Evaluator (BRISQUE) score for the image
+
+        Args:
+            img (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         score = 0 
 
         try: 
@@ -58,6 +122,15 @@ class Evaluation:
         return score 
     
     def __compute_brisque_score(self, hr_path, up_path):
+        """Compute the BRISQUE scores for the images at the provided paths
+
+        Args:
+            hr_path (str): High resolution image path
+            up_path (str): Upscaled image path
+
+        Returns:
+            tuple(float): Tuple of floats with the BRISQUE scores
+        """
         
         # Read the images
         hr = PIL.Image.open(hr_path)
@@ -78,6 +151,8 @@ class Evaluation:
         return hr_brisque, up_brisque, hr_y_brisque, up_y_brisque
     
     def evaluate_div2k(self):
+        """Evaluate the upscaled images from the DIV2K dataset
+        """
         
         metrics_summary = []
 
@@ -183,6 +258,11 @@ class Evaluation:
         print(f'\n\tSuccessfully print evaluation summary to {summary_output_file}.')
             
     def evaluate_tests(self):
+        """Evaluate each upscaled image from the test datasets for all models and 
+        scaling factors
+        """
+
+        # Loop over all the evaluation targets
         for target in TARGETS_EVALUATION:
             print(f'\n=> Evaluating {target["dataset"]} (X{target["scale"]}) images...')
 
@@ -210,6 +290,7 @@ class Evaluation:
                     print('\t\tError! Different number of files were found for HR and UP images!')
                     continue
                 
+                # Loop over every HR and upscaled image pair
                 for hr_img_name, up_img_name in zip(hr_imgs, up_imgs):
                     
                     # Read the images
@@ -224,6 +305,7 @@ class Evaluation:
                     hr_img_y, _, _ = cv2.split(hr_img_ycrcb)
                     up_img_y, _, _ = cv2.split(up_img_ycrcb)
 
+                    # Compute the metrics for the image
                     rgb_mse = self.__compute_mse(hr_img=hr_img, up_img=up_img)
                     rgb_psnr = self.__compute_psnr(hr_img=hr_img, up_img=up_img)
                     ssim = self.__compute_ssim(hr_img=hr_img_y, up_img=up_img_y)
@@ -266,24 +348,28 @@ class Evaluation:
                         'brisque_perc_y': brisque_perc_y
                     })
             
+            # Create a dataframe from all the metrics and save to a CSV file
             metrics_df = pd.DataFrame(metrics)
-
             metrics_df.to_csv(target['eval_file'], index=False)
 
             print(f'\tSuccessfully stored evaluation in {target["eval_file"]}')
 
     def create_evaluation_summary(self):
+        """Summarise the results from the individual test evaluations
+        """
         print('\n=> Creating evaluation summary')
         metrics_summary = []
         for idx, target in enumerate(TARGETS_EVALUATION):
             print(f'\t[{idx+1}/{len(TARGETS_EVALUATION)}] Creating summary for {target["dataset"]} (X{target["scale"]})...')
             
+            # If the test file does not exist, then skip
             if not self.utility.file_exists(target['eval_file']):
                 print(f'\t\tUnable to find CSV file at {target["eval_file"]}. Skipping this dataset')
                 continue
             
             metrics_df = pd.read_csv(target['eval_file'])
 
+            # Create a summary of the metrics from the evaluation file
             for model in target['models']:
                 metrics_summary.append({
                     'dataset': target['dataset'],
@@ -337,6 +423,7 @@ class Evaluation:
                     'up_y_brisque_max': metrics_df.loc[metrics_df['model'] == model['tag']]['up_y_brisque'].min(),
                 })
 
+        # Create a dataframe for the summary and save to a CSV file.
         summary_df = pd.DataFrame(metrics_summary)
         summary_df.to_csv('./evaluation/Evaluation Summary.csv', index=False)
 

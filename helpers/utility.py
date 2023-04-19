@@ -53,24 +53,76 @@ class Utility:
         return sorted([f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))])
 
     def get_img_tag(self, img): 
+        """Get the tag (eg HR, LR, etc) from the image name
+
+        Args:
+            img (str): Image name
+
+        Returns:
+            str: tag
+        """
         return img.split('_')[4].split('.')[0]
     
     def get_img_num(self, img):
+        """Get the image number from the image name
+
+        Args:
+            img (str): Image name
+
+        Returns:
+            str: Image number
+        """
         return img.split('_')[1]
 
     def get_imgs_with_tag_from_dir(self, dir_path, tag):
+        """Return a list of .png files in the directory with the 
+        specified tag in the name.
+
+        Args:
+            dir_path (str): Directory path
+            tag (str): Image tag
+
+        Returns:
+            list: List of .png files in the directory
+        """
         return [f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f)) and f.endswith('.png') and self.get_img_tag(f) == tag]
 
     def replace_img_tag(self, img_name, tag):
+        """Replace the tag in the image name with the provided tag
+
+        Args:
+            img_name (str): Image name
+            tag (str): Tag
+
+        Returns:
+            str: New image name
+        """
         num = img_name.split('_')[1]
         scale = img_name.split('_')[3]
         return f'img_{num}_SRF_{scale}_{tag}.png'
     
     def get_time_taken_str(self, start_time):
+        """Returns a formatted string of the time taken between the start time and the current time
+
+        Args:
+            start_time (float): Start time
+
+        Returns:
+            str: Formatted time difference between start time and current time
+        """
         time_taken = time.time() - start_time
         return str(datetime.timedelta(seconds=int(time_taken)))
     
     def filter_names_ignore_tag(self, src, res):
+        """Filter the src image names, ignoring the tags in the result image names
+
+        Args:
+            src (list): List of image names to filter from 
+            res (list): List of images to remove from the src
+
+        Returns:
+            list: List of filtered image
+        """
         filtered = []
         res = [res_img[:13] for res_img in res]
         for src_img in src: 
@@ -78,8 +130,6 @@ class Utility:
                 filtered.append(src_img)
 
         return filtered
-            
-
 
     def progress_print(self, total_itrs, completed_itrs, start_time):
         """Prints a progress message for the process, based on progress
@@ -108,5 +158,7 @@ class Utility:
         return img
 
     def shave(self, img, border):
+        """Shave the border from the image
+        """
         img = img[border: -border, border: -border]
         return img

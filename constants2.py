@@ -1,4 +1,4 @@
-"""Test Constants Module"""
+"""Constants2 Module"""
 
 # TEST DATASET NAMES
 SET5 = 'Set5'
@@ -60,7 +60,7 @@ FSRCNN_DIR = '/' + FSRCNN
 FSRCNN_T1_DIR = '/' + FSRCNN_T1
 FSRCNN_T2_DIR = '/' + FSRCNN_T2
 
-
+# OTHER CONSTANTS
 SCALE_X2 = 2 
 SCALE_X3 = 3 
 SCALE_X4 = 4 
@@ -70,6 +70,7 @@ PROGRESS_NUM = 10
 PLOTS_DIR = './plots'
 IMAGES_DIR = PLOTS_DIR + '/images'
 
+# TARGETS - For upscaling test datasets' images with the RRDB (ESRGAN and PSNR) models
 TARGETS_RRDB = [
     {
         'dataset': SET5, 
@@ -97,6 +98,7 @@ TARGETS_RRDB = [
     }
 ]
 
+# TARGETS - For upscaling test datasets' images with the FSRCNN models
 TARGETS_FSRCNN = [
     {
         'dataset': SET5, 
@@ -274,6 +276,7 @@ TARGETS_FSRCNN = [
     },
 ]
 
+# TARGETS - For evaluating the results of the models
 TARGETS_EVALUATION = [
     {
         'dataset': SET5, 
