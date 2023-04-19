@@ -63,7 +63,7 @@ _It is important to note that a large amount of disk space is required in order 
  * [plots](./plots) - Directory containing generated plots and images
  * [examples](./examples) - Directory containing samples of other directories, not included on GitHub.
    * [dataset](./examples/dataset) - Directory containing the datasets.
-   * [processed](./examples/processed) - Directory containing the processed data.
+   * [processed](./examples/processed) - Directory containing the processed data. The processed .h5 files are not included due to their size.
    * [results](./examples/results) - Directory containing the upscaled image results.
  * [evaluation](./evaluation) - Directory containing evaluation results 
  * [environment.yml](./environment.yml) - File used to create the conda environment. Contains information about dependencies used in the project.
