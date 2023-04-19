@@ -1,6 +1,4 @@
-# AMLS_II_assignment
-
-__Applied Machine Learning Systems II (ELEC0135) 22/23 Assignment Code__
+# Applied Machine Learning Systems II (ELEC0135) 22/23 Assignment Code
 
 _Abstract_: Single-image super-resolution (SR) is an important computer vision challenge that aims to reconstruct high-resolution images from low-resolution ones. Various statistical algorithms were employed for this purpose until deep learning models could be used to address this in a much more efficient manner. This report details the research and deep learning models that were used to evaluate their SR performance against benchmark datasets, using common image quality assessment (IQA) metrics such as peak signal-to-noise ratio (PSNR), structural similarity index (SSIM), and Blind/Referenceless Image Spatial Quality Evaluator (BRISQUE) score. 
 
