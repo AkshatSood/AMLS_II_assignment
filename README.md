@@ -35,6 +35,8 @@ _It is important to note that a large amount of disk space is required in order 
 
 ## Project Structure
 
+The entire code structure along with the functions of each file have been provided below.
+
  * [main.py](./main.py) - Runs the entire pipeline for the project
  * [constants.py](./constants.py) - Contains constants used in the project
  * [constants2.py](./constants2.py) - Contains some more constants used in the project
