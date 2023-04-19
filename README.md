@@ -31,7 +31,7 @@ Once in the conda environment, the entire pipeline can be executed from [main.py
 python main.py
 ```
 
-_It is important to note that a large amount of disk space is required in order to run the entire pipeline. Upwards of 120GB (estimated), a large RAM, and a good quality GPU will be required. It is hard to estimate the run time of the entire pipeline, but it is expected to take multiple hours_
+_It is important to note that a large amount of disk space is required in order to run the entire pipeline (Upwards of 120GB (estimated)). A large RAM, and a good quality GPU will also be required. It is hard to estimate the run time of the entire pipeline, but it is expected to take multiple hours_
 
 ## Project Structure
 
@@ -55,10 +55,10 @@ _It is important to note that a large amount of disk space is required in order 
  * [helpers](./helpers) - Directory containing common functions used by multiple classes 
    * [helpers.py](./helpers/helpers.py) - Contains various helper functions used by different models
    * [utility.py](./helpers/utility.py) - Provides common IO functions used across the project
- * [Track 1](./track1) - Modules for track 1
-   * [track1.py](./track1/track1.py) - Runs models on the Track 1 (NTIRE 2017) validation  data. Deprecated.
- * [Track 2](./track2) - Modules for track 2
-   * [track2.py](./track2/track2.py) - Runs models on the Track 2 (NTIRE 2017) validation  data. Deprecated.
+ * [Track 1](./track1) - Modules for track 1. _Deprecated_.
+   * [track1.py](./track1/track1.py) - Runs models on the Track 1 (NTIRE 2017) validation  data. _Deprecated_.
+ * [Track 2](./track2) - Modules for track 2. _Deprecated_.
+   * [track2.py](./track2/track2.py) - Runs models on the Track 2 (NTIRE 2017) validation  data. _Deprecated_.
  * [models](./models) - Directory containing pre-trained model weights
  * [plots](./plots) - Directory containing generated plots and images
  * [examples](./examples) - Directory containing samples of other directories, not included on GitHub.
