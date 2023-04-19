@@ -31,6 +31,8 @@ Once in the conda environment, the entire pipeline can be executed from [main.py
 python main.py
 ```
 
+Based on which sections of the code need to be executed, other function calls can safely be commented out. However, this is not recommended, as subsequent steps in the pipeline require the output produced by previous steps.
+
 _It is important to note that a large amount of disk space is required in order to run the entire pipeline (Upwards of 120GB (estimated)). A large RAM, and a good quality GPU will also be required. It is hard to estimate the run time of the entire pipeline, but it is expected to take multiple hours_
 
 ## Project Structure
