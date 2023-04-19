@@ -9,7 +9,7 @@ import numpy as np
 
 
 class Utility:
-    """Provides common functions used across the project
+    """Provides common IO functions used across the project
     """
 
     def file_exists(self, fname):

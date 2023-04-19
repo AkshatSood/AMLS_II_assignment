@@ -11,7 +11,7 @@ from track2.track2 import Track2
 
 
 def main():
-    """This runs the entire pipeline fore the code. 
+    """This runs the entire pipeline for the code. 
     """
     # Acquire Data 
     # Downloads the DIV2K dataset to the ./dataset folder (unless its updated in the constants.py)
